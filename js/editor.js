@@ -264,25 +264,92 @@
   // Item definitions for preview
   // ==========================================
   var PREVIEW_ITEMS = {
-    'unique-shako': { code: 'uap', name: 'Harlequin Crest Shako', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 69, DEF: 98, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'ber-rune': { code: 'r30', name: 'Ber Rune', flags: ['MISC'], values: { RUNE: 30, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'jah-rune': { code: 'r31', name: 'Jah Rune', flags: ['MISC'], values: { RUNE: 31, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'zod-rune': { code: 'r33', name: 'Zod Rune', flags: ['MISC'], values: { RUNE: 33, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'normal-cap': { code: 'cap', name: 'Cap', flags: ['NMAG', 'NORM', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 1, DEF: 3, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'magic-ring': { code: 'rin', name: 'Ring', flags: ['MAG', 'JEWELRY'], values: { ILVL: 45, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'rare-amu': { code: 'amu', name: 'Amulet', flags: ['RARE', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'set-item': { code: 'uap', name: 'Harlequin Crest Shako', flags: ['SET', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 69, DEF: 98, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'eth-superior': { code: 'uui', name: 'Archon Plate', flags: ['NMAG', 'ELT', 'ETH', 'SUP', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 524, SOCKETS: 0, ED: 15, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'key': { code: 'key', name: 'Key', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Runes
+    'rune-zod': { code: 'r33', name: 'Zod Rune', flags: ['MISC'], values: { RUNE: 33, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-ber': { code: 'r30', name: 'Ber Rune', flags: ['MISC'], values: { RUNE: 30, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-jah': { code: 'r31', name: 'Jah Rune', flags: ['MISC'], values: { RUNE: 31, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-lo': { code: 'r28', name: 'Lo Rune', flags: ['MISC'], values: { RUNE: 28, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-vex': { code: 'r26', name: 'Vex Rune', flags: ['MISC'], values: { RUNE: 26, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-ist': { code: 'r24', name: 'Ist Rune', flags: ['MISC'], values: { RUNE: 24, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-lem': { code: 'r20', name: 'Lem Rune', flags: ['MISC'], values: { RUNE: 20, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-sol': { code: 'r12', name: 'Sol Rune', flags: ['MISC'], values: { RUNE: 12, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-el': { code: 'r01', name: 'El Rune', flags: ['MISC'], values: { RUNE: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    // Unique items
+    'uni-shako': { code: 'uap', name: 'Harlequin Crest', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 69, DEF: 141, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-griffon': { code: 'ci3', name: 'Griffons Eye', flags: ['UNI', 'ELT', 'CIRC', 'EQ7', 'ARMOR'], values: { ILVL: 85, DEF: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-coa': { code: 'urn', name: 'Crown of Ages', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 85, DEF: 349, SOCKETS: 2, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-arach': { code: 'ulc', name: 'Arachnid Mesh', flags: ['UNI', 'ELT', 'BELT', 'ARMOR', 'EQ6'], values: { ILVL: 85, DEF: 119, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-stormshield': { code: 'uit', name: 'Stormshield', flags: ['UNI', 'ELT', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 85, DEF: 136, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-facet': { code: 'jew', name: 'Rainbow Facet', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-ring': { code: 'rin', name: 'Stone of Jordan', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-amu': { code: 'amu', name: 'Maras Kaleidoscope', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-anni': { code: 'cm1', name: 'Annihilus', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-torch': { code: 'cm2', name: 'Hellfire Torch', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-gheeds': { code: 'cm3', name: 'Gheeds Fortune', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Set items
+    'set-shako': { code: 'uap', name: 'Tal Rashas Horadric Crest', flags: ['SET', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 66, DEF: 98, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'set-ik-armor': { code: 'uth', name: 'Immortal Kings Soul Cage', flags: ['SET', 'ELT', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 487, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'set-tal-amu': { code: 'amu', name: 'Tal Rashas Adjudication', flags: ['SET', 'JEWELRY'], values: { ILVL: 26, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Rare / Crafted
+    'rare-amu': { code: 'amu', name: 'Amulet', flags: ['RARE', 'JEWELRY'], values: { ILVL: 85, ALVL: 90, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rare-ring': { code: 'rin', name: 'Ring', flags: ['RARE', 'JEWELRY'], values: { ILVL: 85, ALVL: 81, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rare-jewel': { code: 'jew', name: 'Jewel', flags: ['RARE', 'JEWELRY'], values: { ILVL: 87, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rare-circlet': { code: 'ci3', name: 'Diadem', flags: ['RARE', 'ELT', 'CIRC', 'EQ7', 'ARMOR'], values: { ILVL: 85, DEF: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rare-boots-elt': { code: 'uhb', name: 'Myrmidon Greaves', flags: ['RARE', 'ELT', 'BOOTS', 'ARMOR', 'EQ5'], values: { ILVL: 85, DEF: 62, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rare-gloves-elt': { code: 'utg', name: 'Crusader Gauntlets', flags: ['RARE', 'ELT', 'GLOVES', 'ARMOR', 'EQ4'], values: { ILVL: 85, DEF: 59, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'craft-amu': { code: 'amu', name: 'Amulet', flags: ['CRAFT', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Magic items
+    'mag-ring': { code: 'rin', name: 'Ring', flags: ['MAG', 'JEWELRY'], values: { ILVL: 45, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-amu': { code: 'amu', name: 'Amulet', flags: ['MAG', 'JEWELRY'], values: { ILVL: 85, CRAFTALVL: 90, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-jewel': { code: 'jew', name: 'Jewel', flags: ['MAG', 'JEWELRY'], values: { ILVL: 87, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-gc-90': { code: 'cm3', name: 'Grand Charm', flags: ['MAG', 'CHARM'], values: { ILVL: 91, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-gc': { code: 'cm3', name: 'Grand Charm', flags: ['MAG', 'CHARM'], values: { ILVL: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-sc': { code: 'cm1', name: 'Small Charm', flags: ['MAG', 'CHARM'], values: { ILVL: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-lc': { code: 'cm2', name: 'Large Charm', flags: ['MAG', 'CHARM'], values: { ILVL: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mag-monarch': { code: 'uit', name: 'Monarch', flags: ['MAG', 'ELT', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 72, DEF: 133, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Runeword bases
+    'base-eth-ap': { code: 'utp', name: 'Archon Plate', flags: ['NMAG', 'ELT', 'ETH', 'SUP', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 524, SOCKETS: 4, ED: 15, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-monarch-4': { code: 'uit', name: 'Monarch', flags: ['NMAG', 'ELT', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 72, DEF: 133, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-pb-5': { code: '7cr', name: 'Phase Blade', flags: ['NMAG', 'ELT', 'SWORD', 'WEAPON', '1H'], values: { ILVL: 73, SOCKETS: 5, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-eth-thresh': { code: '7s7', name: 'Thresher', flags: ['NMAG', 'ELT', 'ETH', 'POLEARM', 'WEAPON', '2H'], values: { ILVL: 85, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-eth-zerker': { code: '7wa', name: 'Berserker Axe', flags: ['NMAG', 'ELT', 'ETH', 'AXE', 'WEAPON', '1H'], values: { ILVL: 85, SOCKETS: 5, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-eth-cb': { code: '7gd', name: 'Colossus Blade', flags: ['NMAG', 'ELT', 'ETH', 'SWORD', 'WEAPON', '2H'], values: { ILVL: 85, SOCKETS: 6, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-diadem-0': { code: 'ci3', name: 'Diadem', flags: ['NMAG', 'ELT', 'CIRC', 'EQ7', 'ARMOR'], values: { ILVL: 85, SOCKETS: 0, MAXSOCKETS: 3, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-flail-4': { code: 'fla', name: 'Flail', flags: ['NMAG', 'NORM', 'MACE', 'WEAPON', '1H'], values: { ILVL: 36, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-crystal-4': { code: 'crs', name: 'Crystal Sword', flags: ['NMAG', 'NORM', 'SWORD', 'WEAPON', '1H'], values: { ILVL: 26, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-pala-45res': { code: 'pa5', name: 'Sacred Targe', flags: ['NMAG', 'EXC', 'DIN', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 85, SOCKETS: 4, RES: 45, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Normal items
+    'norm-cap': { code: 'cap', name: 'Cap', flags: ['NMAG', 'NORM', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 1, DEF: 3, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'norm-belt-elt': { code: 'uhc', name: 'Colossus Girdle', flags: ['NMAG', 'ELT', 'BELT', 'ARMOR', 'EQ6'], values: { ILVL: 85, DEF: 71, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'norm-1os': { code: 'hlm', name: 'Helm', flags: ['NMAG', 'NORM', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 10, DEF: 15, SOCKETS: 1, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'norm-inf': { code: 'lea', name: 'Leather Armor', flags: ['NMAG', 'NORM', 'INF', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 5, DEF: 12, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'norm-sup-ap': { code: 'utp', name: 'Archon Plate', flags: ['NMAG', 'ELT', 'SUP', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 524, SOCKETS: 0, ED: 15, MAXSOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Consumables
+    'gold-5000': { code: 'gold', name: '5000 Gold', flags: [], values: { GOLD: 5000, ILVL: 0, SOCKETS: 0, RUNE: 0, GEM: 0 } },
     'gold-500': { code: 'gold', name: '500 Gold', flags: [], values: { GOLD: 500, ILVL: 0, SOCKETS: 0, RUNE: 0, GEM: 0 } },
     'gold-50': { code: 'gold', name: '50 Gold', flags: [], values: { GOLD: 50, ILVL: 0, SOCKETS: 0, RUNE: 0, GEM: 0 } },
+    'hp5': { code: 'hp5', name: 'Super Healing Potion', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'hp1': { code: 'hp1', name: 'Minor Healing Potion', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'mp5': { code: 'mp5', name: 'Super Mana Potion', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rvl': { code: 'rvl', name: 'Full Rejuv Potion', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'rvs': { code: 'rvs', name: 'Rejuv Potion', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'tp-scroll': { code: 'tsc', name: 'Scroll of Town Portal', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'id-scroll': { code: 'isc', name: 'Scroll of Identify', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'perfect-gem': { code: 'gpv', name: 'Perfect Amethyst', flags: ['MISC'], values: { GEM: 5, GEMLEVEL: 5, GEMTYPE: 1, ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0 } },
-    'rune-el': { code: 'r01', name: 'El Rune', flags: ['MISC'], values: { RUNE: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'charm-sc': { code: 'cm1', name: 'Small Charm', flags: ['MAG', 'CHARM'], values: { ILVL: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'charm-gc': { code: 'cm3', name: 'Grand Charm', flags: ['MAG', 'CHARM'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'jewel': { code: 'jew', name: 'Jewel', flags: ['MAG', 'JEWELRY'], values: { ILVL: 80, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } }
+    'key': { code: 'key', name: 'Key', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Gems
+    'gem-perf-ame': { code: 'gpv', name: 'Perfect Amethyst', flags: ['MISC'], values: { GEM: 5, GEMLEVEL: 5, GEMTYPE: 1, ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0 } },
+    'gem-flaw-dia': { code: 'glw', name: 'Flawless Diamond', flags: ['MISC'], values: { GEM: 4, GEMLEVEL: 4, GEMTYPE: 2, ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0 } },
+    'gem-chip-ruby': { code: 'gcr', name: 'Chipped Ruby', flags: ['MISC'], values: { GEM: 1, GEMLEVEL: 1, GEMTYPE: 4, ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0 } },
+    // PD2 Special
+    'pd2-wss': { code: 'wss', name: 'Worldstone Shard', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-pbox': { code: 'lbox', name: 'Larzuks Puzzlebox', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-essence': { code: 'tes', name: 'Twisted Essence of Suffering', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-token': { code: 'toa', name: 'Token of Absolution', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-key': { code: 'pk1', name: 'Key of Terror', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-organ': { code: 'mbr', name: 'Mephistos Brain', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-rkey': { code: 'rkey', name: 'Skeleton Key', flags: ['MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'pd2-map-t1': { code: 't12', name: 'T1 Map', flags: ['NMAG', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0, MAPTIER: 1 } },
+    'pd2-map-t3-rare': { code: 't34', name: 'T3 Rare Map', flags: ['RARE', 'MISC'], values: { ILVL: 1, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0, MAPTIER: 3 } }
   };
 
   // D2 color map for preview rendering
@@ -819,18 +886,22 @@
   function initPreview() {
     var btnTest = document.getElementById('btn-test-rule');
     var itemSelect = document.getElementById('preview-item-type');
+    var filtlvlSelect = document.getElementById('preview-filtlvl');
 
     btnTest.addEventListener('click', function () {
-      var itemKey = itemSelect.value;
-      var item = PREVIEW_ITEMS[itemKey];
-      if (!item) return;
       testAllItems();
     });
 
-    // Also test all on select change
+    // Re-test on item or filter level change
     itemSelect.addEventListener('change', function () {
       testAllItems();
     });
+
+    if (filtlvlSelect) {
+      filtlvlSelect.addEventListener('change', function () {
+        testAllItems();
+      });
+    }
 
     // Delegated click handler for go-to-line buttons
     previewResults.addEventListener('click', function (e) {
@@ -898,16 +969,36 @@
   }
 
   function matchItem(item, rules) {
+    var accumulated = '';
+    var lastRule = null;
+    var continueChain = false;
     for (var i = 0; i < rules.length; i++) {
       var rule = rules[i];
       if (evaluateConditions(rule.conditions, item)) {
+        var output = rule.output;
+        // Check for %CONTINUE% — store output in item name and keep matching
+        if (output.indexOf('%CONTINUE%') !== -1) {
+          output = output.replace(/%CONTINUE%/g, '');
+          // In PD2, %CONTINUE% stores current output as the new %NAME%
+          // Accumulate the output
+          accumulated = output || accumulated;
+          continueChain = true;
+          lastRule = rule;
+          continue; // Keep checking next rules
+        }
+        // Final match (no %CONTINUE%)
         return {
           matched: true,
           rule: rule,
-          hidden: rule.output === '',
-          output: rule.output
+          hidden: output === '' && !continueChain,
+          output: output || accumulated,
+          continued: continueChain
         };
       }
+    }
+    // If we only had %CONTINUE% rules with no final match
+    if (continueChain && accumulated) {
+      return { matched: true, rule: lastRule, hidden: false, output: accumulated, continued: true };
     }
     return { matched: false, hidden: false, output: '', rule: null };
   }
@@ -1033,16 +1124,24 @@
       return false;
     }
 
-    // FILTLVL — treat as always 1 in preview
+    // FILTLVL — use value from preview selector
     if (token.indexOf('FILTLVL') === 0) {
-      var flMatch = token.match(/FILTLVL([<>=])(\d+)/);
+      var flSelect = document.getElementById('preview-filtlvl');
+      var currentFL = flSelect ? parseInt(flSelect.value, 10) : 1;
+      var flMatch = token.match(/FILTLVL([<>=~])(.+)/);
       if (flMatch) {
         var flOp = flMatch[1];
-        var flVal = parseInt(flMatch[2], 10);
-        if (flOp === '>') return 1 > flVal;
-        if (flOp === '<') return 1 < flVal;
-        if (flOp === '=') return 1 === flVal;
+        var flValStr = flMatch[2];
+        if (flOp === '~') {
+          var flParts = flValStr.split('-');
+          return currentFL >= parseInt(flParts[0], 10) && currentFL <= parseInt(flParts[1], 10);
+        }
+        var flVal = parseInt(flValStr, 10);
+        if (flOp === '>') return currentFL > flVal;
+        if (flOp === '<') return currentFL < flVal;
+        if (flOp === '=') return currentFL === flVal;
       }
+      // Handle !FILTLVL=N (negation handled by caller)
       return true;
     }
 

@@ -635,26 +635,120 @@
             </div>
             <div class="preview-test-bar">
               <select id="preview-item-type">
-                <option value="unique-shako">Unique Shako (uap, UNI ELT HELM)</option>
-                <option value="ber-rune">Ber Rune (r30, RUNE=30)</option>
-                <option value="jah-rune">Jah Rune (r31, RUNE=31)</option>
-                <option value="zod-rune">Zod Rune (r33, RUNE=33)</option>
-                <option value="normal-cap">Normal Cap (cap, NMAG NORM HELM)</option>
-                <option value="magic-ring">Magic Ring (rin, MAG JEWELRY)</option>
-                <option value="rare-amu">Rare Amulet (amu, RARE JEWELRY)</option>
-                <option value="set-item">Set Shako (uap, SET ELT HELM)</option>
-                <option value="eth-superior">Eth Superior Archon Plate (uui, NMAG ELT ETH SUP CHEST)</option>
-                <option value="key">Key (key, NMAG MISC)</option>
-                <option value="gold-500">500 Gold (GOLD=500)</option>
-                <option value="gold-50">50 Gold (GOLD=50)</option>
-                <option value="tp-scroll">TP Scroll (tsc, NMAG MISC)</option>
-                <option value="id-scroll">ID Scroll (isc, NMAG MISC)</option>
-                <option value="perfect-gem">Perfect Amethyst (gpv, GEM=5)</option>
-                <option value="rune-el">El Rune (r01, RUNE=1)</option>
-                <option value="charm-sc">Small Charm (cm1, MAG CHARM)</option>
-                <option value="charm-gc">Grand Charm (cm3, MAG CHARM)</option>
-                <option value="jewel">Magic Jewel (jew, MAG JEWELRY)</option>
+                <optgroup label="Runes">
+                  <option value="rune-zod">Zod Rune (r33)</option>
+                  <option value="rune-ber" selected>Ber Rune (r30)</option>
+                  <option value="rune-jah">Jah Rune (r31)</option>
+                  <option value="rune-lo">Lo Rune (r28)</option>
+                  <option value="rune-vex">Vex Rune (r26)</option>
+                  <option value="rune-ist">Ist Rune (r24)</option>
+                  <option value="rune-lem">Lem Rune (r20)</option>
+                  <option value="rune-sol">Sol Rune (r12)</option>
+                  <option value="rune-el">El Rune (r01)</option>
+                </optgroup>
+                <optgroup label="Unique Items">
+                  <option value="uni-shako">Unique Shako (uap)</option>
+                  <option value="uni-griffon">Unique Diadem (ci3)</option>
+                  <option value="uni-coa">Unique Demonhead (urn)</option>
+                  <option value="uni-arach">Unique Spiderweb Sash (ulc)</option>
+                  <option value="uni-stormshield">Unique Monarch (uit)</option>
+                  <option value="uni-facet">Rainbow Facet (jew)</option>
+                  <option value="uni-ring">Unique Ring (rin)</option>
+                  <option value="uni-amu">Unique Amulet (amu)</option>
+                  <option value="uni-anni">Annihilus (cm1)</option>
+                  <option value="uni-torch">Hellfire Torch (cm2)</option>
+                  <option value="uni-gheeds">Gheeds Fortune (cm3)</option>
+                </optgroup>
+                <optgroup label="Set Items">
+                  <option value="set-shako">Set Shako (uap)</option>
+                  <option value="set-ik-armor">Set Sacred Armor (uth)</option>
+                  <option value="set-tal-amu">Set Amulet (amu)</option>
+                </optgroup>
+                <optgroup label="Rare / Crafted">
+                  <option value="rare-amu">Rare Amulet (amu)</option>
+                  <option value="rare-ring">Rare Ring (rin)</option>
+                  <option value="rare-jewel">Rare Jewel (jew)</option>
+                  <option value="rare-circlet">Rare Diadem (ci3)</option>
+                  <option value="rare-boots-elt">Rare Elite Boots (uhb)</option>
+                  <option value="rare-gloves-elt">Rare Elite Gloves (utg)</option>
+                  <option value="craft-amu">Crafted Amulet (amu)</option>
+                </optgroup>
+                <optgroup label="Magic Items">
+                  <option value="mag-ring">Magic Ring (rin)</option>
+                  <option value="mag-amu">Magic Amulet (amu)</option>
+                  <option value="mag-jewel">Magic Jewel (jew)</option>
+                  <option value="mag-gc-90">Magic GC ilvl91 (cm3)</option>
+                  <option value="mag-gc">Magic Grand Charm (cm3)</option>
+                  <option value="mag-sc">Magic Small Charm (cm1)</option>
+                  <option value="mag-lc">Magic Large Charm (cm2)</option>
+                  <option value="mag-monarch">Magic Monarch (uit)</option>
+                </optgroup>
+                <optgroup label="Runeword Bases">
+                  <option value="base-eth-ap">Eth Archon Plate 4os (utp)</option>
+                  <option value="base-monarch-4">Monarch 4os (uit)</option>
+                  <option value="base-pb-5">Phase Blade 5os (7cr)</option>
+                  <option value="base-eth-thresh">Eth Thresher 4os (7s7)</option>
+                  <option value="base-eth-zerker">Eth Berserker Axe 5os (7wa)</option>
+                  <option value="base-eth-cb">Eth Colossus Blade 6os (7gd)</option>
+                  <option value="base-diadem-0">Diadem 0os (ci3)</option>
+                  <option value="base-flail-4">Flail 4os (fla)</option>
+                  <option value="base-crystal-4">Crystal Sword 4os (crs)</option>
+                  <option value="base-pala-45res">Sacred Targe 45res 4os (pa5)</option>
+                </optgroup>
+                <optgroup label="Normal Items">
+                  <option value="norm-cap">Normal Cap (cap)</option>
+                  <option value="norm-belt-elt">Normal Elite Belt (uhc)</option>
+                  <option value="norm-1os">Normal 1os Helm (hlm)</option>
+                  <option value="norm-inf">Inferior Armor (lea)</option>
+                  <option value="norm-sup-ap">Superior Archon Plate (utp)</option>
+                </optgroup>
+                <optgroup label="Consumables">
+                  <option value="gold-5000">5000 Gold</option>
+                  <option value="gold-500">500 Gold</option>
+                  <option value="gold-50">50 Gold</option>
+                  <option value="hp5">Super Healing (hp5)</option>
+                  <option value="hp1">Minor Healing (hp1)</option>
+                  <option value="mp5">Super Mana (mp5)</option>
+                  <option value="rvl">Full Rejuv (rvl)</option>
+                  <option value="rvs">Rejuv (rvs)</option>
+                  <option value="tp-scroll">TP Scroll (tsc)</option>
+                  <option value="id-scroll">ID Scroll (isc)</option>
+                  <option value="key">Key (key)</option>
+                </optgroup>
+                <optgroup label="Gems">
+                  <option value="gem-perf-ame">Perfect Amethyst (gpv)</option>
+                  <option value="gem-flaw-dia">Flawless Diamond (glw)</option>
+                  <option value="gem-chip-ruby">Chipped Ruby (gcr)</option>
+                </optgroup>
+                <optgroup label="PD2 Special">
+                  <option value="pd2-wss">Worldstone Shard (wss)</option>
+                  <option value="pd2-pbox">Larzuks Puzzlebox (lbox)</option>
+                  <option value="pd2-essence">Twisted Essence (tes)</option>
+                  <option value="pd2-token">Token of Absolution (toa)</option>
+                  <option value="pd2-key">Key of Terror (pk1)</option>
+                  <option value="pd2-organ">Mephistos Brain (mbr)</option>
+                  <option value="pd2-rkey">Skeleton Key (rkey)</option>
+                  <option value="pd2-map-t1">T1 Map (NMAG)</option>
+                  <option value="pd2-map-t3-rare">T3 Rare Map</option>
+                </optgroup>
               </select>
+              <label class="preview-filtlvl-label">FILTLVL:
+                <select id="preview-filtlvl">
+                  <option value="0">0 (Show All)</option>
+                  <option value="1" selected>1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+              </label>
               <button class="btn btn-secondary" id="btn-test-rule">Test</button>
             </div>
             <div class="preview-results" id="preview-results">

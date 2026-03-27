@@ -472,6 +472,27 @@
   font-size: 0.85rem;
 }
 
+.preview-filtlvl-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.preview-filtlvl-label select {
+  flex: none;
+  width: 5rem;
+  padding: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
 .preview-results {
   flex: 1;
   padding: 1rem;
