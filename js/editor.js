@@ -1338,9 +1338,20 @@
       cssClass += ' selected';
     }
 
-    var displayName = item.name;
+    // Default rarity color for items before filter applies
+    var rarityColor = '#ffffff';
+    if (item.flags.indexOf('UNI') !== -1) rarityColor = '#c8a040'; // gold
+    else if (item.flags.indexOf('SET') !== -1) rarityColor = '#00c000'; // green
+    else if (item.flags.indexOf('RARE') !== -1) rarityColor = '#ffff40'; // yellow
+    else if (item.flags.indexOf('CRAFT') !== -1) rarityColor = '#ff8000'; // orange
+    else if (item.flags.indexOf('MAG') !== -1) rarityColor = '#6464ff'; // blue
+    else if (item.flags.indexOf('NMAG') !== -1) rarityColor = '#ffffff'; // white
+
+    var displayName;
     if (result.matched && result.output) {
       displayName = renderOutput(result.output, item);
+    } else {
+      displayName = '<span style="color:' + rarityColor + '">' + escapeHtml(item.name) + '</span>';
     }
 
     // Build item info tag
