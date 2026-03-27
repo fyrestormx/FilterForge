@@ -325,10 +325,14 @@
                   <button class="chip" data-value="GEMMED">Gemmed</button>
                 </div>
 
-                <label class="builder-label">Equipment</label>
+                <label class="builder-label">Item Category</label>
+                <div class="chip-group" data-field="itemcat" data-multi="true">
+                  <button class="chip" data-value="ARMOR">Armor</button>
+                  <button class="chip" data-value="WEAPON">Weapon</button>
+                </div>
+
+                <label class="builder-label">Armor Slot</label>
                 <div class="chip-group" data-field="equipment">
-                  <button class="chip" data-value="ARMOR">All Armor</button>
-                  <button class="chip" data-value="WEAPON">All Weapons</button>
                   <button class="chip" data-value="HELM">Helm</button>
                   <button class="chip" data-value="CHEST">Chest</button>
                   <button class="chip" data-value="SHIELD">Shield</button>
@@ -338,7 +342,7 @@
                   <button class="chip" data-value="CIRC">Circlet</button>
                 </div>
 
-                <label class="builder-label">Weapons</label>
+                <label class="builder-label">Weapon Type</label>
                 <div class="chip-group" data-field="weapons">
                   <button class="chip" data-value="AXE">Axe</button>
                   <button class="chip" data-value="MACE">Mace</button>
@@ -447,7 +451,32 @@
                 </div>
 
                 <label class="builder-label">Item Code (3-char)</label>
-                <input type="text" class="builder-input" id="item-code-input" placeholder="e.g. uap, r30, cm3" maxlength="20">
+                <div class="itemcode-input-wrap">
+                  <input type="text" class="builder-input" id="item-code-input" placeholder="Type name or code..." maxlength="20" autocomplete="off">
+                  <div class="itemcode-dropdown" id="itemcode-dropdown"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item Code Finder -->
+            <div class="builder-group">
+              <div class="builder-group-header" data-toggle="itemcode-panel">
+                <span>Item Code Finder</span>
+                <span class="chevron">&#9654;</span>
+              </div>
+              <div class="builder-panel" id="itemcode-panel">
+                <input type="text" class="builder-input" id="itemcode-search" placeholder="Search by name or code...">
+                <div class="itemcode-tabs">
+                  <button class="itemcode-tab active" data-cat="runes">Runes</button>
+                  <button class="itemcode-tab" data-cat="pd2">PD2</button>
+                  <button class="itemcode-tab" data-cat="norm">Norm</button>
+                  <button class="itemcode-tab" data-cat="exc">Excep</button>
+                  <button class="itemcode-tab" data-cat="elt">Elite</button>
+                  <button class="itemcode-tab" data-cat="uni">Unique</button>
+                  <button class="itemcode-tab" data-cat="set">Set</button>
+                  <button class="itemcode-tab" data-cat="misc">Misc</button>
+                </div>
+                <div class="itemcode-list" id="itemcode-list"></div>
               </div>
             </div>
 
@@ -577,27 +606,6 @@
                 <button class="template-btn" data-template="mapping">Mapping Filter</button>
               </div>
             </div>
-            <!-- Item Code Finder -->
-            <div class="builder-group">
-              <div class="builder-group-header" data-toggle="itemcode-panel">
-                <span>Item Code Finder</span>
-                <span class="chevron">&#9654;</span>
-              </div>
-              <div class="builder-panel" id="itemcode-panel">
-                <input type="text" class="builder-input" id="itemcode-search" placeholder="Search by name or code...">
-                <div class="itemcode-tabs">
-                  <button class="itemcode-tab active" data-cat="runes">Runes</button>
-                  <button class="itemcode-tab" data-cat="pd2">PD2</button>
-                  <button class="itemcode-tab" data-cat="norm">Norm</button>
-                  <button class="itemcode-tab" data-cat="exc">Excep</button>
-                  <button class="itemcode-tab" data-cat="elt">Elite</button>
-                  <button class="itemcode-tab" data-cat="uni">Unique</button>
-                  <button class="itemcode-tab" data-cat="set">Set</button>
-                  <button class="itemcode-tab" data-cat="misc">Misc</button>
-                </div>
-                <div class="itemcode-list" id="itemcode-list"></div>
-              </div>
-            </div>
           </div>
         </aside>
 
@@ -646,23 +654,23 @@
                   <option value="rune-sol">Sol Rune (r12)</option>
                   <option value="rune-el">El Rune (r01)</option>
                 </optgroup>
-                <optgroup label="Unique Items">
-                  <option value="uni-shako">Unique Shako (uap)</option>
-                  <option value="uni-griffon">Unique Diadem (ci3)</option>
-                  <option value="uni-coa">Unique Demonhead (urn)</option>
-                  <option value="uni-arach">Unique Spiderweb Sash (ulc)</option>
-                  <option value="uni-stormshield">Unique Monarch (uit)</option>
-                  <option value="uni-facet">Rainbow Facet (jew)</option>
-                  <option value="uni-ring">Unique Ring (rin)</option>
-                  <option value="uni-amu">Unique Amulet (amu)</option>
-                  <option value="uni-anni">Annihilus (cm1)</option>
-                  <option value="uni-torch">Hellfire Torch (cm2)</option>
-                  <option value="uni-gheeds">Gheeds Fortune (cm3)</option>
+                <optgroup label="Unique Items (unid)">
+                  <option value="uni-shako">Unid Unique Shako (uap)</option>
+                  <option value="uni-griffon">Unid Unique Diadem (ci3)</option>
+                  <option value="uni-coa">Unid Unique Demonhead (urn)</option>
+                  <option value="uni-arach">Unid Unique Spiderweb Sash (ulc)</option>
+                  <option value="uni-stormshield">Unid Unique Monarch (uit)</option>
+                  <option value="uni-facet">Unid Unique Jewel (jew)</option>
+                  <option value="uni-ring">Unid Unique Ring (rin)</option>
+                  <option value="uni-amu">Unid Unique Amulet (amu)</option>
+                  <option value="uni-anni">Unid Annihilus (cm1)</option>
+                  <option value="uni-torch">Unid Hellfire Torch (cm2)</option>
+                  <option value="uni-gheeds">Unid Gheeds Fortune (cm3)</option>
                 </optgroup>
-                <optgroup label="Set Items">
-                  <option value="set-shako">Set Shako (uap)</option>
-                  <option value="set-ik-armor">Set Sacred Armor (uth)</option>
-                  <option value="set-tal-amu">Set Amulet (amu)</option>
+                <optgroup label="Set Items (unid)">
+                  <option value="set-shako">Unid Set Shako (uap)</option>
+                  <option value="set-ik-armor">Unid Set Sacred Armor (uth)</option>
+                  <option value="set-tal-amu">Unid Set Amulet (amu)</option>
                 </optgroup>
                 <optgroup label="Rare / Crafted">
                   <option value="rare-amu">Rare Amulet (amu)</option>

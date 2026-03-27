@@ -23,6 +23,7 @@
     quality: '',
     tier: '',
     properties: [],
+    itemcat: [],
     equipment: '',
     weapons: '',
     misc: '',
@@ -264,33 +265,33 @@
   // Item definitions for preview
   // ==========================================
   var PREVIEW_ITEMS = {
-    // Runes
-    'rune-zod': { code: 'r33', name: 'Zod Rune', flags: ['MISC'], values: { RUNE: 33, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-ber': { code: 'r30', name: 'Ber Rune', flags: ['MISC'], values: { RUNE: 30, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-jah': { code: 'r31', name: 'Jah Rune', flags: ['MISC'], values: { RUNE: 31, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-lo': { code: 'r28', name: 'Lo Rune', flags: ['MISC'], values: { RUNE: 28, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-vex': { code: 'r26', name: 'Vex Rune', flags: ['MISC'], values: { RUNE: 26, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-ist': { code: 'r24', name: 'Ist Rune', flags: ['MISC'], values: { RUNE: 24, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-lem': { code: 'r20', name: 'Lem Rune', flags: ['MISC'], values: { RUNE: 20, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-sol': { code: 'r12', name: 'Sol Rune', flags: ['MISC'], values: { RUNE: 12, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    'rune-el': { code: 'r01', name: 'El Rune', flags: ['MISC'], values: { RUNE: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
-    // Unique items
-    'uni-shako': { code: 'uap', name: 'Harlequin Crest', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 69, DEF: 141, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-griffon': { code: 'ci3', name: 'Griffons Eye', flags: ['UNI', 'ELT', 'CIRC', 'EQ7', 'ARMOR'], values: { ILVL: 85, DEF: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-coa': { code: 'urn', name: 'Crown of Ages', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 85, DEF: 349, SOCKETS: 2, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-arach': { code: 'ulc', name: 'Arachnid Mesh', flags: ['UNI', 'ELT', 'BELT', 'ARMOR', 'EQ6'], values: { ILVL: 85, DEF: 119, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-stormshield': { code: 'uit', name: 'Stormshield', flags: ['UNI', 'ELT', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 85, DEF: 136, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-facet': { code: 'jew', name: 'Rainbow Facet', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-ring': { code: 'rin', name: 'Stone of Jordan', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-amu': { code: 'amu', name: 'Maras Kaleidoscope', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-anni': { code: 'cm1', name: 'Annihilus', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-torch': { code: 'cm2', name: 'Hellfire Torch', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'uni-gheeds': { code: 'cm3', name: 'Gheeds Fortune', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    // Set items
-    'set-shako': { code: 'uap', name: 'Tal Rashas Horadric Crest', flags: ['SET', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 66, DEF: 98, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'set-ik-armor': { code: 'uth', name: 'Immortal Kings Soul Cage', flags: ['SET', 'ELT', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 487, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'set-tal-amu': { code: 'amu', name: 'Tal Rashas Adjudication', flags: ['SET', 'JEWELRY'], values: { ILVL: 26, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    // Rare / Crafted
+    // Runes (stacked — r##s format, QTY=1 means stacked)
+    'rune-zod': { code: 'r33s', name: 'Zod Rune', flags: ['MISC'], values: { RUNE: 33, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-ber': { code: 'r30s', name: 'Ber Rune', flags: ['MISC'], values: { RUNE: 30, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-jah': { code: 'r31s', name: 'Jah Rune', flags: ['MISC'], values: { RUNE: 31, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-lo': { code: 'r28s', name: 'Lo Rune', flags: ['MISC'], values: { RUNE: 28, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-vex': { code: 'r26s', name: 'Vex Rune', flags: ['MISC'], values: { RUNE: 26, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-ist': { code: 'r24s', name: 'Ist Rune', flags: ['MISC'], values: { RUNE: 24, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-lem': { code: 'r20s', name: 'Lem Rune', flags: ['MISC'], values: { RUNE: 20, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-sol': { code: 'r12s', name: 'Sol Rune', flags: ['MISC'], values: { RUNE: 12, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    'rune-el': { code: 'r01s', name: 'El Rune', flags: ['MISC'], values: { RUNE: 1, QTY: 1, ILVL: 1, SOCKETS: 0, GOLD: 0, GEM: 0 } },
+    // Unique items (!ID — unidentified, %NAME% shows base type name)
+    'uni-shako': { code: 'uap', name: 'Shako', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 69, DEF: 141, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-griffon': { code: 'ci3', name: 'Diadem', flags: ['UNI', 'ELT', 'CIRC', 'EQ7', 'ARMOR'], values: { ILVL: 85, DEF: 50, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-coa': { code: 'urn', name: 'Corona', flags: ['UNI', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 85, DEF: 349, SOCKETS: 2, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-arach': { code: 'ulc', name: 'Spiderweb Sash', flags: ['UNI', 'ELT', 'BELT', 'ARMOR', 'EQ6'], values: { ILVL: 85, DEF: 119, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-stormshield': { code: 'uit', name: 'Monarch', flags: ['UNI', 'ELT', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 85, DEF: 136, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-facet': { code: 'jew', name: 'Jewel', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-ring': { code: 'rin', name: 'Ring', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-amu': { code: 'amu', name: 'Amulet', flags: ['UNI', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-anni': { code: 'cm1', name: 'Small Charm', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-torch': { code: 'cm2', name: 'Large Charm', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'uni-gheeds': { code: 'cm3', name: 'Grand Charm', flags: ['UNI', 'CHARM'], values: { ILVL: 99, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Set items (!ID — unidentified, %NAME% shows base type name)
+    'set-shako': { code: 'uap', name: 'Shako', flags: ['SET', 'ELT', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 66, DEF: 98, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'set-ik-armor': { code: 'uth', name: 'Lacquered Plate', flags: ['SET', 'ELT', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 487, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'set-tal-amu': { code: 'amu', name: 'Amulet', flags: ['SET', 'JEWELRY'], values: { ILVL: 26, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
+    // Rare / Crafted (!ID — unidentified, %NAME% shows base type name)
     'rare-amu': { code: 'amu', name: 'Amulet', flags: ['RARE', 'JEWELRY'], values: { ILVL: 85, ALVL: 90, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'rare-ring': { code: 'rin', name: 'Ring', flags: ['RARE', 'JEWELRY'], values: { ILVL: 85, ALVL: 81, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'rare-jewel': { code: 'jew', name: 'Jewel', flags: ['RARE', 'JEWELRY'], values: { ILVL: 87, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
@@ -298,7 +299,7 @@
     'rare-boots-elt': { code: 'uhb', name: 'Myrmidon Greaves', flags: ['RARE', 'ELT', 'BOOTS', 'ARMOR', 'EQ5'], values: { ILVL: 85, DEF: 62, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'rare-gloves-elt': { code: 'utg', name: 'Crusader Gauntlets', flags: ['RARE', 'ELT', 'GLOVES', 'ARMOR', 'EQ4'], values: { ILVL: 85, DEF: 59, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'craft-amu': { code: 'amu', name: 'Amulet', flags: ['CRAFT', 'JEWELRY'], values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
-    // Magic items
+    // Magic items (!ID — unidentified, %NAME% shows base type name)
     'mag-ring': { code: 'rin', name: 'Ring', flags: ['MAG', 'JEWELRY'], values: { ILVL: 45, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'mag-amu': { code: 'amu', name: 'Amulet', flags: ['MAG', 'JEWELRY'], values: { ILVL: 85, CRAFTALVL: 90, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'mag-jewel': { code: 'jew', name: 'Jewel', flags: ['MAG', 'JEWELRY'], values: { ILVL: 87, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
@@ -311,13 +312,13 @@
     'base-eth-ap': { code: 'utp', name: 'Archon Plate', flags: ['NMAG', 'ELT', 'ETH', 'SUP', 'CHEST', 'ARMOR', 'EQ2'], values: { ILVL: 85, DEF: 524, SOCKETS: 4, ED: 15, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-monarch-4': { code: 'uit', name: 'Monarch', flags: ['NMAG', 'ELT', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 72, DEF: 133, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-pb-5': { code: '7cr', name: 'Phase Blade', flags: ['NMAG', 'ELT', 'SWORD', 'WEAPON', '1H'], values: { ILVL: 73, SOCKETS: 5, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'base-eth-thresh': { code: '7s7', name: 'Thresher', flags: ['NMAG', 'ELT', 'ETH', 'POLEARM', 'WEAPON', '2H'], values: { ILVL: 85, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-eth-thresh': { code: '7s7', name: 'Balrog Spear', flags: ['NMAG', 'ELT', 'ETH', 'POLEARM', 'WEAPON', '2H'], values: { ILVL: 85, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-eth-zerker': { code: '7wa', name: 'Berserker Axe', flags: ['NMAG', 'ELT', 'ETH', 'AXE', 'WEAPON', '1H'], values: { ILVL: 85, SOCKETS: 5, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-eth-cb': { code: '7gd', name: 'Colossus Blade', flags: ['NMAG', 'ELT', 'ETH', 'SWORD', 'WEAPON', '2H'], values: { ILVL: 85, SOCKETS: 6, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-diadem-0': { code: 'ci3', name: 'Diadem', flags: ['NMAG', 'ELT', 'CIRC', 'EQ7', 'ARMOR'], values: { ILVL: 85, SOCKETS: 0, MAXSOCKETS: 3, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-flail-4': { code: 'fla', name: 'Flail', flags: ['NMAG', 'NORM', 'MACE', 'WEAPON', '1H'], values: { ILVL: 36, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
     'base-crystal-4': { code: 'crs', name: 'Crystal Sword', flags: ['NMAG', 'NORM', 'SWORD', 'WEAPON', '1H'], values: { ILVL: 26, SOCKETS: 4, RUNE: 0, GOLD: 0, GEM: 0 } },
-    'base-pala-45res': { code: 'pa5', name: 'Sacred Targe', flags: ['NMAG', 'EXC', 'DIN', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 85, SOCKETS: 4, RES: 45, RUNE: 0, GOLD: 0, GEM: 0 } },
+    'base-pala-45res': { code: 'pa5', name: 'Crown Shield', flags: ['NMAG', 'EXC', 'DIN', 'SHIELD', 'ARMOR', 'EQ3'], values: { ILVL: 85, SOCKETS: 4, RES: 45, RUNE: 0, GOLD: 0, GEM: 0 } },
     // Normal items
     'norm-cap': { code: 'cap', name: 'Cap', flags: ['NMAG', 'NORM', 'HELM', 'ARMOR', 'EQ1'], values: { ILVL: 1, DEF: 3, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
     'norm-belt-elt': { code: 'uhc', name: 'Colossus Girdle', flags: ['NMAG', 'ELT', 'BELT', 'ARMOR', 'EQ6'], values: { ILVL: 85, DEF: 71, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 } },
@@ -554,10 +555,19 @@
       builderState.properties.forEach(function (p) { conditions.push(p); });
     }
 
-    // Equipment
+    // Item category (ARMOR, WEAPON — multi-select)
+    if (builderState.itemcat && builderState.itemcat.length) {
+      if (builderState.itemcat.length === 1) {
+        conditions.push(builderState.itemcat[0]);
+      } else {
+        conditions.push('(' + builderState.itemcat.join(' OR ') + ')');
+      }
+    }
+
+    // Armor slot
     if (builderState.equipment) conditions.push(builderState.equipment);
 
-    // Weapons
+    // Weapon type
     if (builderState.weapons) conditions.push(builderState.weapons);
 
     // Misc
@@ -791,11 +801,17 @@
       if (!file) return;
       var reader = new FileReader();
       reader.onload = function (ev) {
-        codeEditor.value = ev.target.result;
+        var buf = ev.target.result;
+        // Try UTF-8 first, fall back to Windows-1252 for ANSI filters
+        var text = new TextDecoder('utf-8').decode(buf);
+        if (text.indexOf('\uFFFD') !== -1) {
+          text = new TextDecoder('windows-1252').decode(buf);
+        }
+        codeEditor.value = text;
         updateLineNumbers();
         saveToStorage();
       };
-      reader.readAsText(file);
+      reader.readAsArrayBuffer(file);
       fileInput.value = '';
     });
 
@@ -879,15 +895,25 @@
     var lh = getLineHeight();
     var targetScroll = Math.max(0, (lineNum - 5) * lh);
 
-    // Focus and select the line, then force scroll position after browser settles
-    codeEditor.focus();
-    codeEditor.setSelectionRange(pos, lineEnd);
-    codeEditor.scrollTop = targetScroll;
-    // Browser may override scrollTop on focus — force it again after a frame
-    requestAnimationFrame(function () {
+    // Strategy: first set selection to put cursor at target line,
+    // then repeatedly force scroll until it sticks.
+    // The browser fights us on focus/tab-switch, so we brute force it.
+    function forceScroll(attempts) {
       codeEditor.scrollTop = targetScroll;
       renderVisibleLineNumbers();
-    });
+      if (attempts > 0) {
+        requestAnimationFrame(function () { forceScroll(attempts - 1); });
+      }
+    }
+
+    // Set selection without focus first (avoids browser auto-scroll)
+    codeEditor.setSelectionRange(pos, lineEnd);
+
+    // Wait for layout, then focus and force scroll
+    setTimeout(function () {
+      codeEditor.focus();
+      forceScroll(5);
+    }, 100);
   }
 
   function initPreview() {
@@ -948,6 +974,60 @@
   }
 
   function parseRules(lines) {
+    // First pass: collect Alias[] definitions
+    var aliases = {};
+    for (var a = 0; a < lines.length; a++) {
+      var al = lines[a].trim();
+      var aliasMatch = al.match(/^Alias\s*\[([^\]]+)\]\s*:\s*(.*)/);
+      if (aliasMatch) {
+        aliases[aliasMatch[1].trim()] = aliasMatch[2].trim();
+      }
+    }
+
+    // Sort alias keys longest-first to prevent "SET" matching inside "SET_TIER3_ITEM"
+    var sortedKeys = Object.keys(aliases).sort(function (a, b) { return b.length - a.length; });
+
+    // PD2 aliases are raw find-and-replace at load time. For our preview:
+    // - In OUTPUT strings: only expand %KEY% wrapped tokens (safe, no false matches)
+    // - In CONDITION strings: expand bare KEY as full find-and-replace (like PD2 does)
+    function expandOutput(str) {
+      if (!sortedKeys.length) return str;
+      var changed = true;
+      var iterations = 0;
+      while (changed && iterations < 10) {
+        changed = false;
+        iterations++;
+        for (var k = 0; k < sortedKeys.length; k++) {
+          var key = sortedKeys[k];
+          var wrapped = '%' + key + '%';
+          if (str.indexOf(wrapped) !== -1) {
+            str = str.split(wrapped).join(aliases[key]);
+            changed = true;
+          }
+        }
+      }
+      return str;
+    }
+
+    function expandConditions(str) {
+      if (!sortedKeys.length) return str;
+      var changed = true;
+      var iterations = 0;
+      while (changed && iterations < 10) {
+        changed = false;
+        iterations++;
+        for (var k = 0; k < sortedKeys.length; k++) {
+          var key = sortedKeys[k];
+          if (str.indexOf(key) !== -1) {
+            str = str.split(key).join(aliases[key]);
+            changed = true;
+          }
+        }
+      }
+      return str;
+    }
+
+    // Second pass: collect ItemDisplay rules with aliases expanded
     var rules = [];
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i].trim();
@@ -964,9 +1044,11 @@
 
       var match = line.match(/^ItemDisplay\s*\[([^\]]*)\]\s*:\s*(.*)/);
       if (match) {
+        var cond = expandConditions(match[1].trim());
+        var out = expandOutput(match[2].trim());
         rules.push({
-          conditions: match[1].trim(),
-          output: match[2].trim(),
+          conditions: cond,
+          output: out,
           lineNum: i + 1,
           raw: lines[i].trim()
         });
@@ -976,16 +1058,15 @@
   }
 
   function matchItem(item, rules) {
-    // PD2 %CONTINUE% behavior:
-    // 1. When a rule matches and has %CONTINUE%, its output (with %NAME% resolved)
-    //    becomes the new value of %NAME% for subsequent rules.
-    // 2. Processing continues to the next rule.
-    // 3. When a rule matches WITHOUT %CONTINUE%, that's the final display.
-    //
-    // This means %CONTINUE% chains build up the display string step by step,
-    // each rule modifying %NAME% before the next one sees it.
+    // PD2 %CONTINUE% semantics (from wiki):
+    // - %CONTINUE% stores the current rule's output into %NAME% and continues checking.
+    // - %NAME% outside {} = the stored NAME portion (text outside braces)
+    // - %NAME% inside {} = the stored DESCRIPTION portion (text inside braces)
+    // - Both are tracked separately and resolved contextually.
+    // - %CONTINUE% must be outside braces.
 
-    var currentName = item.name; // Start with the item's original name
+    var storedName = item.name; // %NAME% outside {} starts as item's default name
+    var storedDesc = '';        // %NAME% inside {} starts empty
     var lastRule = null;
     var anyMatched = false;
     var allMatchedRules = [];
@@ -996,37 +1077,54 @@
         var output = rule.output;
         var hasContinue = output.indexOf('%CONTINUE%') !== -1;
 
-        if (hasContinue) {
-          // Remove %CONTINUE% token
-          output = output.replace(/%CONTINUE%/g, '');
-          // Resolve %NAME% in the output to the current accumulated name
-          output = output.replace(/%NAME%/g, currentName);
-          // This becomes the new %NAME% for subsequent rules
-          if (output) currentName = output;
-          lastRule = rule;
-          anyMatched = true;
-          allMatchedRules.push(rule);
-          continue; // Keep processing
+        // Remove %CONTINUE% token
+        output = output.replace(/%CONTINUE%/g, '');
+
+        // Split into name part and description part
+        var namePart = output;
+        var descPart = '';
+        var braceMatch = output.match(/^([^{]*)\{(.*)\}(.*)$/);
+        if (braceMatch) {
+          namePart = braceMatch[1] + braceMatch[3]; // text outside braces
+          descPart = braceMatch[2]; // text inside braces
         }
 
-        // Final match (no %CONTINUE%)
-        // Resolve %NAME% with accumulated value
-        output = output.replace(/%NAME%/g, currentName);
+        // Resolve %NAME% in each part contextually
+        namePart = namePart.replace(/%NAME%/g, storedName);
+        descPart = descPart.replace(/%NAME%/g, storedDesc || storedName);
+
         allMatchedRules.push(rule);
+
+        if (hasContinue) {
+          // Store for next rule
+          storedName = namePart;
+          storedDesc = descPart;
+          lastRule = rule;
+          anyMatched = true;
+          continue;
+        }
+
+        // Final match — reconstruct full output for display
+        var finalOutput = namePart;
+        if (descPart) {
+          finalOutput = namePart + '{' + descPart + '}';
+        }
         return {
           matched: true,
           rule: rule,
-          hidden: output === '' && !anyMatched,
-          output: output,
+          hidden: finalOutput === '' && !anyMatched,
+          output: finalOutput,
           continued: anyMatched,
           allRules: allMatchedRules
         };
       }
     }
 
-    // If we only had %CONTINUE% rules with no final terminal match
+    // Only %CONTINUE% rules matched, no terminal rule
     if (anyMatched) {
-      return { matched: true, rule: lastRule, hidden: false, output: currentName, continued: true, allRules: allMatchedRules };
+      var finalOut = storedName;
+      if (storedDesc) finalOut = storedName + '{' + storedDesc + '}';
+      return { matched: true, rule: lastRule, hidden: false, output: finalOut, continued: true, allRules: allMatchedRules };
     }
     return { matched: false, hidden: false, output: '', rule: null, allRules: [] };
   }
@@ -1070,6 +1168,9 @@
     var i = 0;
     while (i < tokens.length) {
       var token = tokens[i];
+
+      // Skip explicit AND keyword (implicit in PD2 — conditions are AND by default)
+      if (token === 'AND') { i++; continue; }
 
       // Check for OR group: (A OR B OR C)
       if (token.charAt(0) === '(' && token.charAt(token.length - 1) === ')') {
@@ -1183,6 +1284,12 @@
 
       // GOLD conditions only match gold piles (items with code 'gold')
       if (code === 'GOLD' && item.code !== 'gold') return false;
+      // RUNE conditions only match actual runes (items with RUNE value > 0)
+      if (code === 'RUNE' && (!item.values || !item.values.RUNE)) return false;
+      // GEM/GEMLEVEL conditions only match gems
+      if ((code === 'GEM' || code === 'GEMLEVEL') && (!item.values || !item.values.GEM)) return false;
+      // MAPTIER only match maps
+      if (code === 'MAPTIER' && (!item.values || !item.values.MAPTIER)) return false;
 
       if (op === '~') {
         var parts = valStr.split('-');
@@ -1212,23 +1319,14 @@
 
   function renderPreviewItem(item, result, isSelected) {
     var cssClass = 'preview-item';
-    var statusText = '';
 
     if (!result.matched) {
       cssClass += ' preview-item-default';
-      statusText = 'No matching rule — shown with default name';
     } else if (result.hidden) {
       cssClass += ' preview-item-hidden';
-      statusText = 'HIDDEN by line ' + result.rule.lineNum;
     } else {
       cssClass += ' preview-item-shown';
-      if (result.continued && result.allRules && result.allRules.length > 1) {
-        statusText = result.allRules.length + ' rules matched (lines ' + result.allRules.map(function (r) { return r.lineNum; }).join(', ') + ')';
-      } else {
-        statusText = 'Matched line ' + result.rule.lineNum;
-      }
     }
-
     if (isSelected) {
       cssClass += ' selected';
     }
@@ -1240,34 +1338,98 @@
 
     var html = '<div class="' + cssClass + '"' + (isSelected ? ' style="border-width:2px;"' : '') + '>';
     html += '<div class="preview-item-name">' + displayName + '</div>';
-    html += '<div class="preview-item-rule">' + escapeHtml(statusText);
-    if (result.rule) {
-      html += ' <button class="btn-goto-line" data-line="' + result.rule.lineNum + '">Line ' + result.rule.lineNum + ' &rarr;</button>';
+
+    if (!result.matched) {
+      html += '<div class="preview-item-rule">No matching rule — shown with default name</div>';
+    } else if (result.hidden) {
+      html += '<div class="preview-item-rule">HIDDEN by line ' + result.rule.lineNum;
+      html += ' <button class="btn-goto-line" data-line="' + result.rule.lineNum + '">Go to line &rarr;</button>';
+      html += '</div>';
+    } else if (result.allRules && result.allRules.length > 1) {
+      // %CONTINUE% chain — show computed result + each contributing rule
+      html += '<div class="preview-chain">';
+      // Effective computed output
+      html += '<div class="preview-chain-rule chain-result">';
+      html += '<span class="chain-effective">computed</span> ';
+      html += '<code>' + escapeHtml(truncateRule(result.output, 100)) + '</code>';
+      html += '</div>';
+      // Each rule in the chain
+      for (var ri = 0; ri < result.allRules.length; ri++) {
+        var r = result.allRules[ri];
+        var isLast = (ri === result.allRules.length - 1);
+        var label = isLast ? '<span class="chain-terminal">terminal</span>' : '<span class="chain-continue">%CONTINUE%</span>';
+        html += '<div class="preview-chain-rule">';
+        html += '<span class="chain-line">L' + r.lineNum + '</span> ';
+        html += label + ' ';
+        html += '<code>' + escapeHtml(truncateRule(r.raw, 70)) + '</code> ';
+        html += '<button class="btn-goto-line" data-line="' + r.lineNum + '">&rarr;</button>';
+        html += '</div>';
+      }
+      html += '</div>';
+    } else {
+      html += '<div class="preview-item-rule">Matched line ' + result.rule.lineNum;
+      html += ' — <code>' + escapeHtml(truncateRule(result.rule.raw, 90)) + '</code>';
+      html += ' <button class="btn-goto-line" data-line="' + result.rule.lineNum + '">Go to line &rarr;</button>';
+      html += '</div>';
     }
-    html += '</div></div>';
+
+    html += '</div>';
     return html;
+  }
+
+  function truncateRule(str, max) {
+    if (str.length <= max) return str;
+    return str.substring(0, max) + '...';
   }
 
   function renderOutput(output, item) {
     var text = output;
 
-    // %NAME% may already be resolved by matchItem's %CONTINUE% handling
-    // Only replace remaining %NAME% tokens that weren't resolved
-    text = text.replace(/%NAME%/g, item.name);
+    // %NAME% is resolved by matchItem during %CONTINUE% processing
+    // Only replace if there are still unresolved %NAME% tokens (non-CONTINUE rules)
+    if (text.indexOf('%NAME%') !== -1) {
+      text = text.replace(/%NAME%/g, item.name);
+    }
     text = text.replace(/%RUNENAME%/g, RUNE_NAMES[item.values.RUNE] || '');
     text = text.replace(/%RUNENUM%/g, item.values.RUNE || '');
     text = text.replace(/%ILVL%/g, item.values.ILVL || '');
+    text = text.replace(/%ALVL%/g, item.values.ALVL || '');
+    text = text.replace(/%CRAFTALVL%/g, item.values.CRAFTALVL || '');
+    text = text.replace(/%REROLLALVL%/g, item.values.REROLLALVL || '');
     text = text.replace(/%SOCKETS%/g, item.values.SOCKETS || '0');
+    text = text.replace(/%SOCK%/g, item.values.SOCKETS || '0');
+    text = text.replace(/%MAXSOCKETS%/g, item.values.MAXSOCKETS || '0');
     text = text.replace(/%DEF%/g, item.values.DEF || '0');
     text = text.replace(/%ED%/g, item.values.ED || '0');
-    text = text.replace(/%MAPTIER%/g, '0');
+    text = text.replace(/%EDEF%/g, item.values.EDEF || item.values.ED || '0');
+    text = text.replace(/%EDAM%/g, item.values.EDAM || item.values.ED || '0');
+    text = text.replace(/%RES%/g, item.values.RES || '0');
+    text = text.replace(/%PRICE%/g, item.values.PRICE || '0');
+    text = text.replace(/%SELLPRICE%/g, item.values.SELLPRICE || '0');
+    text = text.replace(/%QTY%/g, item.values.QTY || '0');
+    text = text.replace(/%MAPTIER%/g, item.values.MAPTIER || '0');
+    text = text.replace(/%BASENAME%/g, item.name);
+    // Generic STAT### tokens — show 0 for unknown
+    text = text.replace(/%STAT\d+%/g, '0');
+    text = text.replace(/%CLSK\d+%/g, '0');
+    text = text.replace(/%TABSK\d+%/g, '0');
+    text = text.replace(/%SK\d+%/g, '0');
 
-    // Remove notification tokens for display
+    // Remove notification and special tokens for display
     text = text.replace(/%(?:BORDER|MAP|DOT|PX)(?:-[0-9A-Fa-f]{1,2})?%/g, '');
     text = text.replace(/%SOUNDID-\d+%/g, '');
     text = text.replace(/%NOTIFY[^%]*%/g, '');
     text = text.replace(/%CONTINUE%/g, '');
     text = text.replace(/%TIER-\d+%/g, '');
+    text = text.replace(/%NL%/g, ' | ');
+    text = text.replace(/%CL%/g, ' | ');
+    text = text.replace(/%CS%/g, ' ');
+    text = text.replace(/%CODE%/g, item.code || '');
+    text = text.replace(/%RANGE%/g, '0');
+    text = text.replace(/%WPNSPD%/g, '0');
+    text = text.replace(/%MULTI[^%]*%/g, '0');
+    // Strip any remaining unknown %TOKEN% patterns (but preserve color tokens)
+    text = text.replace(/%(?!WHITE|GRAY|RED|GREEN|DARK_GREEN|BLUE|GOLD|YELLOW|ORANGE|PURPLE|TAN|BLACK|CORAL|SAGE|TEAL|LIGHT_GRAY)[A-Z_0-9]+%/g, '');
 
     // Remove descriptions {} for inline display
     text = text.replace(/\{[^}]*\}/g, '');
@@ -1278,10 +1440,17 @@
     var parts = text.split(/(%[A-Z_]+%)/g);
     for (var i = 0; i < parts.length; i++) {
       var part = parts[i];
+      if (!part) continue;
       if (D2_COLORS[part]) {
         currentColor = D2_COLORS[part];
-      } else if (part && part.charAt(0) !== '%') {
-        result += '<span style="color:' + currentColor + '">' + escapeHtml(part) + '</span>';
+      } else if (part.charAt(0) === '%' && part.charAt(part.length - 1) === '%') {
+        // Unknown %TOKEN% — skip it silently
+      } else {
+        // Regular text (may contain orphan % from alias joins — strip them)
+        var cleaned = part.replace(/%/g, '');
+        if (cleaned) {
+          result += '<span style="color:' + currentColor + '">' + escapeHtml(cleaned) + '</span>';
+        }
       }
     }
 
@@ -1349,6 +1518,7 @@
       builderState.quality = '';
       builderState.tier = '';
       builderState.properties = [];
+      builderState.itemcat = [];
       builderState.equipment = '';
       builderState.weapons = '';
       builderState.misc = '';
@@ -1821,21 +1991,12 @@
       lines.push('ItemDisplay[RUNE>0 QTY>1]: %NAME% %TAN%x%QTY%{%NAME%}%CONTINUE%');
       lines.push('');
 
-      // Tier 4: Low Runes (El #1 through Fal #19)
-      lines.push('// --- Low Runes (El - Fal) ---');
-      if (isStrict) {
-        // Strict: show Ko-Fal (#18-19) with dot, hide lowest at FILTLVL>2
-        lines.push('ItemDisplay[RUNE>17 RUNE<20]: %ORANGE%%RUNENAME% (#%RUNENUM%)' + lowRuneDot);
-        lines.push('ItemDisplay[RUNE>10 RUNE<18]: %ORANGE%%RUNENAME% (#%RUNENUM%)');
-        lines.push('ItemDisplay[RUNE>0 RUNE<11 FILTLVL<2]: %ORANGE%%RUNENAME% (#%RUNENUM%)');
-        lines.push('ItemDisplay[RUNE>0 RUNE<11 FILTLVL>1]:');
-      } else if (isMid) {
-        lines.push('ItemDisplay[RUNE>14 RUNE<20]: %ORANGE%%RUNENAME% Rune (#%RUNENUM%)' + lowRuneDot);
-        lines.push('ItemDisplay[RUNE>10 RUNE<15]: %ORANGE%%RUNENAME% (#%RUNENUM%)');
-        lines.push('ItemDisplay[RUNE>0 RUNE<11]: %ORANGE%%RUNENAME% (#%RUNENUM%)');
-      } else {
-        lines.push('ItemDisplay[RUNE>0 RUNE<20]: %ORANGE%%RUNENAME% Rune (#%RUNENUM%)' + lowRuneDot);
-      }
+      // Tier 4: Low Runes (El #1 through Fal #19) — FILTLVL-gated
+      lines.push('// --- Low Runes (El - Fal) — hidden at higher FILTLVL ---');
+      lines.push('ItemDisplay[RUNE>14 RUNE<20]: %ORANGE%%RUNENAME% Rune (#%RUNENUM%)' + lowRuneDot);
+      lines.push('ItemDisplay[RUNE>10 RUNE<15 FILTLVL<3]: %ORANGE%%RUNENAME% (#%RUNENUM%)');
+      lines.push('ItemDisplay[RUNE>0 RUNE<11 FILTLVL<2]: %ORANGE%%RUNENAME% (#%RUNENUM%)');
+      lines.push('ItemDisplay[RUNE>0 RUNE<20 FILTLVL>2]:');
       lines.push('');
 
       // ==========================
@@ -1851,26 +2012,61 @@
       lines.push('ItemDisplay[UNI cm2]: %GOLD%+ Hellfire Torch +' + descStr + (wantBigNotify ? '%BORDER-62%' : wantMapIcons ? '%MAP-62%' : '') + (wantSounds ? '%SOUNDID-4716%' : ''));
       lines.push('ItemDisplay[UNI cm3]: %GOLD%+ Gheeds Fortune +' + descStr + (wantBigNotify ? '%BORDER-62%' : wantMapIcons ? '%MAP-62%' : '') + (wantSounds ? '%SOUNDID-4716%' : ''));
 
-      lines.push('// --- Unique Items ---');
-      if (isStrict) {
-        // Endgame: show all uniques but tier them
-        lines.push('ItemDisplay[UNI ELT]: %GOLD%%NAME%' + descStr + uniNotify);
-        lines.push('ItemDisplay[UNI EXC]: %GOLD%%NAME%' + descStr + (wantMapIcons ? '%MAP-62%' : ''));
-        lines.push('ItemDisplay[UNI NORM FILTLVL<3]: %GOLD%%NAME%' + descStr);
-        lines.push('ItemDisplay[UNI NORM FILTLVL>2]: %GOLD%%NAME%');
-      } else {
-        lines.push('ItemDisplay[UNI]: %GOLD%%NAME%' + descStr + uniNotify);
-      }
+      // Unique/Set tiering based on HiimFilter star system
+      // Item code groups by value tier
+      var uni4star = '(ci3 OR pa9 OR obf OR uar OR ulc OR uap OR uhm OR usk OR urn OR uit OR uts OR 7wh OR 7ws OR 6bs OR 6ws OR 7gw OR xhb OR uhc OR ci2 OR nef OR uui OR upl OR uul OR 8mx OR dre OR 7pa OR drd OR umc OR umg OR utg OR ztb OR xvb OR cqv3 OR xsh)';
+      var uni4eth = '(utp OR amf OR 9gm OR 7p7 OR 7xf OR 9la OR 7s8 OR 7b7 OR 7b8 OR ama OR aar OR xlt OR 7gd OR 7pa OR 8ls OR 7gm OR 7ts)';
+      var uni3star = '(amf OR bae OR xhn OR utu OR zlb OR uvc OR uhg OR uh9 OR 9gm OR 7fl OR 7wc OR 9bw OR 9gw OR 6lw OR xtb OR xui OR 7cr OR uvg OR ulm OR uow OR 7p7 OR nee OR 7xf OR ned OR xh9 OR zvb OR 6sw OR 7gd OR paf OR 8ls OR 7mp OR scl OR 8cb OR 7gm OR zhb OR 7b7 OR drc OR 8rx OR aqv3 OR aqv2)';
+      var uni2star = '(drb OR oba OR xea OR xmb OR tgl OR xvg OR 7bl OR 9wn OR 7bw OR xld OR ulb OR umb OR 9la OR 7bt OR pae OR xtg OR 7wa OR 8ws OR obc OR uhb OR bad OR 9s8 OR ba6 OR dra OR 7ls OR pac OR 7s8 OR neg)';
+      var set3star = '(ne9 OR utc OR xmg OR uhm OR xul OR 7ws OR paf OR lgl OR xvg)';
+      var set2star = '(xap OR stu OR uts OR xar OR urn OR dr8 OR ucl OR xh9 OR 7qr OR vbt)';
+      var set1star = '(ulg OR 6cs OR xtb OR uul OR ba5 OR 7m7 OR zhb OR xhg OR xhb OR xmb OR oba OR xsk OR zmb OR uh9 OR uar OR xhm OR ci3 OR amc OR uld OR xtg OR zvb OR uth OR mbl)';
 
-      lines.push('// --- Set Items ---');
-      if (isStrict) {
-        lines.push('ItemDisplay[SET ELT]: %GREEN%%NAME%' + descStr + setNotify);
-        lines.push('ItemDisplay[SET EXC]: %GREEN%%NAME%' + descStr + (wantMapIcons ? '%MAP-84%' : ''));
-        lines.push('ItemDisplay[SET NORM FILTLVL<3]: %GREEN%%NAME%' + descStr);
-        lines.push('ItemDisplay[SET NORM FILTLVL>2]: %GREEN%%NAME%');
-      } else {
-        lines.push('ItemDisplay[SET]: %GREEN%%NAME%' + descStr + setNotify);
-      }
+      // Unique boss items (DClone/Rathma) — always show with max notification
+      lines.push('// --- Boss Uniques (DClone/Rathma — always show) ---');
+      lines.push('ItemDisplay[UNI !ID (ram OR rar OR rbe OR 7qr OR uhn OR uth OR utb OR 7bs OR 7cr2)]: %GOLD%%NAME%' + (wantBigNotify ? '%BORDER-62%' : wantMapIcons ? '%MAP-62%' : '') + (wantSounds ? '%SOUNDID-4719%' : ''));
+
+      // Unique jewels (Rainbow Facet) — always show
+      lines.push('ItemDisplay[jew UNI !ID]: %GOLD%%NAME%' + uniNotify);
+      // Unique rings/amulets — always show
+      lines.push('ItemDisplay[(rin OR amu) UNI !ID]: %GOLD%%NAME%' + uniNotify);
+
+      // 4-star uniques — always show with full notifications
+      lines.push('// --- 4-Star Uniques (GG tier — always show) ---');
+      lines.push('ItemDisplay[UNI !ID ' + uni4star + ']: %GOLD%%NAME%' + descStr + uniNotify);
+      lines.push('ItemDisplay[UNI !ID ETH ' + uni4eth + ']: %GOLD%%NAME%' + descStr + uniNotify);
+
+      // 3-star uniques — always show with good notification
+      lines.push('// --- 3-Star Uniques (high value) ---');
+      lines.push('ItemDisplay[UNI !ID ' + uni3star + ']: %GOLD%%NAME%' + descStr + (wantMapIcons ? '%MAP-A5%' : '') + (wantSounds ? '%SOUNDID-4715%' : ''));
+
+      // 2-star uniques — shown with dot, hidden at FILTLVL 4
+      lines.push('// --- 2-Star Uniques (mid value) ---');
+      lines.push('ItemDisplay[UNI !ID FILTLVL<4 ' + uni2star + ']: %GOLD%%NAME%' + descStr + (wantMapIcons ? '%DOT-D3%' : ''));
+
+      // Remaining uniques — shown at lower FILTLVL, hidden at 3+
+      lines.push('// --- Low-tier Uniques (shown at FILTLVL 1-2) ---');
+      lines.push('ItemDisplay[UNI !ID FILTLVL<3]: %GOLD%%NAME%' + descStr);
+      lines.push('// Unique catch-all at high FILTLVL — still show with minimal display');
+      lines.push('ItemDisplay[UNI !ID]: %GOLD%%NAME%');
+
+      // 3-star sets — always show
+      lines.push('// --- 3-Star Sets (top tier — always show) ---');
+      lines.push('ItemDisplay[SET !ID ' + set3star + ']: %GREEN%%NAME%' + descStr + setNotify);
+
+      // 2-star sets — shown with dot
+      lines.push('// --- 2-Star Sets (high value) ---');
+      lines.push('ItemDisplay[SET !ID ' + set2star + ']: %GREEN%%NAME%' + descStr + (wantMapIcons ? '%DOT-84%' : ''));
+
+      // 1-star sets — shown at FILTLVL 1-3
+      lines.push('// --- 1-Star Sets (mid value) ---');
+      lines.push('ItemDisplay[SET !ID FILTLVL<4 ' + set1star + ']: %GREEN%%NAME%' + descStr);
+
+      // Remaining sets — shown at lower FILTLVL
+      lines.push('// --- Low-tier Sets (shown at FILTLVL 1-2) ---');
+      lines.push('ItemDisplay[SET !ID FILTLVL<3]: %GREEN%%NAME%' + descStr);
+      lines.push('// Set catch-all — still show with minimal display');
+      lines.push('ItemDisplay[SET !ID]: %GREEN%%NAME%');
       lines.push('');
 
       // ==========================
@@ -1879,30 +2075,17 @@
       lines.push('// ============================================================');
       lines.push('// RARE & CRAFTED');
       lines.push('// ============================================================');
-      if (isStrict) {
-        lines.push('// Endgame: only show valuable rare slot types');
-        lines.push('ItemDisplay[RARE JEWELRY]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE (CIRC OR CIRCLET)]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE GLOVES ELT]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE BOOTS ELT]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE BELT ELT]: %YELLOW%%NAME%' + descStr);
-        if (myClass) {
-          lines.push('ItemDisplay[RARE ' + myClass + ' ELT]: %YELLOW%%NAME%' + descStr);
-        }
-        lines.push('ItemDisplay[RARE ELT FILTLVL<2]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE FILTLVL<2]: %YELLOW%%NAME%');
-        lines.push('ItemDisplay[RARE]:');
-      } else if (isMid) {
-        lines.push('ItemDisplay[RARE JEWELRY]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE (CIRC OR CIRCLET)]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE ELT]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE EXC]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE NORM FILTLVL<3]: %YELLOW%%NAME%' + descStr);
-        lines.push('ItemDisplay[RARE NORM FILTLVL>2]:');
-      } else {
-        lines.push('ItemDisplay[RARE]: %YELLOW%%NAME%' + descStr);
-      }
-      lines.push('ItemDisplay[CRAFT]: %ORANGE%%NAME%' + descStr);
+      // Rare jewelry/circlets always shown
+      lines.push('ItemDisplay[RARE !ID JEWELRY]: %YELLOW%%NAME%' + descStr);
+      lines.push('ItemDisplay[RARE !ID CIRC]: %YELLOW%%NAME%' + descStr);
+      // Rare elite always shown
+      lines.push('ItemDisplay[RARE !ID ELT]: %YELLOW%%NAME%' + descStr);
+      // Rare exceptional: shown at FILTLVL 1-2, hidden at 3+
+      lines.push('ItemDisplay[RARE !ID EXC FILTLVL<3]: %YELLOW%%NAME%' + descStr);
+      // Rare normal: shown at FILTLVL 1 only
+      lines.push('ItemDisplay[RARE !ID NORM FILTLVL<2]: %YELLOW%%NAME%' + descStr);
+      // Crafted always shown
+      lines.push('ItemDisplay[CRAFT !ID]: %ORANGE%%NAME%' + descStr);
       lines.push('');
 
       // ==========================
@@ -2553,32 +2736,27 @@
       lines.push('// ============================================================');
       lines.push('// NORMAL & MAGIC ITEM HIDING');
       lines.push('// ============================================================');
-      if (isStrict) {
-        lines.push('// Endgame: aggressively hide normal/magic, FILTLVL gates for fine-tuning');
-        lines.push('// FILTLVL>1: hide normal tier');
-        lines.push('ItemDisplay[NMAG !SUP !ETH NORM]:');
-        lines.push('ItemDisplay[NMAG !SUP !ETH EXC]:');
-        lines.push('ItemDisplay[NMAG !ETH !RW ELT SOCK=0]:');
-        lines.push('// FILTLVL>2: hide magic tier');
-        lines.push('ItemDisplay[MAG NORM]:');
-        lines.push('ItemDisplay[MAG EXC]:');
-        lines.push('ItemDisplay[MAG ELT FILTLVL>2]:');
-        lines.push('// FILTLVL>3: hide remaining non-elite magic');
-        lines.push('ItemDisplay[MAG !JEWELRY !CHARM FILTLVL>3]:');
-      } else if (isMid) {
-        lines.push('// Experienced: moderate hiding with FILTLVL gates');
-        lines.push('ItemDisplay[NMAG !SUP !ETH NORM CLVL>20]:');
-        lines.push('ItemDisplay[NMAG !SUP !ETH EXC CLVL>50]:');
-        lines.push('ItemDisplay[NMAG !ETH !RW ELT SOCK=0 FILTLVL>2]:');
-        lines.push('ItemDisplay[MAG NORM CLVL>30]:');
-        lines.push('ItemDisplay[MAG EXC FILTLVL>2]:');
-      } else if (isCasual) {
-        lines.push('// Casual: light hiding only at higher levels');
-        lines.push('ItemDisplay[NMAG !SUP !ETH NORM CLVL>40]:');
-        lines.push('ItemDisplay[NMAG !SUP !ETH EXC CLVL>70 FILTLVL>2]:');
-        lines.push('ItemDisplay[MAG NORM CLVL>50]:');
-      }
-      // New players: no hiding
+      // FILTLVL-gated progressive hiding
+      // Level 1 (Relaxed): show almost everything
+      // Level 2 (Normal): hide normal-tier junk + low magic
+      // Level 3 (Strict): hide exceptional bases + most magic
+      // Level 4 (Very Strict): hide everything except elite + jewelry + charms
+      lines.push('// --- 1-Socket junk (always hide past CLVL 30) ---');
+      lines.push('ItemDisplay[NMAG SOCK=1 !RW (ARMOR OR WEAPON) !ETH CLVL>30]:');
+      lines.push('');
+      lines.push('// --- FILTLVL 2+: Hide normal-tier white and magic items ---');
+      lines.push('ItemDisplay[NMAG !SUP !ETH NORM FILTLVL>1]:');
+      lines.push('ItemDisplay[MAG !ID NORM FILTLVL>1]:');
+      lines.push('');
+      lines.push('// --- FILTLVL 3+: Hide exceptional-tier items ---');
+      lines.push('ItemDisplay[NMAG !SUP !ETH EXC FILTLVL>2]:');
+      lines.push('ItemDisplay[MAG !ID EXC FILTLVL>2]:');
+      lines.push('ItemDisplay[RARE !ID NORM FILTLVL>2]:');
+      lines.push('');
+      lines.push('// --- FILTLVL 4+: Very strict — hide non-elite magic, exc rares ---');
+      lines.push('ItemDisplay[NMAG !ETH !RW !SUP ELT SOCK=0 FILTLVL>3]:');
+      lines.push('ItemDisplay[MAG !ID !JEWELRY !CHARM FILTLVL>3]:');
+      lines.push('ItemDisplay[RARE !ID EXC FILTLVL>3]:');
       lines.push('');
 
       // ==========================
@@ -2608,10 +2786,10 @@
   // ==========================================
   var ITEM_CODES = {
     runes: [
-      ['r01','El'],['r02','Eld'],['r03','Tir'],['r04','Nef'],['r05','Eth'],['r06','Ith'],['r07','Tal'],['r08','Ral'],['r09','Ort'],['r10','Thul'],
-      ['r11','Amn'],['r12','Sol'],['r13','Shael'],['r14','Dol'],['r15','Hel'],['r16','Io'],['r17','Lum'],['r18','Ko'],['r19','Fal'],['r20','Lem'],
-      ['r21','Pul'],['r22','Um'],['r23','Mal'],['r24','Ist'],['r25','Gul'],['r26','Vex'],['r27','Ohm'],['r28','Lo'],['r29','Sur'],['r30','Ber'],
-      ['r31','Jah'],['r32','Cham'],['r33','Zod']
+      ['r01s','El'],['r02s','Eld'],['r03s','Tir'],['r04s','Nef'],['r05s','Eth'],['r06s','Ith'],['r07s','Tal'],['r08s','Ral'],['r09s','Ort'],['r10s','Thul'],
+      ['r11s','Amn'],['r12s','Sol'],['r13s','Shael'],['r14s','Dol'],['r15s','Hel'],['r16s','Io'],['r17s','Lum'],['r18s','Ko'],['r19s','Fal'],['r20s','Lem'],
+      ['r21s','Pul'],['r22s','Um'],['r23s','Mal'],['r24s','Ist'],['r25s','Gul'],['r26s','Vex'],['r27s','Ohm'],['r28s','Lo'],['r29s','Sur'],['r30s','Ber'],
+      ['r31s','Jah'],['r32s','Cham'],['r33s','Zod']
     ],
     pd2: [
       ['wss','Worldstone Shard'],['lbox','Larzuks Puzzlebox'],['lpp','Larzuks Puzzlepiece'],['rkey','Skeleton Key'],
@@ -2657,25 +2835,25 @@
       ['ci0','Circlet'],['ci1','Coronet'],['ci2','Tiara'],['ci3','Diadem']
     ],
     elt: [
-      ['uap','Shako/War Hat'],['ukp','Hydraskull'],['ulm','Armet'],['uhl','Spired Helm'],['uhm','Giant Conch'],['urn','Demonhead'],['usk','Bone Visage'],['uh9','Corona'],
-      ['uui','Dusk Shroud'],['uea','Scarab Husk'],['ula','Wire Fleece'],['utu','Wyrmhide'],['ung','Diamond Mail'],['umg','Loricated Mail'],['ucl','Boneweave'],['uhn','Great Hauberk'],['urs','Balrog Skin'],['upl','Hellforge Plate'],['ult','Kraken Shell'],['uld','Shadow Plate'],['uth','Sacred Armor'],['uul','Lacquered Plate'],['uar','Archon Plate'],['utp','Elite Archon Plate'],
+      ['uap','Shako/War Hat'],['ukp','Hydraskull'],['ulm','Armet'],['uhl','Giant Conch'],['uhm','Spired Helm'],['urn','Corona'],['usk','Demonhead'],['uh9','Bone Visage'],
+      ['uui','Dusk Shroud'],['uea','Wyrmhide'],['ula','Scarab Husk'],['utu','Wire Fleece'],['ung','Diamond Mail'],['umg','Boneweave Hauberk'],['ucl','Loricated Mail'],['uhn','Boneweave'],['urs','Great Hauberk'],['upl','Balrog Skin'],['ult','Hellforge Plate'],['uld','Kraken Shell'],['uth','Lacquered Plate'],['uul','Shadow Plate'],['uar','Sacred Armor'],['utp','Archon Plate'],
       ['uit','Monarch'],['uow','Aegis'],['uts','Ward'],['ush','Troll Nest'],
       ['ulg','Bramble Mitts'],['uvg','Vampirebone Gloves'],['umg','Vambraces'],['utg','Crusader Gauntlets'],['uhg','Ogre Gauntlets'],
       ['ulb','Wyrmhide Boots'],['uvb','Scarabshell Boots'],['umb','Boneweave Boots'],['utb','Mirrored Boots'],['uhb','Myrmidon Greaves'],
       ['ulc','Spiderweb Sash'],['uvc','Vampirefang Belt'],['umc','Mithril Coil'],['utc','Troll Belt'],['uhc','Colossus Girdle'],
-      ['7wa','Berserker Axe'],['72a','Ettin Axe'],['7bt','Champion Axe'],['7ga','Decapitator'],['7gi','Feral Axe'],['7la','Cryptic Axe'],
+      ['7wa','Berserker Axe'],['72a','Ettin Axe'],['7bt','Decapitator'],['7ga','Champion Axe'],['7gi','Glorious Axe'],['7la','Feral Axe'],
       ['7wh','Legendary Mallet'],['7m7','Ogre Maul'],['7gm','Thunder Maul'],
-      ['7cr','Phase Blade'],['7fb','Colossus Sword'],['7gd','Colossus Blade'],['7ls','Balrog Blade'],
-      ['7s7','Thresher'],['7pa','Giant Thresher'],['7s8','Colossus Voulge'],['7p7','War Pike'],
-      ['6ws','Archon Staff'],['6ls','Elder Staff'],['6cs','Shillelagh'],['6bs','Stalagmite'],
-      ['7ws','Caduceus'],['7qs','Divine Scepter'],
-      ['6lw','Hydra Bow'],['6sw','Ward Bow'],['6mx','Pellet Bow'],['6rx','Gorgon Crossbow'],
-      ['7xf','Feral Claws'],['7ar','Scissors Suwayyah'],['7qr','Suwayyah'],
+      ['7cr','Phase Blade'],['7fb','Colossus Sword'],['7gd','Colossus Blade'],['7ls','Cryptic Sword'],
+      ['7s7','Balrog Spear'],['7pa','Cryptic Axe'],['7s8','Thresher'],['7p7','War Pike'],
+      ['6ws','Archon Staff'],['6ls','Stalagmite'],['6cs','Elder Staff'],['6bs','Shillelagh'],
+      ['7ws','Caduceus'],['7qs','Seraph Rod'],
+      ['6lw','Hydra Bow'],['6sw','Ward Bow'],['6mx','Gorgon Crossbow'],['6rx','Demon Crossbow'],
+      ['7xf','War Fist'],['7ar','Suwayyah'],['7qr','Scissors Suwayyah'],
       ['aqv3','Elite Arrow Quiver'],['cqv3','Elite Bolt Quiver']
     ],
     uni: [
       ['uap','Harlequin Crest (Shako)'],['ci3','Griffons Eye'],['ci2','Kiras Guardian'],['uhm','Andariel\'s Visage'],['urn','Crown of Ages'],['usk','Giant Skull'],['uh9','Nightwings Veil'],
-      ['uar','Enigma base / Tyrael\'s Might'],['uui','Skin of the Vipermagi'],['uth','Sacred Armor (Templar/Tyrael)'],['xlt','Skullder\'s Ire'],
+      ['uar','Enigma base / Tyrael\'s Might'],['uui','Skin of the Vipermagi'],['uth','Lacquered Plate (Templar/Tyrael)'],['xlt','Skullder\'s Ire'],
       ['uit','Stormshield'],['uow','Aegis (Herald of Zakarum)'],
       ['utg','Dracul\'s Grasp'],['uhg','Steelrend'],['uvg','Magefist base'],
       ['xtb','War Traveler'],['xhb','Gore Rider'],['uhb','Shadow Dancer'],['uvb','Sandstorm Trek'],
@@ -2700,16 +2878,91 @@
       ['hp1','Minor Healing'],['hp2','Light Healing'],['hp3','Healing'],['hp4','Greater Healing'],['hp5','Super Healing'],
       ['mp1','Minor Mana'],['mp2','Light Mana'],['mp3','Mana'],['mp4','Greater Mana'],['mp5','Super Mana'],
       ['rvs','Rejuv (35%)'],['rvl','Full Rejuv (65%)'],['yps','Antidote'],['wms','Thawing'],['vps','Stamina'],['pvpp','PvP Mana'],
-      ['gcv','Chipped Amethyst'],['gfv','Flawed Amethyst'],['gsv','Amethyst'],['gzv','Flawless Amethyst'],['gpv','Perfect Amethyst'],
-      ['gcw','Chipped Diamond'],['gfw','Flawed Diamond'],['gsw','Diamond'],['glw','Flawless Diamond'],['gpw','Perfect Diamond'],
-      ['gcg','Chipped Emerald'],['gfg','Flawed Emerald'],['gsg','Emerald'],['glg','Flawless Emerald'],['gpg','Perfect Emerald'],
-      ['gcr','Chipped Ruby'],['gfr','Flawed Ruby'],['gsr','Ruby'],['glr','Flawless Ruby'],['gpr','Perfect Ruby'],
-      ['gcb','Chipped Sapphire'],['gfb','Flawed Sapphire'],['gsb','Sapphire'],['glb','Flawless Sapphire'],['gpb','Perfect Sapphire'],
-      ['gcy','Chipped Topaz'],['gfy','Flawed Topaz'],['gsy','Topaz'],['gly','Flawless Topaz'],['gpy','Perfect Topaz'],
-      ['skc','Chipped Skull'],['skf','Flawed Skull'],['sku','Skull'],['skl','Flawless Skull'],['skz','Perfect Skull'],
+      ['gcvs','Chipped Amethyst'],['gfvs','Flawed Amethyst'],['gsvs','Amethyst'],['gzvs','Flawless Amethyst'],['gpvs','Perfect Amethyst'],
+      ['gcws','Chipped Diamond'],['gfws','Flawed Diamond'],['gsws','Diamond'],['glws','Flawless Diamond'],['gpws','Perfect Diamond'],
+      ['gcgs','Chipped Emerald'],['gfgs','Flawed Emerald'],['gsgs','Emerald'],['glgs','Flawless Emerald'],['gpgs','Perfect Emerald'],
+      ['gcrs','Chipped Ruby'],['gfrs','Flawed Ruby'],['gsrs','Ruby'],['glrs','Flawless Ruby'],['gprs','Perfect Ruby'],
+      ['gcbs','Chipped Sapphire'],['gfbs','Flawed Sapphire'],['gsbs','Sapphire'],['glbs','Flawless Sapphire'],['gpbs','Perfect Sapphire'],
+      ['gcys','Chipped Topaz'],['gfys','Flawed Topaz'],['gsys','Topaz'],['glys','Flawless Topaz'],['gpys','Perfect Topaz'],
+      ['skcs','Chipped Skull'],['skfs','Flawed Skull'],['skus','Skull'],['skls','Flawless Skull'],['skzs','Perfect Skull'],
       ['ear','Ear'],['leg','Wirt\'s Leg'],['ass','Book of Skill'],['toa','Token of Absolution']
     ]
   };
+
+  // Item code autocomplete on the builder's item code input
+  function initItemCodeAutocomplete() {
+    var input = document.getElementById('item-code-input');
+    var dropdown = document.getElementById('itemcode-dropdown');
+    if (!input || !dropdown) return;
+
+    // Build flat lookup from all categories
+    var allCodes = [];
+    var seen = {};
+    Object.keys(ITEM_CODES).forEach(function (cat) {
+      ITEM_CODES[cat].forEach(function (item) {
+        if (!seen[item[0]]) {
+          seen[item[0]] = true;
+          allCodes.push(item);
+        }
+      });
+    });
+
+    function positionDropdown() {
+      var rect = input.getBoundingClientRect();
+      dropdown.style.top = rect.bottom + 'px';
+      dropdown.style.left = rect.left + 'px';
+      dropdown.style.width = Math.max(rect.width, 220) + 'px';
+    }
+
+    function showDropdown(matches) {
+      dropdown.innerHTML = '';
+      if (!matches.length) {
+        dropdown.classList.remove('open');
+        return;
+      }
+      positionDropdown();
+      matches.slice(0, 15).forEach(function (item) {
+        var div = document.createElement('div');
+        div.className = 'itemcode-dd-item';
+        div.innerHTML = '<span class="itemcode-dd-code">' + item[0] + '</span><span class="itemcode-dd-name">' + escapeHtml(item[1]) + '</span>';
+        div.addEventListener('mousedown', function (e) {
+          e.preventDefault(); // Prevent blur
+          input.value = item[0];
+          dropdown.classList.remove('open');
+          updateGeneratedRule();
+        });
+        dropdown.appendChild(div);
+      });
+      dropdown.classList.add('open');
+    }
+
+    input.addEventListener('input', function () {
+      var val = this.value.trim().toLowerCase();
+      if (val.length < 1) {
+        dropdown.classList.remove('open');
+        return;
+      }
+      var matches = allCodes.filter(function (item) {
+        return item[0].toLowerCase().indexOf(val) !== -1 || item[1].toLowerCase().indexOf(val) !== -1;
+      });
+      showDropdown(matches);
+    });
+
+    input.addEventListener('focus', function () {
+      var val = this.value.trim().toLowerCase();
+      if (val.length >= 1) {
+        var matches = allCodes.filter(function (item) {
+          return item[0].toLowerCase().indexOf(val) !== -1 || item[1].toLowerCase().indexOf(val) !== -1;
+        });
+        showDropdown(matches);
+      }
+    });
+
+    input.addEventListener('blur', function () {
+      // Small delay so mousedown on dropdown item fires first
+      setTimeout(function () { dropdown.classList.remove('open'); }, 150);
+    });
+  }
 
   function initItemCodeFinder() {
     var searchInput = document.getElementById('itemcode-search');
@@ -3011,13 +3264,21 @@
       showStep(3);
       loadingMsg.textContent = 'Downloading ' + file.name + '...';
 
-      // file.url is a direct raw.githubusercontent.com link — returns plain text
+      // Fetch as binary to handle both UTF-8 and ANSI/Latin-1 encoded filters
+      // Some filters (like Kassahi) use 0xFF-based color codes that require Latin-1
       fetch(file.url)
         .then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
-          return res.text();
+          return res.arrayBuffer();
         })
-        .then(function (text) {
+        .then(function (buf) {
+          // Try UTF-8 first
+          var text = new TextDecoder('utf-8').decode(buf);
+          // If it contains replacement chars (U+FFFD), the file isn't valid UTF-8
+          // Fall back to Windows-1252 (ANSI) which preserves 0xFF etc.
+          if (text.indexOf('\uFFFD') !== -1) {
+            text = new TextDecoder('windows-1252').decode(buf);
+          }
           if (codeEditor.value.trim() && !confirm('Load "' + file.name + '" from ' + author.author + '? This will replace your current filter.')) {
             showStep(2);
             return;
@@ -3052,6 +3313,7 @@
     initBuilderActions();
     initWizard();
     initItemCodeFinder();
+    initItemCodeAutocomplete();
     initAuthorImport();
 
     // Code editor events
