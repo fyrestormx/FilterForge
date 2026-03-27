@@ -1507,20 +1507,36 @@
     // Convert colors to spans
     var currentColor = '#ffffff';
     var result = '';
-    var parts = text.split(/(%[A-Z_]+%)/g);
-    for (var i = 0; i < parts.length; i++) {
-      var part = parts[i];
-      if (!part) continue;
-      if (D2_COLORS[part]) {
-        currentColor = D2_COLORS[part];
-      } else if (part.charAt(0) === '%' && part.charAt(part.length - 1) === '%') {
-        // Unknown %TOKEN% — skip it silently
-      } else {
-        // Regular text (may contain orphan % from alias joins — strip them)
-        var cleaned = part.replace(/%/g, '');
-        if (cleaned) {
-          result += '<span style="color:' + currentColor + '">' + escapeHtml(cleaned) + '</span>';
+    // Split by color tokens — but also handle adjacent tokens carefully
+    // Process character by character to avoid regex split issues
+    var ci = 0;
+    while (ci < text.length) {
+      // Check if current position starts a %COLOR% token
+      if (text.charAt(ci) === '%') {
+        var endPct = text.indexOf('%', ci + 1);
+        if (endPct !== -1) {
+          var token = text.substring(ci, endPct + 1);
+          if (D2_COLORS[token]) {
+            currentColor = D2_COLORS[token];
+            ci = endPct + 1;
+            continue;
+          }
+          // Unknown %TOKEN% — skip it
+          if (/^%[A-Z_0-9]+%$/.test(token)) {
+            ci = endPct + 1;
+            continue;
+          }
         }
+        // Orphan % — skip it
+        ci++;
+        continue;
+      }
+      // Collect text until next % or end
+      var textStart = ci;
+      while (ci < text.length && text.charAt(ci) !== '%') ci++;
+      var chunk = text.substring(textStart, ci);
+      if (chunk) {
+        result += '<span style="color:' + currentColor + '">' + escapeHtml(chunk) + '</span>';
       }
     }
 
