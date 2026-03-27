@@ -794,6 +794,28 @@
   // ==========================================
   // Preview / Rule testing
   // ==========================================
+  // Go to a specific line in the editor
+  function goToLine(lineNum) {
+    // Switch to code tab
+    document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
+    document.querySelector('[data-tab="code"]').classList.add('active');
+    document.getElementById('pane-code').style.display = 'flex';
+    document.getElementById('pane-preview').style.display = 'none';
+
+    var text = codeEditor.value;
+    var lines = text.split('\n');
+    var pos = 0;
+    for (var i = 0; i < Math.min(lineNum - 1, lines.length); i++) {
+      pos += lines[i].length + 1;
+    }
+    codeEditor.focus();
+    codeEditor.setSelectionRange(pos, pos + (lines[lineNum - 1] || '').length);
+    // Scroll to the line
+    var lh = getLineHeight();
+    codeEditor.scrollTop = Math.max(0, (lineNum - 5) * lh);
+    renderVisibleLineNumbers();
+  }
+
   function initPreview() {
     var btnTest = document.getElementById('btn-test-rule');
     var itemSelect = document.getElementById('preview-item-type');
@@ -808,6 +830,15 @@
     // Also test all on select change
     itemSelect.addEventListener('change', function () {
       testAllItems();
+    });
+
+    // Delegated click handler for go-to-line buttons
+    previewResults.addEventListener('click', function (e) {
+      var btn = e.target.closest('.btn-goto-line');
+      if (btn) {
+        var line = parseInt(btn.getAttribute('data-line'), 10);
+        if (line) goToLine(line);
+      }
     });
   }
 
@@ -985,6 +1016,9 @@
       var valStr = valueMatch[3];
       var itemVal = (item.values && item.values[code] !== undefined) ? item.values[code] : 0;
 
+      // GOLD conditions only match gold piles (items with code 'gold')
+      if (code === 'GOLD' && item.code !== 'gold') return false;
+
       if (op === '~') {
         var parts = valStr.split('-');
         var min = parseInt(parts[0], 10);
@@ -1053,6 +1087,7 @@
     html += '<div class="preview-item-rule">' + escapeHtml(statusText);
     if (result.rule) {
       html += ' — <code>' + escapeHtml(result.rule.raw) + '</code>';
+      html += ' <button class="btn-goto-line" data-line="' + result.rule.lineNum + '">Line ' + result.rule.lineNum + ' &rarr;</button>';
     }
     html += '</div></div>';
     return html;
@@ -2413,6 +2448,206 @@
   }
 
   // ==========================================
+  // Item Code Finder
+  // ==========================================
+  var ITEM_CODES = {
+    runes: [
+      ['r01','El'],['r02','Eld'],['r03','Tir'],['r04','Nef'],['r05','Eth'],['r06','Ith'],['r07','Tal'],['r08','Ral'],['r09','Ort'],['r10','Thul'],
+      ['r11','Amn'],['r12','Sol'],['r13','Shael'],['r14','Dol'],['r15','Hel'],['r16','Io'],['r17','Lum'],['r18','Ko'],['r19','Fal'],['r20','Lem'],
+      ['r21','Pul'],['r22','Um'],['r23','Mal'],['r24','Ist'],['r25','Gul'],['r26','Vex'],['r27','Ohm'],['r28','Lo'],['r29','Sur'],['r30','Ber'],
+      ['r31','Jah'],['r32','Cham'],['r33','Zod']
+    ],
+    pd2: [
+      ['wss','Worldstone Shard'],['lbox','Larzuks Puzzlebox'],['lpp','Larzuks Puzzlepiece'],['rkey','Skeleton Key'],
+      ['tes','Twisted Essence of Suffering'],['ceh','Charged Essense of Hatred'],['bet','Burning Essence of Terror'],['fed','Festering Essence of Destruction'],
+      ['toa','Token of Absolution'],['pk1','Key of Terror'],['pk2','Key of Hate'],['pk3','Key of Destruction'],
+      ['mbr','Mephistos Brain'],['dhn','Diablos Horn'],['bey','Baals Eye'],['std','Standard of Heroes'],
+      ['dcho','Dclone Heart'],['dcso','Dclone Soul'],['dcbl','Dclone Blood'],['dcma','Dclone Matter'],
+      ['rtmo','Rathma Material 1'],['rtmv','Rathma Material 2'],['cwss','Corrupted WSS'],['rid','Rathma ID'],['rtp','Rathma TP'],
+      ['jewf','Jewel Fragment'],['crfb','Blood Craft Infusion'],['crfc','Caster Craft Infusion'],['crfs','Safety Craft Infusion'],
+      ['crfh','Hitpower Craft Infusion'],['crfv','Vampiric Craft Infusion'],['crfu','Bountiful Craft Infusion'],['crfp','Brilliant Craft Infusion'],
+      ['scou','Map Scout'],['scrb','Map Scroll B'],['iwss','Imbued WSS'],['upmp','Map Upgrade'],['fort','Fortify Orb'],
+      ['rera','Reroll Area Orb'],['imra','Imbue Rare Orb'],['upma','Upgrade Map Orb'],['imma','Imbue Magic Orb']
+    ],
+    norm: [
+      ['cap','Cap'],['skp','Skull Cap'],['hlm','Helm'],['fhl','Full Helm'],['ghm','Great Helm'],['crn','Crown'],['msk','Mask'],['buc','Buckler'],['sml','Small Shield'],['lrg','Large Shield'],['kit','Kite Shield'],['tow','Tower Shield'],['gts','Gothic Shield'],
+      ['qui','Quilted Armor'],['lea','Leather Armor'],['hla','Hard Leather'],['stu','Studded Leather'],['rng','Ring Mail'],['scl','Scale Mail'],['chn','Chain Mail'],['brs','Breast Plate'],['spl','Splint Mail'],['plt','Plate Mail'],['fld','Field Plate'],['gth','Gothic Plate'],['ful','Full Plate Mail'],['aar','Ancient Armor'],['ltp','Light Plate'],
+      ['lgl','Leather Gloves'],['vgl','Heavy Gloves'],['mgl','Chain Gloves'],['tgl','Light Gauntlets'],['hgl','Gauntlets'],
+      ['lbt','Boots'],['vbt','Heavy Boots'],['mbt','Chain Boots'],['tbt','Light Plated Boots'],['hbt','Greaves'],
+      ['lbl','Sash'],['vbl','Light Belt'],['mbl','Belt'],['tbl','Heavy Belt'],['hbl','Plated Belt'],
+      ['hax','Hand Axe'],['axe','Axe'],['2ax','Double Axe'],['mpi','Military Pick'],['wax','War Axe'],['lax','Large Axe'],['bax','Broad Axe'],['btx','Battle Axe'],['gax','Great Axe'],['gix','Giant Axe'],
+      ['clb','Club'],['spc','Spiked Club'],['mac','Mace'],['mst','Morning Star'],['fla','Flail'],['whm','War Hammer'],['mau','Maul'],['gma','Great Maul'],
+      ['ssd','Short Sword'],['scm','Scimitar'],['sbr','Sabre'],['flc','Falchion'],['crs','Crystal Sword'],['bsd','Broad Sword'],['lsd','Long Sword'],['wsd','War Sword'],['2hs','Two-Handed Sword'],['clm','Claymore'],['gis','Giant Sword'],['bsw','Bastard Sword'],['flb','Flamberge'],['gsd','Great Sword'],
+      ['dgr','Dagger'],['dir','Dirk'],['kri','Kris'],['bld','Blade'],
+      ['spr','Spear'],['tri','Trident'],['brn','Brandistock'],['spt','Spetum'],['pik','Pike'],
+      ['bar','Bardiche'],['vou','Voulge'],['scy','Scythe'],['pax','Poleaxe'],['hal','Halberd'],['wsc','War Scythe'],
+      ['sst','Short Staff'],['lst','Long Staff'],['cst','Gnarled Staff'],['bst','Battle Staff'],['wst','War Staff'],
+      ['wnd','Wand'],['ywn','Yew Wand'],['bwn','Bone Wand'],['gwn','Grim Wand'],
+      ['scp','Scepter'],['gsc','Grand Scepter'],['wsp','War Scepter'],
+      ['sbw','Short Bow'],['hbw','Hunters Bow'],['lbw','Long Bow'],['cbw','Composite Bow'],['sbb','Short Battle Bow'],['lbb','Long Battle Bow'],['swb','Short War Bow'],['lwb','Long War Bow'],
+      ['lxb','Light Crossbow'],['mxb','Crossbow'],['hxb','Heavy Crossbow'],['rxb','Repeating Crossbow'],
+      ['key','Key'],['tsc','TP Scroll'],['isc','ID Scroll'],['tbk','TP Tome'],['ibk','ID Tome'],
+      ['rin','Ring'],['amu','Amulet'],['jew','Jewel'],
+      ['cm1','Small Charm'],['cm2','Large Charm'],['cm3','Grand Charm'],
+      ['aqv','Arrow Quiver'],['cqv','Bolt Quiver']
+    ],
+    exc: [
+      ['xap','War Hat'],['xkp','Sallet'],['xlm','Casque'],['xhl','Winged Helm'],['xhm','Grand Crown'],['xrn','Death Mask'],['xsk','Grim Helm'],
+      ['xui','Ghost Armor'],['xea','Serpentskin'],['xla','Demonhide'],['xtu','Trellised Armor'],['xng','Linked Mail'],['xmg','Tigulated Mail'],['xcl','Mesh Armor'],['xhn','Cuirass'],['xrs','Russet Armor'],['xpl','Templar Coat'],['xlt','Sharktooth'],['xld','Embossed Plate'],['xth','Chaos Armor'],['xul','Ornate Plate'],['xar','Mage Plate'],['xtp','Archon Plate'],
+      ['xuc','Defender'],['xml','Round Shield'],['xrg','Scutum'],['xts','Dragon Shield'],['xsh','Pavise'],['xow','Ancient Shield'],
+      ['xlg','Demonhide Gloves'],['xvg','Sharkskin Gloves'],['xmb','Heavy Bracers'],['xtg','Battle Gauntlets'],['xhg','War Gauntlets'],
+      ['xlb','Demonhide Boots'],['xvb','Sharkskin Boots'],['xmb','Mesh Boots'],['xtb','Battle Boots'],['xhb','War Boots'],
+      ['zlb','Demonhide Sash'],['zvb','Sharkskin Belt'],['zmb','Mesh Belt'],['ztb','Battle Belt'],['zhb','War Belt'],
+      ['ci0','Circlet'],['ci1','Coronet'],['ci2','Tiara'],['ci3','Diadem']
+    ],
+    elt: [
+      ['uap','Shako/War Hat'],['ukp','Hydraskull'],['ulm','Armet'],['uhl','Spired Helm'],['uhm','Giant Conch'],['urn','Demonhead'],['usk','Bone Visage'],['uh9','Corona'],
+      ['uui','Dusk Shroud'],['uea','Scarab Husk'],['ula','Wire Fleece'],['utu','Wyrmhide'],['ung','Diamond Mail'],['umg','Loricated Mail'],['ucl','Boneweave'],['uhn','Great Hauberk'],['urs','Balrog Skin'],['upl','Hellforge Plate'],['ult','Kraken Shell'],['uld','Shadow Plate'],['uth','Sacred Armor'],['uul','Lacquered Plate'],['uar','Archon Plate'],['utp','Elite Archon Plate'],
+      ['uit','Monarch'],['uow','Aegis'],['uts','Ward'],['ush','Troll Nest'],
+      ['ulg','Bramble Mitts'],['uvg','Vampirebone Gloves'],['umg','Vambraces'],['utg','Crusader Gauntlets'],['uhg','Ogre Gauntlets'],
+      ['ulb','Wyrmhide Boots'],['uvb','Scarabshell Boots'],['umb','Boneweave Boots'],['utb','Mirrored Boots'],['uhb','Myrmidon Greaves'],
+      ['ulc','Spiderweb Sash'],['uvc','Vampirefang Belt'],['umc','Mithril Coil'],['utc','Troll Belt'],['uhc','Colossus Girdle'],
+      ['7wa','Berserker Axe'],['72a','Ettin Axe'],['7bt','Champion Axe'],['7ga','Decapitator'],['7gi','Feral Axe'],['7la','Cryptic Axe'],
+      ['7wh','Legendary Mallet'],['7m7','Ogre Maul'],['7gm','Thunder Maul'],
+      ['7cr','Phase Blade'],['7fb','Colossus Sword'],['7gd','Colossus Blade'],['7ls','Balrog Blade'],
+      ['7s7','Thresher'],['7pa','Giant Thresher'],['7s8','Colossus Voulge'],['7p7','War Pike'],
+      ['6ws','Archon Staff'],['6ls','Elder Staff'],['6cs','Shillelagh'],['6bs','Stalagmite'],
+      ['7ws','Caduceus'],['7qs','Divine Scepter'],
+      ['6lw','Hydra Bow'],['6sw','Ward Bow'],['6mx','Pellet Bow'],['6rx','Gorgon Crossbow'],
+      ['7xf','Feral Claws'],['7ar','Scissors Suwayyah'],['7qr','Suwayyah'],
+      ['aqv3','Elite Arrow Quiver'],['cqv3','Elite Bolt Quiver']
+    ],
+    uni: [
+      ['uap','Harlequin Crest (Shako)'],['ci3','Griffons Eye'],['ci2','Kiras Guardian'],['uhm','Andariel\'s Visage'],['urn','Crown of Ages'],['usk','Giant Skull'],['uh9','Nightwings Veil'],
+      ['uar','Enigma base / Tyrael\'s Might'],['uui','Skin of the Vipermagi'],['uth','Sacred Armor (Templar/Tyrael)'],['xlt','Skullder\'s Ire'],
+      ['uit','Stormshield'],['uow','Aegis (Herald of Zakarum)'],
+      ['utg','Dracul\'s Grasp'],['uhg','Steelrend'],['uvg','Magefist base'],
+      ['xtb','War Traveler'],['xhb','Gore Rider'],['uhb','Shadow Dancer'],['uvb','Sandstorm Trek'],
+      ['ulc','Arachnid Mesh'],['umc','Verdungo\'s'],['zhb','Thundergod\'s Vigor'],
+      ['rin','Unique Rings (SoJ, BK, Raven, etc.)'],['amu','Unique Amulets (Mara\'s, Highlord\'s, etc.)'],['jew','Rainbow Facet'],
+      ['cm1','Annihilus'],['cm2','Hellfire Torch'],['cm3','Gheeds Fortune'],
+      ['7gw','Death\'s Web'],['obf','Death\'s Fathom'],['oba','The Oculus'],['7wa','Beast base / Grief base'],
+      ['6lw','Windforce'],['7cr','Lightsabre'],['7ws','Astreons Iron Ward'],
+      ['ama','Titan\'s Revenge'],['amf','Thunderstroke'],
+      ['rar','Cage of the Unsullied'],['rbe','Band of Skulls'],['ram','The Third Eye']
+    ],
+    set: [
+      ['rin','Set Rings (BK, Angelic, etc.)'],['amu','Set Amulets (Tal\'s, etc.)'],
+      ['xhm','Tal Rasha\'s Horadric Crest'],['xul','Tal Rasha\'s Guardianship'],['uth','Immortal King\'s Soul Cage'],['paf','Herald of Zakarum base'],
+      ['xtb','Aldur\'s Advance'],['ulg','Laying of Hands'],['7ws','Griswold\'s Honor'],
+      ['xvg','Trang-Oul\'s Claws'],['ne9','Trang-Oul\'s Wing'],['utc','Trang-Oul\'s Girth'],
+      ['urn','Crown of Ages base (IK Helm)'],['xap','Guillaume\'s Face'],['uhm','IK Helm'],
+      ['uar','Natalya\'s Shadow'],['uts','Natalya\'s Mark'],
+      ['lbt','Aldur\'s Advance / Natalya\'s Soul']
+    ],
+    misc: [
+      ['hp1','Minor Healing'],['hp2','Light Healing'],['hp3','Healing'],['hp4','Greater Healing'],['hp5','Super Healing'],
+      ['mp1','Minor Mana'],['mp2','Light Mana'],['mp3','Mana'],['mp4','Greater Mana'],['mp5','Super Mana'],
+      ['rvs','Rejuv (35%)'],['rvl','Full Rejuv (65%)'],['yps','Antidote'],['wms','Thawing'],['vps','Stamina'],['pvpp','PvP Mana'],
+      ['gcv','Chipped Amethyst'],['gfv','Flawed Amethyst'],['gsv','Amethyst'],['gzv','Flawless Amethyst'],['gpv','Perfect Amethyst'],
+      ['gcw','Chipped Diamond'],['gfw','Flawed Diamond'],['gsw','Diamond'],['glw','Flawless Diamond'],['gpw','Perfect Diamond'],
+      ['gcg','Chipped Emerald'],['gfg','Flawed Emerald'],['gsg','Emerald'],['glg','Flawless Emerald'],['gpg','Perfect Emerald'],
+      ['gcr','Chipped Ruby'],['gfr','Flawed Ruby'],['gsr','Ruby'],['glr','Flawless Ruby'],['gpr','Perfect Ruby'],
+      ['gcb','Chipped Sapphire'],['gfb','Flawed Sapphire'],['gsb','Sapphire'],['glb','Flawless Sapphire'],['gpb','Perfect Sapphire'],
+      ['gcy','Chipped Topaz'],['gfy','Flawed Topaz'],['gsy','Topaz'],['gly','Flawless Topaz'],['gpy','Perfect Topaz'],
+      ['skc','Chipped Skull'],['skf','Flawed Skull'],['sku','Skull'],['skl','Flawless Skull'],['skz','Perfect Skull'],
+      ['ear','Ear'],['leg','Wirt\'s Leg'],['ass','Book of Skill'],['toa','Token of Absolution']
+    ]
+  };
+
+  function initItemCodeFinder() {
+    var searchInput = document.getElementById('itemcode-search');
+    var listEl = document.getElementById('itemcode-list');
+    var tabs = document.querySelectorAll('.itemcode-tab');
+    var currentCat = 'runes';
+
+    function renderItems(cat, filter) {
+      var items = ITEM_CODES[cat] || [];
+      if (filter) {
+        var f = filter.toLowerCase();
+        items = items.filter(function (item) {
+          return item[0].toLowerCase().indexOf(f) !== -1 || item[1].toLowerCase().indexOf(f) !== -1;
+        });
+      }
+      listEl.innerHTML = '';
+      if (!items.length) {
+        listEl.innerHTML = '<div style="padding:0.5rem;color:var(--text-secondary);font-size:0.8rem;">No matches</div>';
+        return;
+      }
+      items.forEach(function (item) {
+        var row = document.createElement('div');
+        row.className = 'itemcode-row';
+        row.title = 'Click to copy: ' + item[0];
+        row.innerHTML = '<span class="itemcode-code">' + item[0] + '</span><span class="itemcode-name">' + escapeHtml(item[1]) + '</span><span class="itemcode-copy">copy</span>';
+        row.addEventListener('click', function () {
+          navigator.clipboard.writeText(item[0]).then(function () {
+            var copyEl = row.querySelector('.itemcode-copy');
+            copyEl.textContent = 'copied!';
+            copyEl.style.opacity = '1';
+            setTimeout(function () { copyEl.textContent = 'copy'; copyEl.style.opacity = ''; }, 1000);
+          });
+        });
+        listEl.appendChild(row);
+      });
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        currentCat = tab.getAttribute('data-cat');
+        renderItems(currentCat, searchInput.value);
+      });
+    });
+
+    searchInput.addEventListener('input', function () {
+      // Search across all categories if there's a filter
+      if (this.value.trim()) {
+        // Search all categories, show combined results
+        var filter = this.value.trim().toLowerCase();
+        var allItems = [];
+        Object.keys(ITEM_CODES).forEach(function (cat) {
+          ITEM_CODES[cat].forEach(function (item) {
+            if (item[0].toLowerCase().indexOf(filter) !== -1 || item[1].toLowerCase().indexOf(filter) !== -1) {
+              allItems.push(item);
+            }
+          });
+        });
+        // Deduplicate by code
+        var seen = {};
+        var unique = [];
+        allItems.forEach(function (item) {
+          if (!seen[item[0]]) { seen[item[0]] = true; unique.push(item); }
+        });
+        listEl.innerHTML = '';
+        unique.forEach(function (item) {
+          var row = document.createElement('div');
+          row.className = 'itemcode-row';
+          row.title = 'Click to copy: ' + item[0];
+          row.innerHTML = '<span class="itemcode-code">' + item[0] + '</span><span class="itemcode-name">' + escapeHtml(item[1]) + '</span><span class="itemcode-copy">copy</span>';
+          row.addEventListener('click', function () {
+            navigator.clipboard.writeText(item[0]).then(function () {
+              var copyEl = row.querySelector('.itemcode-copy');
+              copyEl.textContent = 'copied!';
+              copyEl.style.opacity = '1';
+              setTimeout(function () { copyEl.textContent = 'copy'; copyEl.style.opacity = ''; }, 1000);
+            });
+          });
+          listEl.appendChild(row);
+        });
+        if (!unique.length) {
+          listEl.innerHTML = '<div style="padding:0.5rem;color:var(--text-secondary);font-size:0.8rem;">No matches</div>';
+        }
+      } else {
+        renderItems(currentCat, '');
+      }
+    });
+
+    // Initial render
+    renderItems(currentCat, '');
+  }
+
+  // ==========================================
   // Import from Community Author
   // ==========================================
   var AUTHOR_FILTERS_DATA = [
@@ -2660,6 +2895,7 @@
     initPreview();
     initBuilderActions();
     initWizard();
+    initItemCodeFinder();
     initAuthorImport();
 
     // Code editor events
