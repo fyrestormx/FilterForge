@@ -1099,6 +1099,52 @@
       return false;
     }
 
+    // FILTLVL — use value from preview selector (must be checked BEFORE generic value conditions)
+    if (token.indexOf('FILTLVL') === 0) {
+      var flSelect = document.getElementById('preview-filtlvl');
+      var currentFL = flSelect ? parseInt(flSelect.value, 10) : 1;
+      var flMatch = token.match(/FILTLVL([<>=~])(.+)/);
+      if (flMatch) {
+        var flOp = flMatch[1];
+        var flValStr = flMatch[2];
+        if (flOp === '~') {
+          var flParts = flValStr.split('-');
+          return currentFL >= parseInt(flParts[0], 10) && currentFL <= parseInt(flParts[1], 10);
+        }
+        var flVal = parseInt(flValStr, 10);
+        if (flOp === '>') return currentFL > flVal;
+        if (flOp === '<') return currentFL < flVal;
+        if (flOp === '=') return currentFL === flVal;
+      }
+      return true;
+    }
+
+    // DIFF — treat as Hell (2) in preview
+    if (token.indexOf('DIFF') === 0) {
+      var diffMatch = token.match(/DIFF([<>=])(\d+)/);
+      if (diffMatch) {
+        var diffOp = diffMatch[1];
+        var diffVal = parseInt(diffMatch[2], 10);
+        if (diffOp === '>') return 2 > diffVal;
+        if (diffOp === '<') return 2 < diffVal;
+        if (diffOp === '=') return 2 === diffVal;
+      }
+      return true;
+    }
+
+    // CLVL — treat as 85 in preview
+    if (token.indexOf('CLVL') === 0) {
+      var clMatch = token.match(/CLVL([<>=])(\d+)/);
+      if (clMatch) {
+        var clOp = clMatch[1];
+        var clVal = parseInt(clMatch[2], 10);
+        if (clOp === '>') return 85 > clVal;
+        if (clOp === '<') return 85 < clVal;
+        if (clOp === '=') return 85 === clVal;
+      }
+      return true;
+    }
+
     // Value condition: CODE<val, CODE>val, CODE=val, CODE~min-max
     var valueMatch = token.match(/^([A-Z]+)([<>=~])(.+)$/);
     if (valueMatch) {
@@ -1122,27 +1168,6 @@
       if (op === '<') return itemVal < val;
       if (op === '=') return itemVal === val;
       return false;
-    }
-
-    // FILTLVL — use value from preview selector
-    if (token.indexOf('FILTLVL') === 0) {
-      var flSelect = document.getElementById('preview-filtlvl');
-      var currentFL = flSelect ? parseInt(flSelect.value, 10) : 1;
-      var flMatch = token.match(/FILTLVL([<>=~])(.+)/);
-      if (flMatch) {
-        var flOp = flMatch[1];
-        var flValStr = flMatch[2];
-        if (flOp === '~') {
-          var flParts = flValStr.split('-');
-          return currentFL >= parseInt(flParts[0], 10) && currentFL <= parseInt(flParts[1], 10);
-        }
-        var flVal = parseInt(flValStr, 10);
-        if (flOp === '>') return currentFL > flVal;
-        if (flOp === '<') return currentFL < flVal;
-        if (flOp === '=') return currentFL === flVal;
-      }
-      // Handle !FILTLVL=N (negation handled by caller)
-      return true;
     }
 
     // Boolean flag
