@@ -2406,8 +2406,25 @@
           // Eth Colossus Blade/Sword for BotD/Death
           lines.push('ItemDisplay[NMAG !INF !RW ETH (SOCK=0 OR SOCK>3) (7gd OR 7fb)]: %GOLD%GG Base %GRAY%ETH %WHITE%%NAME%' + rwNotify);
           // Eth Feral Claws (7xf) for Chaos — with skill checks
-          lines.push('ItemDisplay[NMAG !INF !RW ETH (SOCK=0 OR SOCK=3) 7xf SK263>2]: %GOLD%GG Chaos %GRAY%ETH %WHITE%%NAME%' + rwNotify);
+          lines.push('ItemDisplay[NMAG !INF !RW ETH (SOCK=0 OR SOCK=3) 7xf SK263>2 SK252>2]: %GOLD%GG Chaos %GRAY%ETH %WHITE%%NAME%{+3Venom +3WpnBlck}' + rwNotify);
+          lines.push('ItemDisplay[NMAG !INF !RW ETH (SOCK=0 OR SOCK=3) 7xf (SK263>2 OR SK252>2)]: %GOLD%Chaos Base %GRAY%ETH %WHITE%%NAME%' + rwNotify);
         }
+
+        // GG Skill-Checked Bases (from HiimFilter — runewords that need specific staffmods)
+        lines.push('// --- GG Skill-Checked Bases ---');
+        // Dominion wand: +3 Fire Golem + Bone Armor + Lower Res/Revive
+        lines.push('ItemDisplay[WAND !(wnd OR ywn OR 9wn) SK94>2 SK68>0 (SK91>0 OR SK95>0) !SOCK=1 NMAG !RW]: %GOLD%GG Dominion %WHITE%%NAME%' + rwNotify);
+        lines.push('ItemDisplay[WAND !(wnd OR ywn OR 9wn) SK85>2 SK68>0 SK95>0 !SOCK=1 NMAG !RW]: %GOLD%GG Dominion %WHITE%%NAME%' + rwNotify);
+        // Infinity staff: +3 Nova/ChrgBolt/ChainLight + LightMastery/Teleport
+        lines.push('ItemDisplay[(6ls OR 6cs OR 6bs OR 6ws) (SK48>2 OR SK38>2 OR SK53>2) (SK63>0 OR SK54>0) NMAG !RW (SOCK=0 OR SOCK=4)]: %GOLD%GG Infinity %WHITE%%NAME%' + rwNotify);
+        // CTA staff: Enchant + Energy Shield/Fireball + Thunder Storm
+        lines.push('ItemDisplay[(wst OR 8ws OR 6ws) SK58>0 (SK50>0 OR SK60>0) SK57>0 !INF NMAG !RW SOCK=5]: %GOLD%GG CTA %WHITE%%NAME%' + rwNotify);
+        // Memory staff: +3 Thunder Storm + +3 Lightning Mastery + ES/Fireball
+        lines.push('ItemDisplay[STAFF SK57>2 SK63>2 (SK50>0 OR SK60>0) !INF NMAG !RW SOCK=4]: %GOLD%GG Memory %WHITE%%NAME%' + rwNotify);
+        // Obsession staff: +3 Meteor/Fire Mastery + +3 Warmth
+        lines.push('ItemDisplay[6ws (SK56>2 OR SK62>2) SK61>2 NMAG !RW (SOCK=0 OR SOCK=6)]: %GOLD%GG Obsession %WHITE%%NAME%' + rwNotify);
+        lines.push('');
+
         // Phase Blade (7cr) — always show, cannot be eth, fixed speed
         lines.push('ItemDisplay[NMAG !INF !RW (SOCK=0 OR SOCK>3) 7cr]: %WHITE%Phase Blade %GRAY%[%SOCKETS%os]' + (wantMapIcons ? '%DOT-D6%' : ''));
         // Monarch (uit) — Spirit base
@@ -2760,6 +2777,19 @@
       lines.push('');
 
       // ==========================
+      // ==========================
+      // 16b. ALWAYS SHOW — identified quality items & runewords
+      // ==========================
+      lines.push('// ============================================================');
+      lines.push('// ALWAYS SHOW — these should never be hidden by FILTLVL rules');
+      lines.push('// ============================================================');
+      lines.push('ItemDisplay[UNI ID]: %GOLD%%NAME%' + descStr);
+      lines.push('ItemDisplay[SET ID]: %GREEN%%NAME%' + descStr);
+      lines.push('ItemDisplay[RARE ID]: %YELLOW%%NAME%' + descStr);
+      lines.push('ItemDisplay[CRAFT ID]: %ORANGE%%NAME%' + descStr);
+      lines.push('ItemDisplay[RW]: %GOLD%%NAME%' + descStr);
+      lines.push('');
+
       // 17. CATCH-ALL
       // ==========================
       lines.push('// ============================================================');
