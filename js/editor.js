@@ -1028,13 +1028,28 @@
     return escapeForHtml(line);
   }
 
+  var HL_MAX_LINES = 500;
   var hlCache = [];
   function highlightCode() {
     var text = codeEditor.value;
     var lines = text.split('\n');
-    var changed = false;
 
-    // Only re-highlight lines that changed
+    // Disable highlighting for large files — show plain text instead
+    if (lines.length > HL_MAX_LINES) {
+      if (highlightEl.style.display !== 'none') {
+        highlightEl.style.display = 'none';
+        codeEditor.style.color = 'var(--text-primary)';
+      }
+      return;
+    }
+
+    // Re-enable if we dropped below the threshold
+    if (highlightEl.style.display === 'none') {
+      highlightEl.style.display = '';
+      codeEditor.style.color = 'transparent';
+    }
+
+    var changed = false;
     if (lines.length !== hlCache.length) {
       hlCache = lines.map(function (l) { return { src: l, html: highlightLine(l) }; });
       changed = true;
@@ -4498,8 +4513,11 @@
     // Code editor events
     var saveTimer = null;
     codeEditor.addEventListener('input', function () {
-      // Highlight must run immediately so typed characters are visible
-      if (typeof highlightCode === 'function') highlightCode();
+      // For small files: highlight immediately so typed text is visible
+      // For large files: highlighting is disabled, textarea text is visible directly
+      if (typeof highlightCode === 'function' && cachedLineCount <= HL_MAX_LINES) {
+        highlightCode();
+      }
 
       // Debounce everything else (stats, resize, save)
       clearTimeout(saveTimer);
