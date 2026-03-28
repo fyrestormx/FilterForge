@@ -789,6 +789,29 @@
     saveToStorage();
   }
 
+  function insertRuleAtTop() {
+    var rule = generatedCode.textContent;
+    var val = codeEditor.value;
+    var suffix = val.length > 0 && !val.startsWith('\n') ? '\n' : '';
+    codeEditor.value = rule + suffix + val;
+    codeEditor.selectionStart = codeEditor.selectionEnd = rule.length;
+    codeEditor.focus();
+    updateLineNumbers();
+    saveToStorage();
+  }
+
+  function insertRuleAtEnd() {
+    var rule = generatedCode.textContent;
+    var val = codeEditor.value;
+    var prefix = val.length > 0 && !val.endsWith('\n') ? '\n' : '';
+    codeEditor.value = val + prefix + rule;
+    var newPos = val.length + prefix.length + rule.length;
+    codeEditor.selectionStart = codeEditor.selectionEnd = newPos;
+    codeEditor.focus();
+    updateLineNumbers();
+    saveToStorage();
+  }
+
   // ==========================================
   // Import / Export
   // ==========================================
@@ -1602,7 +1625,9 @@
   // Builder action buttons
   // ==========================================
   function initBuilderActions() {
+    document.getElementById('btn-insert-top').addEventListener('click', insertRuleAtTop);
     document.getElementById('btn-insert-rule').addEventListener('click', insertRule);
+    document.getElementById('btn-insert-end').addEventListener('click', insertRuleAtEnd);
 
     document.getElementById('btn-copy-rule').addEventListener('click', function () {
       navigator.clipboard.writeText(generatedCode.textContent).then(function () {

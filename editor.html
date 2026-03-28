@@ -705,10 +705,13 @@
           <div class="generated-rule-bar" id="generated-panel">
             <pre class="generated-rule"><code id="generated-code">ItemDisplay[]: %NAME%</code></pre>
             <div class="builder-actions">
-              <button class="btn btn-primary" id="btn-insert-rule">Insert into Editor</button>
+              <button class="btn btn-primary" id="btn-insert-top" title="Insert at line 1 — this rule will override all others below it">Insert at Top</button>
+              <button class="btn btn-primary" id="btn-insert-rule">Insert at Cursor</button>
+              <button class="btn btn-primary" id="btn-insert-end" title="Insert at the end of the filter">Insert at End</button>
               <button class="btn btn-secondary" id="btn-copy-rule">Copy</button>
               <button class="btn btn-secondary" id="btn-clear-builder">Clear</button>
             </div>
+            <p class="text-muted" style="font-size:0.7rem; margin:0.3rem 0 0;">Inserting at the top will override all other matching rules below it.</p>
           </div>
 
           <div class="editor-tabs">
