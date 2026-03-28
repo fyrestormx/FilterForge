@@ -4108,10 +4108,10 @@
       {name:"Regular.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular.filter",size:1001355}
     ]},
     {name:"Erazure's PD2 Loot Filter",author:"Erazure",repo:"FiltersBy-Erazure/PD2-Loot-Filter",files:[
-      {name:"Erazure-BIG-GG-PoE.filter",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG-PoE.filter",size:775381},
-      {name:"Erazure-BIG-GG.filter",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG.filter",size:774777},
-      {name:"Erazure-Main-PoE.filter",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main-PoE.filter",size:770903},
-      {name:"Erazure-Main.filter",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main.filter",size:770819}
+      {name:"Erazure-BIG-GG-PoE.filter",displayName:"BIG GG \u2014 PoE Sounds",description:"Strict filter with PoE-style drop sounds.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG-PoE.filter",size:775381},
+      {name:"Erazure-BIG-GG.filter",displayName:"BIG GG",description:"Strict filter for endgame mapping.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG.filter",size:774777},
+      {name:"Erazure-Main-PoE.filter",displayName:"Main \u2014 PoE Sounds",description:"Standard filter with PoE-style drop sounds.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main-PoE.filter",size:770903},
+      {name:"Erazure-Main.filter",displayName:"Main",description:"Standard all-purpose filter.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main.filter",size:770819}
     ]},
     {name:"HiimFilter by Maaaark + HiimDave",author:"HiimFilter",repo:"Maaaaaarrk/HiimFilter-PD2-Filter",
       definitionsUrl:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/filter_definitions.json",
