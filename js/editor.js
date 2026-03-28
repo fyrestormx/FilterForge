@@ -1145,28 +1145,17 @@
       pos += lines[i].length + 1;
     }
     var lineEnd = pos + (lines[lineNum - 1] || '').length;
-    var lh = getLineHeight();
-    var targetScroll = Math.max(0, (lineNum - 5) * lh);
 
-    // Strategy: first set selection to put cursor at target line,
-    // then repeatedly force scroll until it sticks.
-    // The browser fights us on focus/tab-switch, so we brute force it.
-    function forceScroll(attempts) {
-      codeEditor.scrollTop = targetScroll;
-      renderVisibleLineNumbers();
-      if (attempts > 0) {
-        requestAnimationFrame(function () { forceScroll(attempts - 1); });
-      }
-    }
-
-    // Set selection without focus first (avoids browser auto-scroll)
+    // Select the line in the textarea
     codeEditor.setSelectionRange(pos, lineEnd);
+    codeEditor.focus();
 
-    // Wait for layout, then focus and force scroll
-    setTimeout(function () {
-      codeEditor.focus();
-      forceScroll(5);
-    }, 100);
+    // Scroll the page to the target line (editor is full-length, page scrolls)
+    var lh = getLineHeight();
+    var editorTop = codeEditor.getBoundingClientRect().top + window.scrollY;
+    var lineOffset = (lineNum - 1) * lh;
+    var targetY = editorTop + lineOffset - (window.innerHeight / 3);
+    window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
   }
 
   function initPreview() {
