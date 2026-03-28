@@ -740,32 +740,14 @@
   }
 
   function renderVisibleLineNumbers() {
-    var lh = getLineHeight();
-    if (!lh) return;
-
-    var scrollTop = codeEditor.scrollTop;
-    var viewHeight = codeEditor.clientHeight;
-    var paddingTop = parseFloat(window.getComputedStyle(codeEditor).paddingTop) || 12;
-
-    // Which lines are visible
-    var firstVisible = Math.floor(scrollTop / lh);
-    var visibleCount = Math.ceil(viewHeight / lh) + 2; // buffer
-    var startLine = Math.max(0, firstVisible - 1);
-    var endLine = Math.min(cachedLineCount, startLine + visibleCount + 2);
-
-    // Build only visible line numbers with spacer divs for positioning
-    var topPad = startLine * lh + paddingTop;
+    // Full render — editor is full-length, no virtual scroll needed
     var nums = [];
-    for (var i = startLine + 1; i <= endLine; i++) {
+    for (var i = 1; i <= cachedLineCount; i++) {
       nums.push(i);
     }
-
-    lineNumbers.style.paddingTop = topPad + 'px';
-    lineNumbers.style.paddingBottom = Math.max(0, (cachedLineCount - endLine) * lh) + 'px';
+    lineNumbers.style.paddingTop = '';
+    lineNumbers.style.paddingBottom = '';
     lineNumbers.textContent = nums.join('\n');
-
-    // Keep scroll in sync
-    lineNumbers.scrollTop = scrollTop;
   }
 
   var highlightEl = document.getElementById('code-highlight');
@@ -1031,7 +1013,7 @@
         document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
         tab.classList.add('active');
 
-        document.getElementById('pane-code').style.display = target === 'code' ? 'flex' : 'none';
+        document.getElementById('pane-code').style.display = target === 'code' ? 'block' : 'none';
         document.getElementById('pane-preview').style.display = target === 'preview' ? 'flex' : 'none';
       });
     });
@@ -1045,7 +1027,7 @@
     // Switch to code tab
     document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
     document.querySelector('[data-tab="code"]').classList.add('active');
-    document.getElementById('pane-code').style.display = 'flex';
+    document.getElementById('pane-code').style.display = 'block';
     document.getElementById('pane-preview').style.display = 'none';
 
     var text = codeEditor.value;

@@ -450,6 +450,12 @@
 .editor-pane {
 }
 
+/* Preview pane needs flex column for scrollable results */
+#pane-preview.editor-pane {
+  flex-direction: column;
+  min-height: 500px;
+}
+
 .editor-meta {
   display: flex;
   gap: 1rem;
@@ -484,8 +490,7 @@
 
 .code-editor-container {
   position: relative;
-  flex: 1;
-  min-width: 0;
+  flex: 1 0 auto;
 }
 
 .code-highlight {
