@@ -735,7 +735,9 @@
             </div>
             <div class="code-editor-wrap">
               <div class="line-numbers" id="line-numbers"></div>
-              <textarea class="code-editor" id="code-editor" aria-label="Filter code editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+              <div class="code-editor-container">
+                <div class="code-highlight" id="code-highlight" aria-hidden="true"></div>
+                <textarea class="code-editor" id="code-editor" aria-label="Filter code editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
                 placeholder="// Start typing your filter rules here, or use the Rule Builder on the left.
 //
 // Example:
@@ -743,6 +745,7 @@
 // ItemDisplay[RUNE>19]: %GOLD%%RUNENAME% Rune%BORDER%
 // ItemDisplay[NMAG NORM CLVL>30]:
 // ItemDisplay[]: %NAME%"></textarea>
+              </div>
             </div>
           </div>
 

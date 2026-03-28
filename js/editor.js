@@ -718,6 +718,9 @@
         ruleCount.textContent = 'Rules: ' + countRules(text);
       }, 500);
     }
+
+    // Update syntax highlighting
+    if (typeof highlightCode === 'function') highlightCode();
   }
 
   function countRules(text) {
@@ -761,8 +764,82 @@
     lineNumbers.scrollTop = scrollTop;
   }
 
+  var highlightEl = document.getElementById('code-highlight');
+
+  // Known valid condition tokens for validation
+  var KNOWN_FLAGS = ['UNI','SET','RARE','MAG','NMAG','CRAFT','ETH','SUP','INF','ID','RW','NORM','EXC','ELT','ARMOR','WEAPON','HELM','CHEST','SHIELD','GLOVES','BOOTS','BELT','CIRC','AXE','MACE','SWORD','DAGGER','SPEAR','POLEARM','BOW','XBOW','STAFF','WAND','SCEPTER','JAV','THROWING','JEWELRY','CHARM','QUIVER','MISC','GEMMED','GROUND','1H','2H','CLASS','ZON','SOR','NEC','DIN','BAR','DRU','SIN','CL1','CL2','CL3','CL4','CL5','CL6','CL7','EQ1','EQ2','EQ3','EQ4','EQ5','EQ6','EQ7'];
+  var KNOWN_NEGATES = KNOWN_FLAGS.map(function (f) { return '!' + f; });
+  var KNOWN_VALUE_CODES = ['SOCKETS','SOCK','DEF','ED','EDEF','EDAM','ILVL','CLVL','ALVL','QLVL','RUNE','GOLD','PRICE','SELLPRICE','FRES','CRES','LRES','PRES','RES','STR','DEX','LIFE','MANA','FCR','IAS','FHR','FRW','MFIND','LVLREQ','MAXSOCKETS','GEMLEVEL','GEM','GEMTYPE','FILTLVL','DIFF','MAPID','MAPTIER','ALLSK','QTY','TABSK0','TABSK1','TABSK2','TABSK3','TABSK4','TABSK5','TABSK6','CHARSTAT'];
+  var KNOWN_OUTPUT_TOKENS = ['NAME','RUNENAME','RUNENUM','ILVL','ALVL','CRAFTALVL','REROLLALVL','SOCKETS','SOCK','MAXSOCKETS','DEF','ED','EDEF','EDAM','RES','PRICE','SELLPRICE','QTY','MAPTIER','BASENAME','CODE','RANGE','WPNSPD','GEMTYPE','GEMLEVEL','CONTINUE','NL','CL','CS','WHITE','GRAY','RED','GREEN','DARK_GREEN','BLUE','GOLD','YELLOW','ORANGE','PURPLE','TAN','BLACK','CORAL','SAGE','TEAL','LIGHT_GRAY'];
+
+  function escapeForHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlightLine(line) {
+    var trimmed = line.trim();
+
+    // Empty line
+    if (!trimmed) return escapeForHtml(line);
+
+    // Comment
+    if (trimmed.startsWith('//')) {
+      return '<span class="hl-comment">' + escapeForHtml(line) + '</span>';
+    }
+
+    // Alias line
+    var aliasMatch = trimmed.match(/^(Alias\s*)\[([^\]]*)\]\s*:\s*(.*)/);
+    if (aliasMatch) {
+      var pre = line.substring(0, line.indexOf('Alias'));
+      return pre + '<span class="hl-alias-kw">Alias</span>[<span class="hl-alias-name">' + escapeForHtml(aliasMatch[2]) + '</span>]: <span class="hl-alias-val">' + escapeForHtml(aliasMatch[3]) + '</span>';
+    }
+
+    // ItemDisplay line
+    var ruleMatch = trimmed.match(/^(ItemDisplay\s*)\[([^\]]*)\]\s*:\s*(.*)/);
+    if (ruleMatch) {
+      var pre = line.substring(0, line.indexOf('ItemDisplay'));
+      var conditions = ruleMatch[2];
+      var output = ruleMatch[3];
+
+      // Highlight color tokens in output with their actual color
+      var highlightedOutput = escapeForHtml(output).replace(/%([A-Z_]+)%/g, function (m, tok) {
+        var colorKey = '%' + tok + '%';
+        if (D2_COLORS[colorKey]) {
+          return '<span class="hl-color-token" style="color:' + D2_COLORS[colorKey] + '">' + m + '</span>';
+        }
+        return m;
+      });
+
+      return pre + '<span class="hl-keyword">ItemDisplay</span>[<span class="hl-condition">' + escapeForHtml(conditions) + '</span>]: <span class="hl-output">' + highlightedOutput + '</span>';
+    }
+
+    // FilterDisplayName line
+    if (trimmed.match(/^ItemDisplayFilter(Name|Description)\s*\[/)) {
+      return '<span class="hl-keyword">' + escapeForHtml(line) + '</span>';
+    }
+
+    // Non-empty, non-comment, non-rule line — possibly broken
+    if (trimmed.length > 0) {
+      return '<span class="hl-error">' + escapeForHtml(line) + '</span>';
+    }
+
+    return escapeForHtml(line);
+  }
+
+  function highlightCode() {
+    var text = codeEditor.value;
+    var lines = text.split('\n');
+    var html = lines.map(highlightLine).join('\n');
+    highlightEl.innerHTML = html + '\n';
+    // Sync scroll
+    highlightEl.scrollTop = codeEditor.scrollTop;
+    highlightEl.scrollLeft = codeEditor.scrollLeft;
+  }
+
   function syncScroll() {
     lineNumbers.scrollTop = codeEditor.scrollTop;
+    highlightEl.scrollTop = codeEditor.scrollTop;
+    highlightEl.scrollLeft = codeEditor.scrollLeft;
     renderVisibleLineNumbers();
   }
 
