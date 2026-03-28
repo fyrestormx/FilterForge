@@ -1437,12 +1437,12 @@
         return;
       }
 
-      // Remove existing grail section, then insert at top
+      // Switch to code tab FIRST so textarea is visible for auto-resize
+      switchToCodeTab();
       var currentCode = removeGrailSection(codeEditor.value);
       codeEditor.value = lines.join('\n') + '\n' + currentCode;
       updateLineNumbers();
       saveToStorage();
-      switchToCodeTab();
     });
 
     btnUpdate.addEventListener('click', function () {
@@ -1452,11 +1452,11 @@
         return;
       }
       var lines = buildGrailLines();
+      switchToCodeTab();
       var cleaned = removeGrailSection(currentCode);
       codeEditor.value = lines.join('\n') + '\n' + cleaned;
       updateLineNumbers();
       saveToStorage();
-      switchToCodeTab();
     });
 
     renderGrail('');
