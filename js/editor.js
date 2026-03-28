@@ -3660,9 +3660,6 @@
   function init() {
     loadFromStorage();
     updateLineNumbers();
-    // Auto-size textarea to content
-    codeEditor.style.height = 'auto';
-    codeEditor.style.height = codeEditor.scrollHeight + 'px';
 
     initChips();
     initPanelToggles();
@@ -3679,15 +3676,9 @@
     initAuthorImport();
 
     // Code editor events
-    function autoResizeEditor() {
-      codeEditor.style.height = 'auto';
-      codeEditor.style.height = codeEditor.scrollHeight + 'px';
-    }
-
     codeEditor.addEventListener('input', function () {
       updateLineNumbers();
       saveToStorage();
-      autoResizeEditor();
     });
     codeEditor.addEventListener('scroll', syncScroll);
     codeEditor.addEventListener('keydown', handleTab);

@@ -415,8 +415,10 @@
 .code-editor-wrap {
   flex: 1;
   display: flex;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   min-height: 400px;
+  max-height: calc(100vh - 120px);
   position: relative;
 }
 
@@ -449,7 +451,8 @@
   tab-size: 4;
   white-space: pre;
   overflow-wrap: normal;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .code-editor::placeholder {
