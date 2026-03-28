@@ -1918,7 +1918,7 @@
         arrows: 'Arrows', stars: 'Stars', diamonds: 'Diamonds', pipes: 'Pipes', exclaim: 'Exclaim',
         circles: 'Circles', dots: 'Dots', crosses: 'Crosses', middot: 'Middle Dots',
         sockets: 'Socket Count', ilvl: 'Item Level', price: 'Vendor Price',
-        crafting: 'Crafting Info', eth: 'Ethereal Tag', shortnames: 'Short Names', uniquenames: 'Reveal Uniques',
+        crafting: 'Crafting Info', eth: 'Ethereal Tag', shortnames: 'Short Names', uniquenames: 'Reveal Uniques', staffmods: 'Staffmods',
         'all-rw': 'All Good Bases', 'eth-rw': 'Eth Bases Only', 'none-rw': 'None',
         hidegold: 'Hide Low Gold', hidekeys: 'Hide Keys',
         hidescrolls: 'Hide Scrolls', hidepots: 'Hide Small Potions',
@@ -2042,6 +2042,7 @@
       var wantEthTag = c.extras.indexOf('eth') !== -1;
       var wantShortNames = c.extras.indexOf('shortnames') !== -1;
       var wantUniqueNames = c.extras.indexOf('uniquenames') !== -1;
+      var wantStaffmods = c.extras.indexOf('staffmods') !== -1;
       var rwBases = c.rwbases || 'none';
       var wantSocketRecipe = c.tooltips.indexOf('socketrecipe') !== -1;
       var wantSellValue = c.tooltips.indexOf('sellvalue') !== -1;
@@ -2703,79 +2704,141 @@
       lines.push('');
 
       // ==========================
-      // 13c. STAFFMOD DISPLAY (from HiimFilter/Kryszard)
+      // 13c. STAFFMOD DISPLAY (from HiimFilter community filter)
       // ==========================
+      if (wantStaffmods) {
       lines.push('// ============================================================');
       lines.push('// STAFFMOD DISPLAY -- skill bonuses on white/magic items');
       lines.push('// ============================================================');
 
-      // Tab-based staffmods (all classes)
-      lines.push('// --- Skill Tab Display (all classes) ---');
-      // Amazon
-      lines.push('ItemDisplay[NMAG !RW TABSK0>2]: %GREEN%+3 Bow %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK1>2]: %GREEN%+3 PassMag %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK2>2]: %GREEN%+3 Java %NAME%{%NAME%}%CONTINUE%');
-      // Sorceress
-      lines.push('ItemDisplay[NMAG !RW TABSK8>2]: %GREEN%+3 Fire %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK9>2]: %GREEN%+3 Light %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK10>2]: %GREEN%+3 Cold %NAME%{%NAME%}%CONTINUE%');
-      // Necromancer
-      lines.push('ItemDisplay[NMAG !RW TABSK16>2]: %GREEN%+3 Curses %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK17>2]: %GREEN%+3 PnB %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK18>2]: %GREEN%+3 NecSum %NAME%{%NAME%}%CONTINUE%');
-      // Paladin
-      lines.push('ItemDisplay[NMAG !RW TABSK24>2]: %GREEN%+3 PalCmbt %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK25>2]: %GREEN%+3 OffAura %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK26>2]: %GREEN%+3 DefAura %NAME%{%NAME%}%CONTINUE%');
-      // Barbarian
-      lines.push('ItemDisplay[NMAG !RW TABSK32>2]: %GREEN%+3 BarCmbt %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK33>2]: %GREEN%+3 Masteries %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK34>2]: %GREEN%+3 Warcries %NAME%{%NAME%}%CONTINUE%');
-      // Druid
-      lines.push('ItemDisplay[NMAG !RW TABSK40>2]: %GREEN%+3 DruSum %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK41>2]: %GREEN%+3 Shape %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK42>2]: %GREEN%+3 Elem %NAME%{%NAME%}%CONTINUE%');
-      // Assassin
-      lines.push('ItemDisplay[NMAG !RW TABSK48>2]: %GREEN%+3 Traps %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK49>2]: %GREEN%+3 Shadow %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW TABSK50>2]: %GREEN%+3 MartArt %NAME%{%NAME%}%CONTINUE%');
+      // Tab-based staffmods (all classes, +3 only)
+      lines.push('// --- Skill Tab Display (+3 all classes) ---');
+      var tabSkills = [
+        ['TABSK0','Bow'],['TABSK1','PassMag'],['TABSK2','Java'],
+        ['TABSK8','Fire'],['TABSK9','Light'],['TABSK10','Cold'],
+        ['TABSK16','Curses'],['TABSK17','PnB'],['TABSK18','NecSum'],
+        ['TABSK24','PalCmbt'],['TABSK25','OffAura'],['TABSK26','DefAura'],
+        ['TABSK32','BarCmbt'],['TABSK33','Masteries'],['TABSK34','Warcries'],
+        ['TABSK40','DruSum'],['TABSK41','Shape'],['TABSK42','Elem'],
+        ['TABSK48','Traps'],['TABSK49','Shadow'],['TABSK50','MartArt']
+      ];
+      tabSkills.forEach(function (t) {
+        lines.push('ItemDisplay[NMAG !RW ' + t[0] + '>2]: %GREEN%+3 ' + t[1] + ' %NAME%{%NAME%}%CONTINUE%');
+      });
 
-      // Key individual staffmods (valuable for runewords — always show)
-      lines.push('// --- Key Individual Staffmods (valuable for RW bases) ---');
-      // Assassin claws: Weapon Block, Burst of Speed, Blade Fury, Venom, Fade
-      lines.push('ItemDisplay[NMAG !RW SIN SK263>2]: %ORANGE%+3 WpnBlck %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SIN SK258>2]: %ORANGE%+3 BurstSpd %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SIN SK266>2]: %ORANGE%+3 BldFury %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SIN SK278>2]: %ORANGE%+3 Venom %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SIN SK267>2]: %ORANGE%+3 Fade %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SIN SK252>2]: %ORANGE%+3 ClwMast %NAME%{%NAME%}%CONTINUE%');
-      // Sorceress orbs: Energy Shield, Shiver Armor, Enchant Fire, Teleport
-      lines.push('ItemDisplay[NMAG !RW SOR SK58>2]: %ORANGE%+3 E.Shield %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SOR SK50>2]: %ORANGE%+3 ShivArm %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SOR SK52>2]: %ORANGE%+3 Enchant %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW SOR SK54>2]: %ORANGE%+3 Tele %NAME%{%NAME%}%CONTINUE%');
-      // Necromancer wands: Lower Resist, Corpse Explosion, Bone Spear, Revive
-      lines.push('ItemDisplay[NMAG !RW NEC SK91>2]: %ORANGE%+3 LwrRes %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW NEC SK74>2]: %ORANGE%+3 CorpExpl %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW NEC SK84>2]: %ORANGE%+3 BneSpr %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW NEC SK95>2]: %ORANGE%+3 Revive %NAME%{%NAME%}%CONTINUE%');
-      // Paladin scepters: Holy Shield, Conviction, Fanaticism, Blessed Hammer
-      lines.push('ItemDisplay[NMAG !RW DIN SK117>2]: %ORANGE%+3 HlyShld %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DIN SK123>2]: %ORANGE%+3 Convic %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DIN SK122>2]: %ORANGE%+3 Fanat %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DIN SK112>2]: %ORANGE%+3 BHammer %NAME%{%NAME%}%CONTINUE%');
-      // Barbarian helms: Battle Orders, Battle Command, Natural Resistance, War Cry
-      lines.push('ItemDisplay[NMAG !RW BAR SK149>2]: %ORANGE%+3 BO %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW BAR SK155>2]: %ORANGE%+3 BCmnd %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW BAR SK153>2]: %ORANGE%+3 NatRes %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW BAR SK154>2]: %ORANGE%+3 WarCry %NAME%{%NAME%}%CONTINUE%');
-      // Druid pelts: Tornado, Fissure, Volcano, Heart of Wolverine, Oak Sage, Grizzly
-      lines.push('ItemDisplay[NMAG !RW DRU SK245>2]: %ORANGE%+3 Tornado %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DRU SK234>2]: %ORANGE%+3 Fissure %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DRU SK244>2]: %ORANGE%+3 Volcano %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DRU SK236>2]: %ORANGE%+3 HOW %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DRU SK226>2]: %ORANGE%+3 OakSage %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[NMAG !RW DRU SK247>2]: %ORANGE%+3 Grizzly %NAME%{%NAME%}%CONTINUE%');
+      // Individual skill staffmods — data: [SK#, name, top] where top=true means show at all FILTLVL
+      // Amazon
+      var aznSkills = [
+        ['SK6','MagicArw',0],['SK7','FireArw',0],['SK8','ColdArw',0],['SK9','MultShot',0],['SK10','ExplArw',0],
+        ['SK11','IceArw',1],['SK12','GuidArw',1],['SK13','Strafe',1],['SK14','Immolation',1],
+        ['SK16','InnerSight',0],['SK17','CritStrike',0],['SK18','Dodge',0],['SK19','SlwMissle',0],
+        ['SK20','Avoid',0],['SK21','Penetrate',0],['SK22','Decoy',0],['SK23','Evade',0],
+        ['SK24','Valkyrie',1],['SK25','Pierce',1],
+        ['SK26','Jab',0],['SK27','PwrStrk',0],['SK28','PoisJav',0],['SK29','Impale',0],
+        ['SK30','LghtBolt',0],['SK31','ChrgStrk',1],['SK32','PlgJav',1],['SK33','Fend',0],
+        ['SK34','LghtStrk',1],['SK35','LghtFury',1]
+      ];
+      // Sorceress
+      var sorSkills = [
+        ['SK36','FireBolt',0],['SK37','Warmth',0],['SK38','Inferno',0],['SK39','Blaze',0],
+        ['SK40','FireBall',1],['SK41','FireWall',0],['SK42','Enchant',1],['SK43','Meteor',1],
+        ['SK44','FireMstry',1],['SK45','Hydra',1],
+        ['SK46','ChrgBolt',0],['SK47','StatFld',0],['SK48','Telekinesis',0],['SK49','Nova',1],
+        ['SK50','ShivArm',1],['SK51','Lghtn',1],['SK52','ChainLght',1],['SK53','ThndStorm',1],
+        ['SK54','Teleport',1],['SK55','LghtMstry',1],['SK56','EnrgShld',1],
+        ['SK57','FrstBolt',0],['SK58','IceBlst',0],['SK59','FrstNova',1],['SK60','Blizzard',1],
+        ['SK61','GlacSpike',1],['SK62','ColdMstry',1],['SK63','FrzOrb',1],['SK64','ShvrArm',1],
+        ['SK65','ColdSnap',1]
+      ];
+      // Necromancer
+      var necSkills = [
+        ['SK66','AmpDmg',1],['SK67','Terror',1],['SK68','Weaken',1],['SK69','LifeTap',1],
+        ['SK70','IronMaid',1],['SK71','Confuse',0],['SK72','Attract',0],['SK73','Decrepify',1],
+        ['SK74','LwrRes',1],['SK75','DimVsn',1],
+        ['SK79','SkeletonMsry',1],['SK80','CorpExpl',1],['SK83','BneSpear',1],
+        ['SK84','BneWall',1],['SK85','BnePrison',1],['SK87','BneSpirit',1],
+        ['SK89','PsnNova',1],['SK91','PsnExpl',0],['SK92','Revive',1],
+        ['SK94','SkelMage',1],['SK95','BloodGolem',1]
+      ];
+      // Paladin
+      var palSkills = [
+        ['SK99','Sacrifice',1],['SK101','HlyBolt',1],['SK102','Zeal',1],
+        ['SK105','Charge',1],['SK109','Vengeance',1],['SK110','BlessHammer',1],
+        ['SK111','Conversion',0],['SK112','HlyShld',1],['SK113','FistHvns',1],
+        ['SK114','Might',1],['SK116','HlyFire',1],['SK117','Thorns',0],
+        ['SK118','Defiance',1],['SK119','Resist',1],['SK121','Cleansing',1],
+        ['SK122','Vigor',1],['SK123','Meditate',1],['SK125','Conviction',1],
+        ['SK364','Fanaticism',1]
+      ];
+      // Barbarian
+      var barSkills = [
+        ['SK126','Bash',0],['SK128','GenMstry',1],['SK130','Howl',0],
+        ['SK131','FindPot',0],['SK132','Taunt',0],['SK133','Shout',1],
+        ['SK134','Stun',1],['SK135','DblSwng',1],['SK136','Leap',1],
+        ['SK137','DblThrow',0],['SK138','LeapAtk',1],['SK139','Concentrate',0],
+        ['SK140','IrnSkin',1],['SK141','BattleCry',1],['SK142','Frenzy',0],
+        ['SK143','Whirlwind',1],['SK144','Berserk',0],['SK145','NatRes',1],
+        ['SK146','WarCry',1],['SK147','BattleOrders',1],['SK148','GrimWrd',1],
+        ['SK149','BattleCommand',1],['SK150','FindItem',0],['SK151','IncSpeed',1],
+        ['SK153','CombMstry',1],['SK154','AxeMstry',1],['SK155','MaceMstry',1],['SK368','PolearmMstry',1]
+      ];
+      // Druid
+      var druSkills = [
+        ['SK222','Raven',1],['SK223','PlagPoppy',0],['SK224','OakSage',1],
+        ['SK225','SumSpirit',0],['SK226','Carrion',1],['SK227','HoW',1],
+        ['SK228','SumGrizzly',1],['SK229','SumDire',1],
+        ['SK230','Werewolf',0],['SK231','Lycanthrpy',0],['SK232','Werebear',0],
+        ['SK233','FeralRage',0],['SK234','Maul',0],['SK235','Rabies',1],
+        ['SK236','FireClaws',1],['SK237','Hunger',1],['SK238','ShockWave',0],
+        ['SK239','Fury',0],
+        ['SK240','Firestorm',0],['SK241','MoltenBldr',0],['SK242','Arctic',0],
+        ['SK243','Fissure',1],['SK244','CycloneArmr',1],['SK245','Twister',1],
+        ['SK246','Volcano',1],['SK247','Tornado',1],['SK248','Armageddon',1],
+        ['SK249','Hurricane',1],['SK370','SumVine',1]
+      ];
+      // Assassin
+      var sinSkills = [
+        ['SK251','FireBlast',0],['SK252','ClawMstry',1],['SK253','PsyHammer',0],
+        ['SK254','TigerStrk',0],['SK255','DrgnTalon',0],['SK256','ShckWeb',0],
+        ['SK257','BladeSent',1],['SK258','BurstSpd',1],['SK259','FistOFire',1],
+        ['SK260','DrgnClaw',0],['SK261','ChrgBoltSent',1],['SK262','WakeOFire',1],
+        ['SK263','WpnBlock',1],['SK264','CloakShadow',0],['SK265','CobraStrk',0],
+        ['SK266','BladeFury',1],['SK267','Fade',1],['SK268','ShadowWarr',0],
+        ['SK269','ClawsThund',1],['SK270','DrgnTail',0],['SK271','LghtSent',1],
+        ['SK272','WakeInferno',1],['SK273','MindBlast',1],['SK274','BladeIce',1],
+        ['SK275','DrgnFlight',1],['SK276','DeathSent',1],['SK277','BladeShield',1],
+        ['SK278','Venom',1],['SK279','ShadowMstr',0],['SK280','PhnxStrk',1],['SK366','LghtSentry',1]
+      ];
+
+      var allClassSkills = [
+        {name:'Amazon', skills:aznSkills},
+        {name:'Sorceress', skills:sorSkills},
+        {name:'Necromancer', skills:necSkills},
+        {name:'Paladin', skills:palSkills},
+        {name:'Barbarian', skills:barSkills},
+        {name:'Druid', skills:druSkills},
+        {name:'Assassin', skills:sinSkills}
+      ];
+
+      allClassSkills.forEach(function (cls) {
+        lines.push('// --- ' + cls.name + ' Staffmods ---');
+        cls.skills.forEach(function (sk) {
+          var code = sk[0], name = sk[1], top = sk[2];
+          if (top) {
+            // Top skills: show +3 always, show +1/+2 at low FILTLVL
+            lines.push('ItemDisplay[!UNI !SET !RW ' + code + '=3]: %ORANGE%+3 ' + name + ' %NAME%{%NAME%}%CONTINUE%');
+            lines.push('ItemDisplay[!UNI !SET !RW ' + code + '=2 FILTLVL<3]: %GREEN%+2 ' + name + ' %NAME%{%NAME%}%CONTINUE%');
+            lines.push('ItemDisplay[!UNI !SET !RW ' + code + '=1 FILTLVL<2]: %GREEN%+1 ' + name + ' %NAME%{%NAME%}%CONTINUE%');
+          } else {
+            // Non-top skills: only show at low FILTLVL
+            lines.push('ItemDisplay[!UNI !SET !RW ' + code + '=3 FILTLVL<3]: %GREEN%+3 ' + name + ' %NAME%{%NAME%}%CONTINUE%');
+            lines.push('ItemDisplay[!UNI !SET !RW ' + code + '=2 FILTLVL<2]: %GREEN%+2 ' + name + ' %NAME%{%NAME%}%CONTINUE%');
+            lines.push('ItemDisplay[!UNI !SET !RW ' + code + '=1 FILTLVL<2]: %GREEN%+1 ' + name + ' %NAME%{%NAME%}%CONTINUE%');
+          }
+        });
+        lines.push('');
+      });
+      } // end wantStaffmods
       lines.push('');
 
       // ==========================
