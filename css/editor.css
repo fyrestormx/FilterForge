@@ -472,7 +472,7 @@
   flex: 1;
   display: flex;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
   min-height: 400px;
   max-height: calc(100vh - 120px);
   position: relative;
