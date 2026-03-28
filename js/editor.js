@@ -801,16 +801,38 @@
       var conditions = ruleMatch[2];
       var output = ruleMatch[3];
 
-      // Highlight color tokens in output with their actual color
-      var highlightedOutput = escapeForHtml(output).replace(/%([A-Z_]+)%/g, function (m, tok) {
+      // Validate and highlight condition tokens
+      var highlightedConds = escapeForHtml(conditions).replace(/[A-Z!][A-Z0-9_!]*/g, function (tok) {
+        // Skip tokens that are part of OR groups or value comparisons
+        if (tok === 'OR') return tok;
+        // Value comparison (e.g. RUNE, SOCKETS in RUNE>5)
+        var baseTok = tok.replace(/^!/, '');
+        if (KNOWN_FLAGS.indexOf(baseTok) !== -1 || KNOWN_NEGATES.indexOf(tok) !== -1) return tok;
+        if (KNOWN_VALUE_CODES.indexOf(baseTok) !== -1) return tok;
+        // 3-4 char item codes are OK
+        if (baseTok.length <= 4 && baseTok.length >= 2) return tok;
+        // Unknown token — warn
+        return '<span class="hl-warn" title="Unknown condition: ' + tok + '">' + tok + '</span>';
+      });
+
+      // Highlight color tokens in output with their actual color, validate others
+      var highlightedOutput = escapeForHtml(output).replace(/%([A-Z_0-9]+(?:-[A-Z0-9]+)?)%/g, function (m, tok) {
         var colorKey = '%' + tok + '%';
         if (D2_COLORS[colorKey]) {
           return '<span class="hl-color-token" style="color:' + D2_COLORS[colorKey] + '">' + m + '</span>';
         }
-        return m;
+        // Known output tokens
+        var baseTok = tok.replace(/-.*/, '');
+        if (KNOWN_OUTPUT_TOKENS.indexOf(baseTok) !== -1) return m;
+        // Notification tokens (BORDER-XX, MAP-XX, DOT-XX, SOUNDID-XXXX, etc.)
+        if (/^(BORDER|MAP|DOT|PX|SOUNDID|SOUND|NOTIFY|TIER|STAT\d+|SK\d+|CLSK\d+|TABSK\d+|MULTI)/.test(tok)) return m;
+        // Escaped percent
+        if (tok === '') return m;
+        // Unknown — warn
+        return '<span class="hl-warn" title="Unknown token: ' + m + '">' + m + '</span>';
       });
 
-      return pre + '<span class="hl-keyword">ItemDisplay</span>[<span class="hl-condition">' + escapeForHtml(conditions) + '</span>]: <span class="hl-output">' + highlightedOutput + '</span>';
+      return pre + '<span class="hl-keyword">ItemDisplay</span>[<span class="hl-condition">' + highlightedConds + '</span>]: <span class="hl-output">' + highlightedOutput + '</span>';
     }
 
     // FilterDisplayName line

@@ -525,6 +525,7 @@
 .code-highlight .hl-alias-name { color: #79c0ff; }
 .code-highlight .hl-alias-val { color: #e6e6e6; }
 .code-highlight .hl-error { background: rgba(225, 112, 85, 0.2); display: inline-block; width: 100%; }
+.code-highlight .hl-warn { text-decoration: wavy underline var(--warning); text-underline-offset: 3px; }
 
 .code-editor {
   position: absolute;
