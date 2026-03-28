@@ -115,26 +115,26 @@
               </div>
             </div>
 
-            <!-- Step 2: Experience -->
+            <!-- Step 2: Filter Strictness -->
             <div class="wizard-step" id="wiz-step-2" style="display:none">
-              <h3>What's your experience level?</h3>
-              <p class="text-muted">This sets the overall strictness — how aggressively items are hidden.</p>
+              <h3>How strict should your filter be?</h3>
+              <p class="text-muted">This controls how aggressively items are hidden from the ground.</p>
               <div class="wizard-options" data-wiz="experience" data-multi="false">
                 <button class="wizard-opt" data-value="new">
-                  <strong>New to PD2</strong>
-                  <span>Show almost everything. I want to learn what drops.</span>
+                  <strong>Relaxed</strong>
+                  <span>Show almost everything — nothing important gets hidden.</span>
                 </button>
                 <button class="wizard-opt" data-value="casual">
-                  <strong>Casual</strong>
+                  <strong>Light</strong>
                   <span>Hide obvious junk but keep anything potentially useful.</span>
                 </button>
                 <button class="wizard-opt" data-value="experienced">
-                  <strong>Experienced</strong>
-                  <span>Hide low-value items. I know what I'm looking for.</span>
+                  <strong>Moderate</strong>
+                  <span>Hide low-value items. Show only gear worth picking up.</span>
                 </button>
                 <button class="wizard-opt" data-value="endgame">
-                  <strong>Endgame / Mapping</strong>
-                  <span>Very strict. Only show items worth picking up in maps.</span>
+                  <strong>Strict</strong>
+                  <span>Very aggressive — only show items worth picking up in maps.</span>
                 </button>
               </div>
             </div>
@@ -273,6 +273,14 @@
                 <button class="wizard-opt" data-value="eth">
                   <strong>Ethereal Tag</strong>
                   <span>Show [ETH] on ethereal items</span>
+                </button>
+                <button class="wizard-opt" data-value="shortnames">
+                  <strong>Class Item Short Names</strong>
+                  <span>Rename unid class items on ground (e.g. "Nec Head", "Sorc Orb") at strict levels</span>
+                </button>
+                <button class="wizard-opt" data-value="uniquenames">
+                  <strong>Reveal Unique Names</strong>
+                  <span>Show what unidentified uniques and sets identify as (e.g. Diadem &rarr; "Griffon's Eye")</span>
                 </button>
               </div>
             </div>
@@ -670,21 +678,6 @@
               </div>
             </div>
 
-            <!-- Preview + Insert -->
-            <div class="builder-group">
-              <div class="builder-group-header always-open">
-                <span>Generated Rule</span>
-              </div>
-              <div class="builder-panel open" id="generated-panel">
-                <pre class="generated-rule"><code id="generated-code">ItemDisplay[]: %NAME%</code></pre>
-                <div class="builder-actions">
-                  <button class="btn btn-primary" id="btn-insert-rule">Insert into Editor</button>
-                  <button class="btn btn-secondary" id="btn-copy-rule">Copy</button>
-                  <button class="btn btn-secondary" id="btn-clear-builder">Clear</button>
-                </div>
-              </div>
-            </div>
-
             <!-- Templates -->
             <div class="builder-group">
               <div class="builder-group-header" data-toggle="templates-panel">
@@ -704,6 +697,16 @@
 
         <!-- Center: Code Editor -->
         <div class="editor-main">
+          <!-- Generated Rule (from Rule Builder) -->
+          <div class="generated-rule-bar" id="generated-panel">
+            <pre class="generated-rule"><code id="generated-code">ItemDisplay[]: %NAME%</code></pre>
+            <div class="builder-actions">
+              <button class="btn btn-primary" id="btn-insert-rule">Insert into Editor</button>
+              <button class="btn btn-secondary" id="btn-copy-rule">Copy</button>
+              <button class="btn btn-secondary" id="btn-clear-builder">Clear</button>
+            </div>
+          </div>
+
           <div class="editor-tabs">
             <button class="editor-tab active" data-tab="code">Code Editor</button>
             <button class="editor-tab" data-tab="preview">Live Preview</button>
@@ -750,7 +753,7 @@
                 <optgroup label="Unique Items (unid)">
                   <option value="uni-shako">Unid Unique Shako (uap)</option>
                   <option value="uni-griffon">Unid Unique Diadem (ci3)</option>
-                  <option value="uni-coa">Unid Unique Demonhead (urn)</option>
+                  <option value="uni-coa">Unid Unique Corona (urn)</option>
                   <option value="uni-arach">Unid Unique Spiderweb Sash (ulc)</option>
                   <option value="uni-stormshield">Unid Unique Monarch (uit)</option>
                   <option value="uni-facet">Unid Unique Jewel (jew)</option>
@@ -867,6 +870,7 @@
     <p>Filter Forge is a community resource for <a href="https://www.projectdiablo2.com/" target="_blank" rel="noopener">Project Diablo 2</a> &middot; <a href="https://github.com/Maaaaaarrk/FilterForge" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
 
+  <div class="preview-tooltip" id="preview-tooltip"></div>
   <script src="js/shared.js"></script>
   <script src="js/editor.js"></script>
 </body>

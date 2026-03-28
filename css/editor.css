@@ -302,6 +302,12 @@
 }
 
 /* Generated rule */
+.generated-rule-bar {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
 .generated-rule {
   margin-bottom: 0.5rem;
   font-size: 0.82rem;
@@ -321,7 +327,7 @@
 
 .builder-actions .btn {
   flex: 1;
-  min-width: 0;
+  min-width: fit-content;
   text-align: center;
   font-size: 0.82rem;
   padding: 0.4rem 0.5rem;
@@ -409,7 +415,7 @@
 .code-editor-wrap {
   flex: 1;
   display: flex;
-  overflow: hidden;
+  overflow: auto;
   min-height: 400px;
   position: relative;
 }
@@ -443,7 +449,7 @@
   tab-size: 4;
   white-space: pre;
   overflow-wrap: normal;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .code-editor::placeholder {
@@ -641,6 +647,30 @@
   font-size: 0.66rem;
   color: var(--text-secondary);
   opacity: 0.6;
+}
+
+/* Preview tooltip */
+.preview-tooltip {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  max-width: 90vw;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.preview-tooltip.visible {
+  display: block;
 }
 
 .btn-goto-line {

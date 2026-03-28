@@ -950,6 +950,33 @@
         if (line) goToLine(line);
       }
     });
+
+    // Custom tooltip for preview code elements
+    var tooltip = document.getElementById('preview-tooltip');
+    previewResults.addEventListener('mouseover', function (e) {
+      var code = e.target.closest('code[data-fulltext]');
+      if (!code) return;
+      var text = code.getAttribute('data-fulltext');
+      if (!text) return;
+      tooltip.textContent = text;
+      tooltip.classList.add('visible');
+    });
+    previewResults.addEventListener('mousemove', function (e) {
+      if (!tooltip.classList.contains('visible')) return;
+      var x = e.clientX + 12;
+      var y = e.clientY + 12;
+      // Keep tooltip on screen
+      var rect = tooltip.getBoundingClientRect();
+      if (x + rect.width > window.innerWidth - 8) x = e.clientX - rect.width - 12;
+      if (y + rect.height > window.innerHeight - 8) y = e.clientY - rect.height - 12;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+    });
+    previewResults.addEventListener('mouseout', function (e) {
+      var code = e.target.closest('code[data-fulltext]');
+      if (!code) return;
+      tooltip.classList.remove('visible');
+    });
   }
 
   function testAllItems() {
@@ -1315,8 +1342,8 @@
     // Boolean flag
     if (item.flags && item.flags.indexOf(token) !== -1) return true;
 
-    // Item code match
-    if (token === item.code) return true;
+    // Item code match (case-insensitive)
+    if (token.toLowerCase() === item.code.toLowerCase()) return true;
 
     // GOLD special
     if (token === 'GOLD' && item.values && item.values.GOLD > 0) return true;
@@ -1401,7 +1428,7 @@
       // Effective computed output
       html += '<div class="preview-chain-rule chain-result">';
       html += '<span class="chain-effective">computed</span> ';
-      html += '<code>' + escapeHtml(truncateRule(result.output, 100)) + '</code>';
+      html += '<code data-fulltext="' + escapeHtml(result.output) + '">' + escapeHtml(truncateRule(result.output, 100)) + '</code>';
       html += '</div>';
       // Each rule in the chain
       for (var ri = 0; ri < result.allRules.length; ri++) {
@@ -1411,14 +1438,14 @@
         html += '<div class="preview-chain-rule">';
         html += '<span class="chain-line">L' + r.lineNum + '</span> ';
         html += label + ' ';
-        html += '<code>' + escapeHtml(truncateRule(r.raw, 70)) + '</code> ';
+        html += '<code data-fulltext="' + escapeHtml(r.raw) + '">' + escapeHtml(truncateRule(r.raw, 70)) + '</code> ';
         html += '<button class="btn-goto-line" data-line="' + r.lineNum + '">&rarr;</button>';
         html += '</div>';
       }
       html += '</div>';
     } else {
       html += '<div class="preview-item-rule">Matched line ' + result.rule.lineNum;
-      html += ' — <code>' + escapeHtml(truncateRule(result.rule.raw, 90)) + '</code>';
+      html += ' — <code data-fulltext="' + escapeHtml(result.rule.raw) + '">' + escapeHtml(truncateRule(result.rule.raw, 90)) + '</code>';
       html += ' <button class="btn-goto-line" data-line="' + result.rule.lineNum + '">Go to line &rarr;</button>';
       html += '</div>';
     }
@@ -1441,6 +1468,9 @@
     }
     text = text.replace(/%RUNENAME%/g, RUNE_NAMES[item.values.RUNE] || '');
     text = text.replace(/%RUNENUM%/g, item.values.RUNE || '');
+    var GEM_TYPE_NAMES = ['', 'Amethyst', 'Diamond', 'Emerald', 'Ruby', 'Sapphire', 'Topaz', 'Skull'];
+    text = text.replace(/%GEMTYPE%/g, GEM_TYPE_NAMES[item.values.GEMTYPE] || '');
+    text = text.replace(/%GEMLEVEL%/g, item.values.GEMLEVEL || '0');
     text = text.replace(/%ILVL%/g, item.values.ILVL || '');
     text = text.replace(/%ALVL%/g, item.values.ALVL || '');
     text = text.replace(/%CRAFTALVL%/g, item.values.CRAFTALVL || '');
@@ -1467,6 +1497,7 @@
     // Remove notification and special tokens for display
     text = text.replace(/%(?:BORDER|MAP|DOT|PX)(?:-[0-9A-Fa-f]{1,2})?%/g, '');
     text = text.replace(/%SOUNDID-\d+%/g, '');
+    text = text.replace(/%SOUND_\d+%/g, '');
     text = text.replace(/%NOTIFY[^%]*%/g, '');
     text = text.replace(/%CONTINUE%/g, '');
     text = text.replace(/%TIER-\d+%/g, '');
@@ -1502,8 +1533,8 @@
     // Remove descriptions {} for inline display
     text = text.replace(/\{[^}]*\}/g, '');
 
-    // Convert colors to spans
-    var currentColor = '#ffffff';
+    // Convert colors to spans (default D2 text color is orange)
+    var currentColor = '#ff8000';
     var result = '';
     // Split by color tokens — but also handle adjacent tokens carefully
     // Process character by character to avoid regex split issues
@@ -1740,13 +1771,13 @@
       var labels = {
         'all': 'All Classes', amazon: 'Amazon', sorceress: 'Sorceress', necromancer: 'Necromancer',
         paladin: 'Paladin', barbarian: 'Barbarian', druid: 'Druid', assassin: 'Assassin',
-        'new': 'New to PD2', casual: 'Casual', experienced: 'Experienced', endgame: 'Endgame',
+        'new': 'Relaxed', casual: 'Light', experienced: 'Moderate', endgame: 'Strict',
         none: 'None', minimal: 'Minimal', standard: 'Standard', full: 'Full', max: 'Maximum',
         'default': 'Default', fire: 'Fire', water: 'Water', earth: 'Earth', rainbow: 'Rainbow', clean: 'Clean',
         arrows: 'Arrows', stars: 'Stars', diamonds: 'Diamonds', pipes: 'Pipes', exclaim: 'Exclaim',
         circles: 'Circles', dots: 'Dots', crosses: 'Crosses',
         sockets: 'Socket Count', ilvl: 'Item Level', price: 'Vendor Price',
-        crafting: 'Crafting Info', eth: 'Ethereal Tag',
+        crafting: 'Crafting Info', eth: 'Ethereal Tag', shortnames: 'Short Names', uniquenames: 'Reveal Uniques',
         'all-rw': 'All Good Bases', 'eth-rw': 'Eth Bases Only', 'none-rw': 'None',
         hidegold: 'Hide Low Gold', hidekeys: 'Hide Keys',
         hidescrolls: 'Hide Scrolls', hidepots: 'Hide Small Potions',
@@ -1759,7 +1790,7 @@
     function renderSummary() {
       var rows = [
         { l: 'Class', v: label('', choices['class']) || 'Not selected' },
-        { l: 'Experience', v: label('', choices.experience) || 'Not selected' },
+        { l: 'Strictness', v: label('', choices.experience) || 'Not selected' },
         { l: 'Notifications', v: label('', choices.notifications) || 'None' },
         { l: 'Color Theme', v: label('', choices.colorprofile) || 'Default' },
         { l: 'Decoration', v: label('', choices.decoration) || 'Arrows' },
@@ -1866,6 +1897,8 @@
       var wantPrice = c.extras.indexOf('price') !== -1;
       var wantCrafting = c.extras.indexOf('crafting') !== -1;
       var wantEthTag = c.extras.indexOf('eth') !== -1;
+      var wantShortNames = c.extras.indexOf('shortnames') !== -1;
+      var wantUniqueNames = c.extras.indexOf('uniquenames') !== -1;
       var rwBases = c.rwbases || 'none';
       var wantSocketRecipe = c.tooltips.indexOf('socketrecipe') !== -1;
       var wantSellValue = c.tooltips.indexOf('sellvalue') !== -1;
@@ -2148,12 +2181,7 @@
 
       // Tier 1: High Runes (Lo #28 through Zod #33)
       lines.push('// --- High Runes (Lo - Zod) ---');
-      lines.push('ItemDisplay[RUNE=33]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
-      lines.push('ItemDisplay[RUNE=32]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
-      lines.push('ItemDisplay[RUNE=31]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
-      lines.push('ItemDisplay[RUNE=30]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
-      lines.push('ItemDisplay[RUNE=29]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
-      lines.push('ItemDisplay[RUNE=28]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
+      lines.push('ItemDisplay[RUNE~28-33]: ' + colorHR + decoHR_L + '%RUNENAME% Rune' + decoHR_R + ' (#%RUNENUM%)' + hrNotify);
 
       // Tier 2: Mid-high Runes (Ist #24 through Ohm #27)
       lines.push('// --- Mid-High Runes (Ist - Ohm) ---');
@@ -2179,6 +2207,117 @@
       // ==========================
       // 7. UNIQUE & SET (tiered)
       // ==========================
+
+      // Reveal unique/set names on unidentified items (must be above display rules)
+      if (wantUniqueNames) {
+        lines.push('// ============================================================');
+        lines.push('// UNIQUE & SET NAME REVEALS');
+        lines.push('// ============================================================');
+        var uniNames = [
+          // Boss uniques
+          ['UNI !ID ram', 'Annihilus'],
+          ['UNI !ID rar', 'Rathma\'s Shield'],
+          ['UNI !ID rbe', 'Rathma\'s Eye'],
+          // 4-star uniques
+          ['UNI !ID ci3', 'Griffon\'s Eye'],
+          ['UNI !ID pa9', 'Herald of Zakarum'],
+          ['UNI !ID obf', 'Bartuc\'s Cut-Throat'],
+          ['UNI !ID uar', 'Chains of Honor'],
+          ['UNI !ID ulc', 'Arachnid Mesh'],
+          ['UNI !ID uap', 'Shako'],
+          ['UNI !ID uhm', 'Steel Shade'],
+          ['UNI !ID usk', 'Hellslayer'],
+          ['UNI !ID urn', 'Crown of Ages'],
+          ['UNI !ID uit', 'Stormshield'],
+          ['UNI !ID uts', 'Shadow Dancer'],
+          ['UNI !ID 7wh', 'Windhammer'],
+          ['UNI !ID 7ws', 'Cranebeak'],
+          ['UNI !ID 6bs', 'Lacerator'],
+          ['UNI !ID 6ws', 'Warshrike'],
+          ['UNI !ID 7gw', 'Death Cleaver'],
+          ['UNI !ID xhb', 'Viperfork'],
+          ['UNI !ID uhc', 'Templar\'s Might'],
+          ['UNI !ID ci2', 'Kira\'s Guardian'],
+          ['UNI !ID nef', 'Lidless Wall'],
+          ['UNI !ID uui', 'Ormus\' Robes'],
+          ['UNI !ID upl', 'Steelrend'],
+          ['UNI !ID uul', 'Gladiator\'s Bane'],
+          ['UNI !ID 8mx', 'Alma Negra'],
+          ['UNI !ID dre', 'Spirit Keeper'],
+          ['UNI !ID 7pa', 'Veil of Steel'],
+          ['UNI !ID drd', 'Cerebus\' Bite'],
+          ['UNI !ID umc', 'Guardian Angel'],
+          ['UNI !ID umg', 'Dracul\'s Grasp'],
+          ['UNI !ID utg', 'Gore Rider'],
+          ['UNI !ID ztb', 'Sandstorm Trek'],
+          ['UNI !ID xvb', 'Trang-Oul\'s Claws'],
+          ['UNI !ID xsh', 'Head Hunter\'s Glory'],
+          ['UNI !ID utp', 'Tyrael\'s Might'],
+          ['UNI !ID amf', 'Windforce'],
+          ['UNI !ID 9gm', 'The Grandfather'],
+          ['UNI !ID 7p7', 'Astreon\'s Iron Ward'],
+          ['UNI !ID 7xf', 'Death\'s Fathom'],
+          ['UNI !ID 9la', 'Tomb Reaver'],
+          ['UNI !ID 7s8', 'Mang Song\'s Lesson'],
+          ['UNI !ID 7b7', 'Stormlash'],
+          ['UNI !ID 7b8', 'Horizon\'s Tornado'],
+          ['UNI !ID ama', 'Titan\'s Revenge'],
+          ['UNI !ID aar', 'Lycander\'s Aim'],
+          ['UNI !ID xlt', 'The Oculus'],
+          ['UNI !ID 7gd', 'Ethereal Edge'],
+          ['UNI !ID 8ls', 'Flamebellow'],
+          ['UNI !ID 7gm', 'Doombringer'],
+          ['UNI !ID 7ts', 'Warshrike'],
+          // 3-star uniques
+          ['UNI !ID bae', 'Vampire Gaze'],
+          ['UNI !ID xhn', 'Duriel\'s Shell'],
+          ['UNI !ID utu', 'Marrowwalk'],
+          ['UNI !ID zlb', 'Arkaine\'s Valor'],
+          ['UNI !ID uvc', 'Verdungo\'s Hearty Cord'],
+          ['UNI !ID uhg', 'Laying of Hands'],
+          ['UNI !ID uh9', 'War Traveler'],
+          ['UNI !ID 7fl', 'Rift'],
+          ['UNI !ID 7wc', 'Earth Shifter'],
+          ['UNI !ID 9bw', 'Eaglehorn'],
+          ['UNI !ID 9gw', 'Messerschmidt\'s Reaver'],
+          ['UNI !ID 6lw', 'Gargoyle\'s Bite'],
+          ['UNI !ID xtb', 'Waterwalk'],
+          ['UNI !ID xui', 'Skullder\'s Ire'],
+          ['UNI !ID 7cr', 'Demon Limb'],
+          ['UNI !ID uvg', 'Thundergod\'s Vigor'],
+          ['UNI !ID ulm', 'Steel Carapace'],
+          ['UNI !ID uow', 'Spike Thorn'],
+          ['UNI !ID nee', 'Homunculus'],
+          ['UNI !ID ned', 'Boneflame'],
+          ['UNI !ID xh9', 'Gore Rider'],
+          ['UNI !ID zvb', 'Jalal\'s Mane'],
+          ['UNI !ID 6sw', 'Gimmershred'],
+          ['UNI !ID paf', 'Herald of Zakarum'],
+          ['UNI !ID 7mp', 'Baranar\'s Star'],
+          ['UNI !ID scl', 'Tiamat\'s Rebuke'],
+          ['UNI !ID 8cb', 'Arreat\'s Face'],
+          ['UNI !ID zhb', 'Ravenlore'],
+          ['UNI !ID drc', 'Wolfhowl'],
+          ['UNI !ID 8rx', 'Headstriker'],
+          // Unique jewelry
+          ['UNI !ID jew', 'Rainbow Facet'],
+          // Well-known set items
+          ['SET !ID ne9', 'Trang-Oul\'s Guise'],
+          ['SET !ID utc', 'Immortal King\'s Soul Cage'],
+          ['SET !ID xmg', 'Laying of Hands'],
+          ['SET !ID uhm', 'Guillaume\'s Face'],
+          ['SET !ID xul', 'Natalya\'s Shadow'],
+          ['SET !ID 7ws', 'Aldur\'s Rhythm'],
+          ['SET !ID lgl', 'Sigon\'s Wrap'],
+          ['SET !ID xvg', 'Trang-Oul\'s Claws'],
+          ['SET !ID lbt', 'Sigon\'s Sabot']
+        ];
+        uniNames.forEach(function (entry) {
+          lines.push('ItemDisplay[' + entry[0] + ']: %CONTINUE%' + entry[1] + '%GOLD%');
+        });
+        lines.push('');
+      }
+
       lines.push('// ============================================================');
       lines.push('// UNIQUE & SET ITEMS');
       lines.push('// ============================================================');
@@ -2271,13 +2410,13 @@
       lines.push('// CHARMS');
       lines.push('// ============================================================');
       // Grand charms: highlight high-ilvl ones for skillers
-      lines.push('ItemDisplay[cm3 MAG ILVL>90]: %BLUE%GC %NAME%' + ilvlStr + charmNotify);
-      lines.push('ItemDisplay[cm3 MAG]: %BLUE%GC %NAME%' + ilvlStr);
+      lines.push('ItemDisplay[cm3 MAG !ID ILVL>90]: %BLUE%Grand Charm %NAME%' + ilvlStr + charmNotify);
+      lines.push('ItemDisplay[cm3 MAG !ID]: %BLUE%Grand Charm %NAME%' + ilvlStr);
       // Large charms
-      lines.push('ItemDisplay[cm2 MAG]: %BLUE%LC %NAME%');
+      lines.push('ItemDisplay[cm2 MAG !ID]: %BLUE%Large Charm %NAME%');
       // Small charms: show ilvl for max-roll hunting
-      lines.push('ItemDisplay[cm1 MAG ILVL>90]: %BLUE%SC %NAME%' + ilvlStr + charmNotify);
-      lines.push('ItemDisplay[cm1 MAG]: %BLUE%SC %NAME%' + ilvlStr);
+      lines.push('ItemDisplay[cm1 MAG !ID ILVL>90]: %BLUE%Small Charm %NAME%' + ilvlStr + charmNotify);
+      lines.push('ItemDisplay[cm1 MAG !ID]: %BLUE%Small Charm %NAME%' + ilvlStr);
       lines.push('');
 
       // ==========================
@@ -2407,8 +2546,8 @@
       lines.push('ItemDisplay[(ARMOR OR WEAPON) NMAG !ETH SOCK>0]: %GRAY%%NAME%%CONTINUE%{%NAME%}');
       // SUP enhanced defense/damage display
       lines.push('// Superior ED% display');
-      lines.push('ItemDisplay[!INF !RW NMAG SUP EDEF>0]: %BLUE%[%EDEF%%%] %NAME%{%NAME%}%CONTINUE%');
-      lines.push('ItemDisplay[!INF !RW NMAG SUP EDAM>0]: %RED%[%EDAM%%%] %NAME%{%NAME%}%CONTINUE%');
+      lines.push('ItemDisplay[!INF !RW NMAG SUP EDEF>0]: %BLUE%[%EDEF%%] %NAME%{%NAME%}%CONTINUE%');
+      lines.push('ItemDisplay[!INF !RW NMAG SUP EDAM>0]: %RED%[%EDAM%%] %NAME%{%NAME%}%CONTINUE%');
       // Paladin shield all-res
       if (!myClass || myClass === 'DIN') {
         lines.push('// Paladin shield All Res');
@@ -2509,25 +2648,17 @@
         lines.push('// Your class magic items get extra callout');
         lines.push('ItemDisplay[' + classUpper + ' ' + clNum + ' FILTLVL<2 MAG !ID]: %BLUE%** %NAME% **');
         lines.push('ItemDisplay[' + classUpper + ' ' + clNum + ' FILTLVL<5 RARE !ID]: %YELLOW%** %NAME% **');
+      }
+      if (wantShortNames) {
         // Class item rename on ground at strict levels
         lines.push('// Class item shortnames on ground at strict levels');
-        if (myClass === 'NEC' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) NEC !ID GROUND FILTLVL>4]: %CONTINUE%Nec Head');
-        if (myClass === 'SOR' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) SOR !ID GROUND FILTLVL>4]: %CONTINUE%Sorc Orb');
-        if (myClass === 'BAR' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) BAR !ID GROUND FILTLVL>4]: %CONTINUE%Barb Helm');
-        if (myClass === 'DRU' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) DRU !ID GROUND FILTLVL>4]: %CONTINUE%Druid Pelt');
-        if (myClass === 'DIN' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) DIN !ID GROUND FILTLVL>4]: %CONTINUE%Pala Shield');
-        if (myClass === 'SIN' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) SIN !ID GROUND FILTLVL>4]: %CONTINUE%Asn Claw');
-        if (myClass === 'ZON' || !myClass) lines.push('ItemDisplay[(MAG OR RARE) ZON !ID GROUND FILTLVL>4]: %CONTINUE%Zon Weapon');
-      } else {
-        // All classes: show class item renames at strict
-        lines.push('// Class item shortnames on ground at strict levels');
-        lines.push('ItemDisplay[(MAG OR RARE) NEC !ID GROUND FILTLVL>4]: %CONTINUE%Nec Head');
-        lines.push('ItemDisplay[(MAG OR RARE) SOR !ID GROUND FILTLVL>4]: %CONTINUE%Sorc Orb');
-        lines.push('ItemDisplay[(MAG OR RARE) BAR !ID GROUND FILTLVL>4]: %CONTINUE%Barb Helm');
-        lines.push('ItemDisplay[(MAG OR RARE) DRU !ID GROUND FILTLVL>4]: %CONTINUE%Druid Pelt');
-        lines.push('ItemDisplay[(MAG OR RARE) DIN !ID GROUND FILTLVL>4]: %CONTINUE%Pala Shield');
-        lines.push('ItemDisplay[(MAG OR RARE) SIN !ID GROUND FILTLVL>4]: %CONTINUE%Asn Claw');
-        lines.push('ItemDisplay[(MAG OR RARE) ZON !ID GROUND FILTLVL>4]: %CONTINUE%Zon Weapon');
+        if (!myClass || myClass === 'NEC') lines.push('ItemDisplay[(MAG OR RARE) NEC !ID GROUND FILTLVL>4]: %CONTINUE%Nec Head');
+        if (!myClass || myClass === 'SOR') lines.push('ItemDisplay[(MAG OR RARE) SOR !ID GROUND FILTLVL>4]: %CONTINUE%Sorc Orb');
+        if (!myClass || myClass === 'BAR') lines.push('ItemDisplay[(MAG OR RARE) BAR !ID GROUND FILTLVL>4]: %CONTINUE%Barb Helm');
+        if (!myClass || myClass === 'DRU') lines.push('ItemDisplay[(MAG OR RARE) DRU !ID GROUND FILTLVL>4]: %CONTINUE%Druid Pelt');
+        if (!myClass || myClass === 'DIN') lines.push('ItemDisplay[(MAG OR RARE) DIN !ID GROUND FILTLVL>4]: %CONTINUE%Pala Shield');
+        if (!myClass || myClass === 'SIN') lines.push('ItemDisplay[(MAG OR RARE) SIN !ID GROUND FILTLVL>4]: %CONTINUE%Asn Claw');
+        if (!myClass || myClass === 'ZON') lines.push('ItemDisplay[(MAG OR RARE) ZON !ID GROUND FILTLVL>4]: %CONTINUE%Zon Weapon');
       }
       // General magic/rare unid display by slot (from HiimFilter FILTLVL-gated)
       lines.push('// --- Unid magic/rare by slot ---');
@@ -2897,7 +3028,7 @@
         lines.push('ItemDisplay[MAG !RW SELLPRICE>34999]: %DARK_GREEN%$ %BLUE%%NAME%{%NAME%}');
         lines.push('ItemDisplay[MAG !RW SELLPRICE>19999 DIFF<2]: %DARK_GREEN%$ %BLUE%%NAME%{%NAME%}');
         lines.push('ItemDisplay[MAG !RW SELLPRICE>9999 DIFF<1]: %DARK_GREEN%$ %BLUE%%NAME%{%NAME%}');
-        lines.push('ItemDisplay[NMAG !RW SELLPRICE>34999 (NORM OR EXC OR ELT)]: %DARK_GREEN%$ %WHITE%%NAME%{%NAME%}');
+        lines.push('ItemDisplay[NMAG !RW SELLPRICE>34999]: %DARK_GREEN%$ %WHITE%%NAME%{%NAME%}');
         lines.push('');
       }
 
@@ -2909,24 +3040,24 @@
         lines.push('// UPGRADE RECIPES -- shown on identified items');
         lines.push('// ============================================================');
         // Unique armor upgrades
-        lines.push('ItemDisplay[UNI ID NORM ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Tal, Shael,%NL%%ORANGE%Upgrade Recipe:}%CONTINUE%');
-        lines.push('ItemDisplay[UNI ID EXC ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Ko, Lem,%NL%%ORANGE%Upgrade Recipe:}%CONTINUE%');
-        lines.push('ItemDisplay[UNI ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Ral, Sol,%NL%%ORANGE%Upgrade Recipe:}%CONTINUE%');
-        lines.push('ItemDisplay[UNI ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Lum, Pul,%NL%%ORANGE%Upgrade Recipe:}%CONTINUE%');
+        lines.push('ItemDisplay[UNI ID NORM ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Tal, Shael,%NL%%ORANGE%Upgrade Recipe:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[UNI ID EXC ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Ko, Lem,%NL%%ORANGE%Upgrade Recipe:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[UNI ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Ral, Sol,%NL%%ORANGE%Upgrade Recipe:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[UNI ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Lum, Pul,%NL%%ORANGE%Upgrade Recipe:%CL%}%CONTINUE%');
         // Set armor upgrades
-        lines.push('ItemDisplay[SET ID NORM ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Tal, Shael,%NL%%GREEN%Set Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[SET ID EXC ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Ko, Lem,%NL%%GREEN%Set Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[SET ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Ral, Sol,%NL%%GREEN%Set Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[SET ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Lum, Pul,%NL%%GREEN%Set Upgrade:}%CONTINUE%');
+        lines.push('ItemDisplay[SET ID NORM ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Tal, Shael,%NL%%GREEN%Set Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[SET ID EXC ARMOR]: %NAME%{%TAN%Rune + Perf Diamond%NL%Cube w/ Ko, Lem,%NL%%GREEN%Set Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[SET ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Ral, Sol,%NL%%GREEN%Set Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[SET ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Emerald%NL%Cube w/ Lum, Pul,%NL%%GREEN%Set Upgrade:%CL%}%CONTINUE%');
         // Rare/Craft armor upgrades
-        lines.push('ItemDisplay[RARE ID NORM (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ral, Thul,%NL%%YELLOW%Rare Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[RARE ID EXC (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ko, Pul,%NL%%YELLOW%Rare Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[RARE ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Ort, Amn,%NL%%YELLOW%Rare Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[RARE ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Fal, Um,%NL%%YELLOW%Rare Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[CRAFT ID NORM (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ral, Thul,%NL%%ORANGE%Craft Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[CRAFT ID EXC (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ko, Pul,%NL%%ORANGE%Craft Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[CRAFT ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Ort, Amn,%NL%%ORANGE%Craft Upgrade:}%CONTINUE%');
-        lines.push('ItemDisplay[CRAFT ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Fal, Um,%NL%%ORANGE%Craft Upgrade:}%CONTINUE%');
+        lines.push('ItemDisplay[RARE ID NORM (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ral, Thul,%NL%%YELLOW%Rare Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[RARE ID EXC (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ko, Pul,%NL%%YELLOW%Rare Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[RARE ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Ort, Amn,%NL%%YELLOW%Rare Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[RARE ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Fal, Um,%NL%%YELLOW%Rare Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[CRAFT ID NORM (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ral, Thul,%NL%%ORANGE%Craft Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[CRAFT ID EXC (ARMOR OR QUIVER)]: %NAME%{%TAN%Rune + Perf Amethyst%NL%Cube w/ Ko, Pul,%NL%%ORANGE%Craft Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[CRAFT ID NORM WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Ort, Amn,%NL%%ORANGE%Craft Upgrade:%CL%}%CONTINUE%');
+        lines.push('ItemDisplay[CRAFT ID EXC WEAPON]: %NAME%{%TAN%Rune + Perf Sapphire%NL%Cube w/ Fal, Um,%NL%%ORANGE%Craft Upgrade:%CL%}%CONTINUE%');
         lines.push('');
       }
 
@@ -2938,7 +3069,8 @@
         lines.push('// IMBUE & SLAM SUGGESTIONS');
         lines.push('// ============================================================');
         lines.push('// Eth elite bases worth imbuing at Charsi');
-        lines.push('ItemDisplay[NMAG ETH !RW SOCK=0 ELT (WEAPON OR CIRC)]: %NAME%{%GOLD%Imbue %WHITE%at Charsi for %YELLOW%Rare item%CL%%NAME%}%CONTINUE%');
+        lines.push('ItemDisplay[NMAG ETH !RW SOCK=0 ELT CIRC]: %NAME%{%GOLD%Imbue %WHITE%at Charsi for %YELLOW%Rare item%CL%%NAME%}%CONTINUE%');
+        lines.push('ItemDisplay[NMAG ETH !RW SOCK=0 ELT (SPEAR OR POLEARM OR AXE OR MACE OR SWORD)]: %NAME%{%GOLD%Imbue %WHITE%at Charsi for %YELLOW%Rare item%CL%%NAME%}%CONTINUE%');
         lines.push('// Diadem always worth imbuing');
         lines.push('ItemDisplay[ci3 NMAG !ETH SOCK=0]: %NAME%{%TAN%Imbue at Charsi for %YELLOW%Rare Diadem}');
         lines.push('// Non-eth bases can be slammed');
@@ -2969,10 +3101,9 @@
       lines.push('ItemDisplay[MAG !ID EXC FILTLVL>2]:');
       lines.push('ItemDisplay[RARE !ID NORM FILTLVL>2]:');
       lines.push('');
-      lines.push('// --- FILTLVL 4+: Very strict — hide non-elite magic, exc rares ---');
+      lines.push('// --- FILTLVL 4+: Very strict — hide non-elite magic ---');
       lines.push('ItemDisplay[NMAG !ETH !RW !SUP ELT SOCK=0 FILTLVL>3]:');
       lines.push('ItemDisplay[MAG !ID !JEWELRY !CHARM FILTLVL>3]:');
-      lines.push('ItemDisplay[RARE !ID EXC FILTLVL>3]:');
       lines.push('');
 
       // ==========================
@@ -3530,6 +3661,9 @@
   function init() {
     loadFromStorage();
     updateLineNumbers();
+    // Auto-size textarea to content
+    codeEditor.style.height = 'auto';
+    codeEditor.style.height = codeEditor.scrollHeight + 'px';
 
     initChips();
     initPanelToggles();
@@ -3546,9 +3680,15 @@
     initAuthorImport();
 
     // Code editor events
+    function autoResizeEditor() {
+      codeEditor.style.height = 'auto';
+      codeEditor.style.height = codeEditor.scrollHeight + 'px';
+    }
+
     codeEditor.addEventListener('input', function () {
       updateLineNumbers();
       saveToStorage();
+      autoResizeEditor();
     });
     codeEditor.addEventListener('scroll', syncScroll);
     codeEditor.addEventListener('keydown', handleTab);
