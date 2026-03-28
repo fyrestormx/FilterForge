@@ -1236,6 +1236,7 @@
     var grailSearch = document.getElementById('grail-search');
     var grailProgress = document.getElementById('grail-progress');
     var btnGenerate = document.getElementById('btn-grail-generate');
+    var btnUpdate = document.getElementById('btn-grail-update');
     var btnReset = document.getElementById('btn-grail-reset');
 
     // Load found items from localStorage
@@ -1314,54 +1315,79 @@
       }
     });
 
-    btnGenerate.addEventListener('click', function () {
+    function buildGrailLines() {
       var lines = [];
-      lines.push('');
       lines.push('// ============================================================');
       lines.push('// HOLY GRAIL — Highlight unfound uniques');
       lines.push('// ============================================================');
-
       Object.keys(GRAIL_DATA).forEach(function (category) {
         GRAIL_DATA[category].forEach(function (item) {
           var key = category + ':' + item.name;
           if (!found[key]) {
-            // Unfound: add a highlight rule
-            lines.push('ItemDisplay[UNI !ID ' + item.code + ']: %PURPLE%** GRAIL: ' + item.name + ' **%BORDER-05%%CONTINUE%');
+            lines.push('ItemDisplay[UNI !ID ' + item.code + ']: %PURPLE%** GRAIL: ' + item.name + ' **%BORDER-05%');
           }
         });
       });
+      lines.push('// ============================================================');
+      lines.push('// END HOLY GRAIL');
+      lines.push('// ============================================================');
+      return lines;
+    }
 
-      if (lines.length <= 3) {
-        alert('All items found! No grail rules needed.');
-        return;
+    function removeGrailSection(code) {
+      var startMarker = '// HOLY GRAIL';
+      var endMarker = '// END HOLY GRAIL';
+      var grailStart = code.indexOf(startMarker);
+      if (grailStart === -1) return code;
+      var lineStart = code.lastIndexOf('\n', grailStart);
+      if (lineStart === -1) lineStart = 0;
+      var endIdx = code.indexOf(endMarker, grailStart);
+      if (endIdx === -1) return code;
+      var lineEnd = code.indexOf('\n', endIdx);
+      if (lineEnd === -1) lineEnd = code.length;
+      // Also remove the closing === line after END HOLY GRAIL
+      var nextLine = code.indexOf('\n', lineEnd + 1);
+      if (nextLine !== -1 && code.substring(lineEnd + 1, nextLine).trim().indexOf('// ====') === 0) {
+        lineEnd = nextLine;
       }
+      return code.substring(0, lineStart) + code.substring(lineEnd);
+    }
 
-      lines.push('');
-
-      // Remove existing grail section if present
-      var currentCode = codeEditor.value;
-      var grailStart = currentCode.indexOf('// HOLY GRAIL');
-      if (grailStart !== -1) {
-        var lineStart = currentCode.lastIndexOf('\n', grailStart);
-        var sectionEnd = currentCode.indexOf('// =====', grailStart + 20);
-        if (sectionEnd !== -1) {
-          var lineEnd = currentCode.indexOf('\n', sectionEnd);
-          if (lineEnd === -1) lineEnd = currentCode.length;
-          currentCode = currentCode.substring(0, lineStart) + currentCode.substring(lineEnd);
-        }
-      }
-
-      // Insert at top of filter
-      codeEditor.value = lines.join('\n') + '\n' + currentCode;
-      updateLineNumbers();
-      saveToStorage();
-
-      // Switch to code tab
+    function switchToCodeTab() {
       document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
       document.querySelector('[data-tab="code"]').classList.add('active');
       document.getElementById('pane-code').style.display = 'block';
       document.getElementById('pane-preview').style.display = 'none';
       document.getElementById('pane-grail').style.display = 'none';
+    }
+
+    btnGenerate.addEventListener('click', function () {
+      var lines = buildGrailLines();
+      if (lines.length <= 4) {
+        alert('All items found! No grail rules needed.');
+        return;
+      }
+
+      // Remove existing grail section, then insert at top
+      var currentCode = removeGrailSection(codeEditor.value);
+      codeEditor.value = lines.join('\n') + '\n' + currentCode;
+      updateLineNumbers();
+      saveToStorage();
+      switchToCodeTab();
+    });
+
+    btnUpdate.addEventListener('click', function () {
+      var currentCode = codeEditor.value;
+      if (currentCode.indexOf('// HOLY GRAIL') === -1) {
+        alert('No grail section found in the filter. Use "Insert Grail Rules" first.');
+        return;
+      }
+      var lines = buildGrailLines();
+      var cleaned = removeGrailSection(currentCode);
+      codeEditor.value = lines.join('\n') + '\n' + cleaned;
+      updateLineNumbers();
+      saveToStorage();
+      switchToCodeTab();
     });
 
     renderGrail('');
