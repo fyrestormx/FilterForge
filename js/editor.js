@@ -3068,9 +3068,8 @@
         lines.push('// ============================================================');
         lines.push('// IMBUE & SLAM SUGGESTIONS');
         lines.push('// ============================================================');
-        lines.push('// Eth elite bases worth imbuing at Charsi');
-        lines.push('ItemDisplay[NMAG ETH !RW SOCK=0 ELT CIRC]: %NAME%{%GOLD%Imbue %WHITE%at Charsi for %YELLOW%Rare item%CL%%NAME%}%CONTINUE%');
-        lines.push('ItemDisplay[NMAG ETH !RW SOCK=0 ELT (SPEAR OR POLEARM OR AXE OR MACE OR SWORD)]: %NAME%{%GOLD%Imbue %WHITE%at Charsi for %YELLOW%Rare item%CL%%NAME%}%CONTINUE%');
+        lines.push('// Eth bases worth imbuing at Charsi');
+        lines.push('ItemDisplay[NMAG ETH !RW SOCK=0 FILTLVL<3 (EQ7 OR lax OR 9la OR 7la OR 7cr OR 9cr OR crs OR 7gl OR 9gl OR glv OR 7wa OR 9wa OR wax OR 7gm OR 9gm OR gma OR 7m7 OR 9m9 OR mau OR 7gd OR 9gd OR gsd OR 7fb OR 9fb OR flb OR 7gi OR 9gi OR gix OR 7wh OR 9wh OR whm OR 7p7 OR 9p9 OR pik OR 7pi OR 9pi OR pil OR 7s7 OR 9s9 OR ssp OR 7ts OR 9ts OR tsp OR axf OR 9xf OR 7xf)]: * * %NAME% * *{%GOLD%Imbue %WHITE%at Charsi for %YELLOW%Rare item%CL%%NAME%}%CONTINUE%');
         lines.push('// Diadem always worth imbuing');
         lines.push('ItemDisplay[ci3 NMAG !ETH SOCK=0]: %NAME%{%TAN%Imbue at Charsi for %YELLOW%Rare Diadem}');
         lines.push('// Non-eth bases can be slammed');
