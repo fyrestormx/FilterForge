@@ -470,8 +470,7 @@
 /* Code editor */
 .code-editor-wrap {
   flex: 1;
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: visible;
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -541,7 +540,8 @@
   tab-size: 4;
   white-space: pre;
   overflow-wrap: normal;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   z-index: 1;
 }
 
