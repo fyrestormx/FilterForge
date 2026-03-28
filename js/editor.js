@@ -1775,7 +1775,7 @@
         none: 'None', minimal: 'Minimal', standard: 'Standard', full: 'Full', max: 'Maximum',
         'default': 'Default', fire: 'Fire', water: 'Water', earth: 'Earth', rainbow: 'Rainbow', clean: 'Clean',
         arrows: 'Arrows', stars: 'Stars', diamonds: 'Diamonds', pipes: 'Pipes', exclaim: 'Exclaim',
-        circles: 'Circles', dots: 'Dots', crosses: 'Crosses',
+        circles: 'Circles', dots: 'Dots', crosses: 'Crosses', middot: 'Middle Dots',
         sockets: 'Socket Count', ilvl: 'Item Level', price: 'Vendor Price',
         crafting: 'Crafting Info', eth: 'Ethereal Tag', shortnames: 'Short Names', uniquenames: 'Reveal Uniques',
         'all-rw': 'All Good Bases', 'eth-rw': 'Eth Bases Only', 'none-rw': 'None',
@@ -1842,24 +1842,26 @@
       var deco = c.decoration || 'arrows';
       var decoHR_L, decoHR_R, decoMid_L, decoMid_R, decoLow_L, decoLow_R;
       if (deco === 'stars') {
-        decoHR_L = '*** '; decoHR_R = ' ***'; decoMid_L = '** '; decoMid_R = ' **'; decoLow_L = '* '; decoLow_R = ' *';
+        decoHR_L = '***** '; decoHR_R = ' *****'; decoMid_L = '*** '; decoMid_R = ' ***'; decoLow_L = '* '; decoLow_R = ' *';
       } else if (deco === 'diamonds') {
         decoHR_L = '<> <> <> '; decoHR_R = ' <> <> <>'; decoMid_L = '<> <> '; decoMid_R = ' <> <>'; decoLow_L = '<> '; decoLow_R = ' <>';
       } else if (deco === 'pipes') {
-        decoHR_L = '|| '; decoHR_R = ' ||'; decoMid_L = '| '; decoMid_R = ' |'; decoLow_L = '| '; decoLow_R = ' |';
+        decoHR_L = '||| '; decoHR_R = ' |||'; decoMid_L = '|| '; decoMid_R = ' ||'; decoLow_L = '| '; decoLow_R = ' |';
       } else if (deco === 'exclaim') {
-        decoHR_L = '!! '; decoHR_R = ' !!'; decoMid_L = '! '; decoMid_R = ' !'; decoLow_L = '! '; decoLow_R = ' !';
+        decoHR_L = '!!! '; decoHR_R = ' !!!'; decoMid_L = '!! '; decoMid_R = ' !!'; decoLow_L = '! '; decoLow_R = ' !';
       } else if (deco === 'circles') {
-        decoHR_L = 'oOo '; decoHR_R = ' oOo'; decoMid_L = 'oO '; decoMid_R = ' Oo'; decoLow_L = 'o '; decoLow_R = ' o';
+        decoHR_L = 'oOoOo '; decoHR_R = ' oOoOo'; decoMid_L = 'oOo '; decoMid_R = ' oOo'; decoLow_L = 'oO '; decoLow_R = ' Oo';
       } else if (deco === 'dots') {
-        decoHR_L = '... '; decoHR_R = ' ...'; decoMid_L = '.. '; decoMid_R = ' ..'; decoLow_L = '. '; decoLow_R = ' .';
+        decoHR_L = '..... '; decoHR_R = ' .....'; decoMid_L = '... '; decoMid_R = ' ...'; decoLow_L = '.. '; decoLow_R = ' ..';
       } else if (deco === 'crosses') {
-        decoHR_L = 'xXx '; decoHR_R = ' xXx'; decoMid_L = 'xX '; decoMid_R = ' Xx'; decoLow_L = 'x '; decoLow_R = ' x';
+        decoHR_L = 'xXxXx '; decoHR_R = ' xXxXx'; decoMid_L = 'xXx '; decoMid_R = ' xXx'; decoLow_L = 'xX '; decoLow_R = ' Xx';
+      } else if (deco === 'middot') {
+        decoHR_L = '\xB7\xB7\xB7\xB7\xB7 '; decoHR_R = ' \xB7\xB7\xB7\xB7\xB7'; decoMid_L = '\xB7\xB7\xB7 '; decoMid_R = ' \xB7\xB7\xB7'; decoLow_L = '\xB7 '; decoLow_R = ' \xB7';
       } else if (deco === 'none') {
         decoHR_L = ''; decoHR_R = ''; decoMid_L = ''; decoMid_R = ''; decoLow_L = ''; decoLow_R = '';
       } else {
         // arrows (default)
-        decoHR_L = '>> '; decoHR_R = ' <<'; decoMid_L = '> '; decoMid_R = ' <'; decoLow_L = ''; decoLow_R = '';
+        decoHR_L = '>>> '; decoHR_R = ' <<<'; decoMid_L = '>> '; decoMid_R = ' <<'; decoLow_L = '> '; decoLow_R = ' <';
       }
 
       // Rainbow: override decorations with color-per-character
