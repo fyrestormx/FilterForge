@@ -802,14 +802,18 @@
       var output = ruleMatch[3];
 
       // Validate and highlight condition tokens
-      var highlightedConds = escapeForHtml(conditions).replace(/[A-Z!][A-Z0-9_!]*/g, function (tok) {
-        // Skip tokens that are part of OR groups or value comparisons
+      var highlightedConds = escapeForHtml(conditions).replace(/!?[A-Za-z][A-Za-z0-9_]*/g, function (tok) {
+        // Skip OR keyword
         if (tok === 'OR') return tok;
-        // Value comparison (e.g. RUNE, SOCKETS in RUNE>5)
+        // Strip leading ! for base token check
         var baseTok = tok.replace(/^!/, '');
-        if (KNOWN_FLAGS.indexOf(baseTok) !== -1 || KNOWN_NEGATES.indexOf(tok) !== -1) return tok;
+        // Known flags and negations
+        if (KNOWN_FLAGS.indexOf(baseTok) !== -1) return tok;
+        // Known value codes (SOCKETS, ILVL, RUNE, etc.)
         if (KNOWN_VALUE_CODES.indexOf(baseTok) !== -1) return tok;
-        // 3-4 char item codes are OK
+        // Dynamic stat/skill tokens: STAT###, SK###, CLSK###, TABSK###
+        if (/^!?(STAT|SK|CLSK|TABSK|CHARSTAT)\d*$/.test(tok)) return tok;
+        // Item codes (2-4 alphanumeric chars) — allow lowercase
         if (baseTok.length <= 4 && baseTok.length >= 2) return tok;
         // Unknown token — warn
         return '<span class="hl-warn" title="Unknown condition: ' + tok + '">' + tok + '</span>';
