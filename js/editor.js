@@ -2010,8 +2010,15 @@
     // Boolean flag
     if (item.flags && item.flags.indexOf(token) !== -1) return true;
 
-    // Item code match (case-insensitive)
-    if (token.toLowerCase() === item.code.toLowerCase()) return true;
+    // Preview rune samples use stackable codes (r30s), but site examples often use r30.
+    // Treat both forms as equivalent so exact rune-code rules preview correctly.
+    var tokenCode = token.toLowerCase();
+    var itemCode = item.code.toLowerCase();
+    if (tokenCode === itemCode) return true;
+    if (item.values && item.values.RUNE > 0) {
+      var shortRuneCode = itemCode.replace(/s$/, '');
+      if (tokenCode === shortRuneCode || tokenCode === shortRuneCode + 's') return true;
+    }
 
     // GOLD special
     if (token === 'GOLD' && item.values && item.values.GOLD > 0) return true;
