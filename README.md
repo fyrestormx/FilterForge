@@ -14,7 +14,7 @@ Filter Forge is a community resource for [Project Diablo 2](https://www.projectd
 Searchable FAQ with 75+ questions covering everything from installation to advanced syntax. Real-time search with tags, two-level accordion (groups + questions), auto-expand on few results, and deep-linkable via `?search=term` or `#question-id`.
 
 ### Build My Filter
-A 7-step wizard that generates a complete custom filter based on your choices:
+A 10-step wizard that generates a complete custom filter based on your choices:
 - Class selection (Amazon, Sorceress, Necromancer, Paladin, Barbarian, Druid, Assassin)
 - Experience level / strictness (New, Casual, Experienced, Endgame)
 - Notification preferences (map icons, sounds, big notifications)
@@ -27,7 +27,7 @@ Full-featured editor for creating and modifying `.filter` files:
 - **Visual Rule Builder** — click-to-build filter rules with conditions, colors, map icons, sounds
 - **Code Editor** — with line numbers, tab support, and auto-save to localStorage
 - **Live Preview** — test rules against 19 predefined items to see matches and colors
-- **Import from Author** — download filters directly from community authors (9 authors, 43+ filters)
+- **Import from Community Author** — download filters directly from community authors (13 authors, 43+ filters)
 - **Import/Export** — import `.filter` files from disk or export your work
 - **Templates** — starter, endgame, rune, crafting, and mapping templates
 
