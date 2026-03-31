@@ -5053,6 +5053,8 @@
     var authorParam = urlParams2.get('author');
     if (authorParam && initAuthorImport.openToAuthor) {
       initAuthorImport.openToAuthor(authorParam);
+      urlParams2.delete('author');
+      history.replaceState(null, '', window.location.pathname + (urlParams2.toString() ? '?' + urlParams2.toString() : '') + window.location.hash);
     }
 
     // Code editor events
