@@ -379,6 +379,7 @@
     'Pul', 'Um', 'Mal', 'Ist', 'Gul', 'Vex', 'Ohm', 'Lo', 'Sur', 'Ber',
     'Jah', 'Cham', 'Zod'
   ];
+  var BAKED_NAME_MARKER = '\u0001NAME\u0001';
 
   // ==========================================
   // Builder: chip/color toggle logic
@@ -1792,7 +1793,11 @@
         }
 
         // Resolve %NAME% in each part contextually
-        namePart = namePart.replace(/%NAME%/g, storedName);
+        var resolvedName = storedName;
+        if (item.values && item.values.RUNE > 0 && storedName === item.name) {
+          resolvedName = BAKED_NAME_MARKER;
+        }
+        namePart = namePart.replace(/%NAME%/g, resolvedName);
         descPart = descPart.replace(/%NAME%/g, storedDesc || storedName);
 
         allMatchedRules.push(rule);
@@ -2133,7 +2138,13 @@
     // %NAME% is resolved by matchItem during %CONTINUE% processing
     // Only replace if there are still unresolved %NAME% tokens (non-CONTINUE rules)
     if (text.indexOf('%NAME%') !== -1) {
-      text = text.replace(/%NAME%/g, item.name);
+      // Some in-game names (notably runes) keep their baked-in default color even when
+      // a rule prepends another color token before %NAME%.
+      if (item.values && item.values.RUNE > 0) {
+        text = text.replace(/%NAME%/g, BAKED_NAME_MARKER);
+      } else {
+        text = text.replace(/%NAME%/g, item.name);
+      }
     }
     text = text.replace(/%RUNENAME%/g, RUNE_NAMES[item.values.RUNE] || '');
     text = text.replace(/%RUNENUM%/g, item.values.RUNE || '');
@@ -2217,6 +2228,11 @@
     // Process character by character to avoid regex split issues
     var ci = 0;
     while (ci < text.length) {
+      if (text.indexOf(BAKED_NAME_MARKER, ci) === ci) {
+        result += '<span style="color:' + rarityColor + '">' + escapeHtml(item.name) + '</span>';
+        ci += BAKED_NAME_MARKER.length;
+        continue;
+      }
       // Check if current position starts a %COLOR% token
       if (text.charAt(ci) === '%') {
         var endPct = text.indexOf('%', ci + 1);
