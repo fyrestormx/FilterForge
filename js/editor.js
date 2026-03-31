@@ -2040,6 +2040,7 @@
     else if (item.flags.indexOf('RARE') !== -1) rarityColor = '#ffff40'; // yellow
     else if (item.flags.indexOf('CRAFT') !== -1) rarityColor = '#ff8000'; // orange
     else if (item.flags.indexOf('MAG') !== -1) rarityColor = '#6464ff'; // blue
+    else if (item.values && item.values.RUNE > 0) rarityColor = '#ff8000'; // orange for runes
     else if (item.flags.indexOf('NMAG') !== -1) rarityColor = '#ffffff'; // white
 
     var displayName;
@@ -2202,12 +2203,13 @@
     text = text.replace(/\{[^}]*\}/g, '');
 
     // Convert colors to spans — start with item's rarity color
-    var rarityColor = '#ff8000'; // default orange
+    var rarityColor = '#ffffff'; // default white
     if (item.flags.indexOf('UNI') !== -1) rarityColor = '#c8a040';
     else if (item.flags.indexOf('SET') !== -1) rarityColor = '#00c000';
     else if (item.flags.indexOf('RARE') !== -1) rarityColor = '#ffff40';
     else if (item.flags.indexOf('CRAFT') !== -1) rarityColor = '#ff8000';
     else if (item.flags.indexOf('MAG') !== -1) rarityColor = '#6464ff';
+    else if (item.values && item.values.RUNE > 0) rarityColor = '#ff8000';
     else if (item.flags.indexOf('NMAG') !== -1) rarityColor = '#ffffff';
     var currentColor = rarityColor;
     var result = '';
