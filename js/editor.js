@@ -1985,7 +1985,7 @@
     }
 
     // Value condition: CODE<val, CODE>val, CODE=val, CODE~min-max
-    var valueMatch = token.match(/^([A-Z]+)([<>=~])(.+)$/);
+    var valueMatch = token.match(/^([A-Z0-9]+)([<>=~])(.+)$/);
     if (valueMatch) {
       var code = valueMatch[1];
       var op = valueMatch[2];
