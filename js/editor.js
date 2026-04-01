@@ -660,9 +660,9 @@
     ['qui','xui','uui'],['lea','xea','uea'],['hla','xla','ula'],['stu','xtu','utu'],['rng','xng','ung'],['scl','xmg','umg'],['chn','xcl','ucl'],
     ['brs','xhn','uhn'],['spl','xrs','urs'],['plt','xpl','upl'],['fld','xlt','ult'],['gth','xld','uld'],['ful','xth','uth'],['aar','xul','uul'],['ltp','xar','uar'],
     // Shields
-    ['buc','xuc','uit'],['sml','xml','uow'],['lrg','xrg','uts'],['kit','xts','ush'],['tow','xsh','ush'],
+    ['buc','xuc','uit'],['sml','xml','uow'],['lrg','xrg','uts'],['kit','xts','uts'],['tow','xsh','ush'],
     // Gloves
-    ['lgl','xlg','ulg'],['vgl','xvg','uvg'],['mgl','xmb','umb'],['tgl','xtg','utg'],['hgl','xhg','uhg'],
+    ['lgl','xlg','ulg'],['vgl','xvg','uvg'],['mgl','xmg','umg'],['tgl','xtg','utg'],['hgl','xhg','uhg'],
     // Boots
     ['lbt','xlb','ulb'],['vbt','xvb','uvb'],['mbt','xmb','umb'],['tbt','xtb','utb'],['hbt','xhb','uhb'],
     // Belts
