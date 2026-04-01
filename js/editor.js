@@ -2049,6 +2049,9 @@
     else if (item.flags.indexOf('MAG') !== -1) rarityColor = '#6464ff'; // blue
     else if (item.values && item.values.RUNE > 0) rarityColor = '#ff8000'; // orange for runes
     else if (item.flags.indexOf('NMAG') !== -1) rarityColor = '#ffffff'; // white
+    // PD2 special item base colors
+    if (item.code === 'wss' || item.code === 'cwss') rarityColor = '#ff4040'; // red for Worldstone Shard
+    else if (item.code === 'lbox' || item.code === 'lpp') rarityColor = '#c8a040'; // gold for Puzzlebox/Puzzlepiece
 
     var displayName;
     if (result.matched && result.output) {
@@ -2218,6 +2221,9 @@
     else if (item.flags.indexOf('MAG') !== -1) rarityColor = '#6464ff';
     else if (item.values && item.values.RUNE > 0) rarityColor = '#ff8000';
     else if (item.flags.indexOf('NMAG') !== -1) rarityColor = '#ffffff';
+    // PD2 special item base colors
+    if (item.code === 'wss' || item.code === 'cwss') rarityColor = '#ff4040'; // red for Worldstone Shard
+    else if (item.code === 'lbox' || item.code === 'lpp') rarityColor = '#c8a040'; // gold for Puzzlebox/Puzzlepiece
     var currentColor = rarityColor;
     var result = '';
     // Split by color tokens — but also handle adjacent tokens carefully
@@ -2784,8 +2790,8 @@
       // Worldstone Shard, Puzzlebox, Puzzlepiece
       lines.push('// --- Corruption & Crafting Materials ---');
       lines.push('ItemDisplay[wss]: %PURPLE%+ %RED%Worldstone Shard %PURPLE%+' + pd2BigNotify);
-      lines.push('ItemDisplay[lbox]: %PURPLE%+ %RED%Larzuks Puzzlebox %PURPLE%+' + pd2BigNotify);
-      lines.push('ItemDisplay[lpp]: %PURPLE%+ %RED%Larzuks Puzzlepiece %PURPLE%+' + pd2BigNotify);
+      lines.push('ItemDisplay[lbox]: %PURPLE%+ %GOLD%Larzuks Puzzlebox %PURPLE%+' + pd2BigNotify);
+      lines.push('ItemDisplay[lpp]: %PURPLE%+ %GOLD%Larzuks Puzzlepiece %PURPLE%+' + pd2BigNotify);
 
       // Skeleton Key
       lines.push('// --- Skeleton Key ---');
