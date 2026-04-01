@@ -1569,6 +1569,7 @@
     document.querySelector('[data-tab="code"]').classList.add('active');
     document.getElementById('pane-code').style.display = 'block';
     document.getElementById('pane-preview').style.display = 'none';
+    document.getElementById('pane-grail').style.display = 'none';
 
     var text = codeEditor.value;
     var lines = text.split('\n');
