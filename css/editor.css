@@ -115,8 +115,9 @@
 }
 
 /* Sidebar - Rule Builder
-   overflow-y requires a height constraint to activate scrolling;
-   sticky positioning + max-height are added in PR #125 (fix/sidebar-scroll) */
+   overflow-y: auto is intentional without a height constraint — the sidebar
+   grows with its content and the page scrolls as a whole. Do not add
+   sticky positioning or max-height here. */
 .editor-sidebar {
   width: 340px;
   flex-shrink: 0;
