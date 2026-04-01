@@ -3963,7 +3963,7 @@
         if (selectedClasses.length === 0 || hasClass('BAR')) lines.push('ItemDisplay[(MAG OR RARE) BAR !ID GROUND FILTLVL>2]: Barb Helm%CONTINUE%');
         if (selectedClasses.length === 0 || hasClass('DRU')) lines.push('ItemDisplay[(MAG OR RARE) DRU !ID GROUND FILTLVL>2]: Druid Pelt%CONTINUE%');
         if (selectedClasses.length === 0 || hasClass('DIN')) lines.push('ItemDisplay[(MAG OR RARE) DIN !ID GROUND FILTLVL>2]: Pala Shield%CONTINUE%');
-        if (selectedClasses.length === 0 || hasClass('SIN')) lines.push('ItemDisplay[(MAG OR RARE) SIN !ID GROUND FILTLVL>2]: Asn Claw%CONTINUE%');
+        if (selectedClasses.length === 0 || hasClass('SIN')) lines.push('ItemDisplay[(MAG OR RARE) SIN !ID GROUND FILTLVL>2]: Sin Claw%CONTINUE%');
         if (selectedClasses.length === 0 || hasClass('ZON')) lines.push('ItemDisplay[(MAG OR RARE) ZON !ID GROUND FILTLVL>2]: Zon Weapon%CONTINUE%');
       }
       // General magic/rare unid display by slot (from HiimFilter FILTLVL-gated)
