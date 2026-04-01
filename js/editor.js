@@ -2253,7 +2253,7 @@
       }
     }
 
-    return result || escapeHtml(item.name);
+    return result;
   }
 
   function escapeHtml(str) {
