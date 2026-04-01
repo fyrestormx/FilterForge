@@ -1361,7 +1361,9 @@
     Object.keys(GRAIL_DATA).forEach(function (cat) { totalItems += GRAIL_DATA[cat].length; });
 
     function saveGrail() {
-      localStorage.setItem('filterforge-grail', JSON.stringify(found));
+      try {
+        localStorage.setItem('filterforge-grail', JSON.stringify(found));
+      } catch (e) {}
     }
 
     function countFound() {
