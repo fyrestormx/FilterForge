@@ -4008,7 +4008,7 @@
         lines.push('// RUNEWORD BASES');
         lines.push('// ============================================================');
         var showEthBases = (rwBases === 'eth' || rwBases === 'all');
-        var showNonEthBases = (rwBases === 'noneth' || rwBases === 'all');
+        var showNonEthBases = (rwBases === 'all');
 
         // Helper to push a base rule for eth and/or non-eth
         function pushBase(cond, sockets, baseLabel) {
