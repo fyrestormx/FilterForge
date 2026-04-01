@@ -4104,10 +4104,10 @@
 
         // Starter bases (shown at relaxed FILTLVL only)
         lines.push('// --- Starter Bases ---');
-        lines.push('ItemDisplay[NMAG !INF !RW SOCK=4 CHEST EXC FILTLVL<2]: %GRAY%4os %WHITE%%NAME%');
-        lines.push('ItemDisplay[NMAG !INF !RW SOCK=3 CHEST FILTLVL<3]: %GRAY%4os %WHITE%%NAME%');
-        lines.push('ItemDisplay[NMAG !INF !RW SOCK=4 POLEARM EXC FILTLVL<2]: %GRAY%4os %WHITE%%NAME%');
-        lines.push('ItemDisplay[NMAG !INF !RW SOCK=4 POLEARM ELT FILTLVL<3]: %GRAY%4os %WHITE%%NAME%');
+        lines.push('ItemDisplay[NMAG !INF !RW SOCK=4 CHEST EXC FILTLVL<2]: %WHITE%%NAME%');
+        lines.push('ItemDisplay[NMAG !INF !RW SOCK=3 CHEST FILTLVL<3]: %WHITE%%NAME%');
+        lines.push('ItemDisplay[NMAG !INF !RW SOCK=4 POLEARM EXC FILTLVL<2]: %WHITE%%NAME%');
+        lines.push('ItemDisplay[NMAG !INF !RW SOCK=4 POLEARM ELT FILTLVL<3]: %WHITE%%NAME%');
 
         // 0-socket bases for Larzuk quest
         lines.push('// --- Unsocketed Elite Bases (Larzuk Quest) ---');
