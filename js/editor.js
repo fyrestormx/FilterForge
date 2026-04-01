@@ -2395,6 +2395,7 @@
 
     function openWizard() {
       modal.style.display = 'flex';
+      btnNext.disabled = false;
       goToStep(1);
     }
 
@@ -2446,6 +2447,7 @@
       if (currentStep < totalSteps) {
         goToStep(currentStep + 1);
       } else {
+        btnNext.disabled = true;
         buildFilter();
       }
     });
