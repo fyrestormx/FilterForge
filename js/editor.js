@@ -5061,6 +5061,7 @@
   // Initialize everything
   // ==========================================
   function init() {
+    if (!codeEditor) return; // Not on editor page
     loadFromStorage();
     updateLineNumbers();
 
