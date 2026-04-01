@@ -1089,6 +1089,7 @@
   // Insert rule into editor
   // ==========================================
   function insertRule() {
+    if (generatedCode.classList.contains('empty-state')) return;
     var rule = generatedCode.textContent;
     var val = codeEditor.value;
     var pos = codeEditor.selectionStart;
@@ -1122,6 +1123,7 @@
   }
 
   function insertRuleAtTop() {
+    if (generatedCode.classList.contains('empty-state')) return;
     var rule = generatedCode.textContent;
     var val = codeEditor.value;
     var suffix = val.length > 0 && !val.startsWith('\n') ? '\n' : '';
@@ -1133,6 +1135,7 @@
   }
 
   function insertRuleAtEnd() {
+    if (generatedCode.classList.contains('empty-state')) return;
     var rule = generatedCode.textContent;
     var val = codeEditor.value;
     var prefix = val.length > 0 && !val.endsWith('\n') ? '\n' : '';
