@@ -1234,13 +1234,13 @@
       {code:'skp',name:'Tarnhelm'},{code:'hlm',name:'Coif of Glory'},{code:'fhl',name:'Duskdeep'},
       {code:'ghm',name:'Howltusk'},{code:'crn',name:'Peasant Crown'},{code:'msk',name:'Wormskull'},
       {code:'xap',name:'The Face of Horror'},{code:'xkp',name:'Sander\'s Paragon'},
-      {code:'xlm',name:'Crown of Thieves'},{code:'xhl',name:'Vampire Gaze'}
+      {code:'xrn',name:'Crown of Thieves'}
     ],
     'Body Armor': [
-      {code:'utp',name:"Tyrael's Might"},{code:'uar',name:'Chains of Honor'},{code:'uui',name:"Ormus' Robes"},
+      {code:'utp',name:"Tyrael's Might"},{code:'uui',name:"Ormus' Robes"},
       {code:'umc',name:'Guardian Angel'},{code:'uul',name:"Gladiator's Bane"},{code:'uhc',name:"Templar's Might"},
       {code:'ulm',name:'Steel Carapace'},{code:'xhn',name:"Duriel's Shell"},{code:'xui',name:"Skullder's Ire"},
-      {code:'zlb',name:"Arkaine's Valor"},{code:'xla',name:'The Spirit Shroud'},{code:'xrs',name:'Skin of the Vipermagi'},
+      {code:'upl',name:"Arkaine's Valor"},{code:'xla',name:'The Spirit Shroud'},{code:'xrs',name:'Skin of the Vipermagi'},
       {code:'xpl',name:'Iron Pelt'},{code:'ltp',name:'Greyform'},{code:'brs',name:'Blinkbat\'s Form'},
       {code:'mpl',name:'The Centurion'},{code:'fld',name:'Twitchthroe'},{code:'gth',name:'Darkglow'},
       {code:'chn',name:'Sparking Mail'},{code:'plt',name:'Venom Ward'},{code:'stu',name:'Iceblink'},
@@ -1248,29 +1248,30 @@
     ],
     'Shields': [
       {code:'uit',name:'Stormshield'},{code:'nef',name:'Lidless Wall'},{code:'xsh',name:"Head Hunter's Glory"},
-      {code:'pa9',name:'Herald of Zakarum'},{code:'8mx',name:'Alma Negra'},{code:'scl',name:"Tiamat's Rebuke"},
+      {code:'pa9',name:'Herald of Zakarum'},{code:'8mx',name:'Alma Negra'},
       {code:'buc',name:'Pelta Lunata'},{code:'sml',name:'Umbral Disk'},{code:'lrg',name:'Stormguild'},
       {code:'kit',name:'Swordback Hold'},{code:'tow',name:'Steelclash'},{code:'gts',name:'Bverrit Keep'},
-      {code:'bsh',name:'The Ward'},{code:'spk',name:'Lance Guard'},{code:'xts',name:'Tiamat\'s Rebuke'}
+      {code:'bsh',name:'The Ward'},{code:'spk',name:'Lance Guard'},{code:'xit',name:'Tiamat\'s Rebuke'},
+      {code:'upk',name:'Spike Thorn'}
     ],
     'Gloves': [
       {code:'upl',name:'Steelrend'},{code:'umg',name:"Dracul's Grasp"},{code:'uhg',name:'Laying of Hands'},
-      {code:'uvg',name:"Magefist"},{code:'xvg',name:"Trang-Oul's Claws"},{code:'xlg',name:'Ghoulhide'},
+      {code:'xvg',name:"Trang-Oul's Claws"},{code:'xlg',name:'Ghoulhide'},
       {code:'lgl',name:'The Hand of Broc'},{code:'vgl',name:'Bloodfist'},{code:'mgl',name:'Chance Guards'},
-      {code:'hgl',name:'Magefist'},{code:'tgl',name:'Frostburn'}
+      {code:'tgl',name:'Magefist'},{code:'hgl',name:'Frostburn'}
     ],
     'Boots': [
-      {code:'uts',name:'Shadow Dancer'},{code:'utg',name:'Gore Rider'},{code:'ztb',name:'Sandstorm Trek'},
-      {code:'uh9',name:'War Traveler'},{code:'utu',name:'Marrowwalk'},{code:'xtb',name:'Waterwalk'},
-      {code:'xhb',name:'Infernostride'},{code:'xlb',name:'Silkweave'},{code:'lbt',name:'Hotspur'},
+      {code:'uhb',name:'Shadow Dancer'},{code:'xhb',name:'Gore Rider'},{code:'uvb',name:'Sandstorm Trek'},
+      {code:'xtb',name:'War Traveler'},{code:'umb',name:'Marrowwalk'},{code:'xvb',name:'Waterwalk'},
+      {code:'xlb',name:'Infernostride'},{code:'xmb',name:'Silkweave'},{code:'lbt',name:'Hotspur'},
       {code:'vbt',name:'Gorefoot'},{code:'mbt',name:'Treads of Cthon'},{code:'hbt',name:'Goblin Toe'},
       {code:'tbt',name:'Tearhaunch'}
     ],
     'Belts': [
       {code:'ulc',name:'Arachnid Mesh'},{code:'uvc',name:"Verdungo's Hearty Cord"},
-      {code:'uvg',name:"Thundergod's Vigor"},{code:'uow',name:'Spike Thorn'},
-      {code:'zhb',name:'String of Ears'},{code:'zvb',name:'Razortail'},
-      {code:'zlb',name:'Gloom\'s Trap'},{code:'lbl',name:'Lenymo'},{code:'vbl',name:'Snakecord'},
+      {code:'zhb',name:"Thundergod's Vigor"},
+      {code:'zlb',name:'String of Ears'},{code:'zvb',name:'Razortail'},
+      {code:'zmb',name:'Gloom\'s Trap'},{code:'lbl',name:'Lenymo'},{code:'vbl',name:'Snakecord'},
       {code:'mbl',name:'Nightsmoke'},{code:'hbl',name:'Goldwrap'},{code:'tbl',name:'Bladebuckle'}
     ],
     'Weapons - Swords': [
@@ -1339,7 +1340,7 @@
       {code:'jew',name:'Rainbow Facet'}
     ],
     'Charms': [
-      {code:'cm3',name:"Gheed's Fortune"},{code:'cm3',name:'Hellfire Torch'},
+      {code:'cm3',name:"Gheed's Fortune"},{code:'cm2',name:'Hellfire Torch'},
       {code:'cm1',name:'Annihilus'}
     ]
   };
