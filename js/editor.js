@@ -2490,7 +2490,7 @@
         { l: 'Color Theme', v: label('', choices.colorprofile) || 'Default' },
         { l: 'Decoration', v: label('', choices.decoration) || 'Arrows' },
         { l: 'Extra Info', v: choices.extras.length ? choices.extras.map(function (x) { return label('', x); }).join(', ') : 'None' },
-        { l: 'Runeword Bases', v: label('', choices.rwbases + '-rw') },
+        { l: 'Runeword Bases', v: choices.rwbases ? label('', choices.rwbases + '-rw') : 'None' },
         { l: 'Hide Consumables', v: choices.consumables.length ? choices.consumables.map(function (x) { return label('', x); }).join(', ') : 'None' },
         { l: 'Tooltips', v: choices.tooltips.length ? choices.tooltips.map(function (x) { return label('', x); }).join(', ') : 'None' }
       ];
@@ -2659,7 +2659,7 @@
       lines.push('// Color Theme: ' + (label('', c.colorprofile) || 'Default'));
       lines.push('// Decoration: ' + (label('', c.decoration) || 'Arrows'));
       lines.push('// Extras: ' + (c.extras.length ? c.extras.map(function (x) { return label('', x); }).join(', ') : 'None'));
-      lines.push('// RW Bases: ' + (label('', c.rwbases + '-rw') || 'None'));
+      lines.push('// RW Bases: ' + (c.rwbases ? label('', c.rwbases + '-rw') : 'None'));
       lines.push('// Consumables: ' + (c.consumables.length ? c.consumables.map(function (x) { return label('', x); }).join(', ') : 'Default'));
       lines.push('// Tooltips: ' + (c.tooltips.length ? c.tooltips.map(function (x) { return label('', x); }).join(', ') : 'None'));
       lines.push('// ============================================================');
