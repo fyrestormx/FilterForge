@@ -3944,7 +3944,7 @@
       lines.push('// ============================================================');
       lines.push('// UNID MAGIC & RARE CLASS ITEM DISPLAY');
       lines.push('// ============================================================');
-      var classUpperMap = {ZON:'AMAZON',SOR:'SORCERESS',NEC:'NECROMANCER',DIN:'PALADIN',BAR:'BARBARIAN',DRU:'DRUID',SIN:'ASSASSIN'};
+      var classUpperMap = {ZON:'ZON',SOR:'SOR',NEC:'NEC',DIN:'DIN',BAR:'BAR',DRU:'DRU',SIN:'SIN'};
       var clNumMap = {ZON:'CL7',SOR:'CL6',NEC:'CL4',DIN:'CL3',BAR:'CL2',DRU:'CL1',SIN:'CL5'};
       if (selectedClasses.length > 0) {
         lines.push('// Your class magic items get extra callout');
