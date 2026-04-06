@@ -916,6 +916,59 @@
     showHighlight();
   }
 
+  // Community editor syntax highlighting
+  var communityHighlights = {};
+  var communityHlCaches = {};
+
+  function initCommunityHighlighting() {
+    var ids = [
+      { textarea: 'community-top-block', highlight: 'community-top-highlight' },
+      { textarea: 'community-filter-text', highlight: 'community-mid-highlight' },
+      { textarea: 'community-bottom-block', highlight: 'community-bottom-highlight' }
+    ];
+    ids.forEach(function (pair) {
+      var ta = document.getElementById(pair.textarea);
+      var hl = document.getElementById(pair.highlight);
+      if (!ta || !hl) return;
+      communityHighlights[pair.textarea] = hl;
+      communityHlCaches[pair.textarea] = [];
+    });
+  }
+
+  function highlightCommunityEditor(textareaId) {
+    var ta = document.getElementById(textareaId);
+    var hl = communityHighlights[textareaId];
+    if (!ta || !hl) return;
+
+    var text = ta.value;
+    var lines = text.split('\n');
+    var cache = communityHlCaches[textareaId];
+    var changed = false;
+
+    if (lines.length !== cache.length) {
+      communityHlCaches[textareaId] = lines.map(function (l) { return { src: l, html: highlightLine(l) }; });
+      changed = true;
+    } else {
+      for (var i = 0; i < lines.length; i++) {
+        if (cache[i].src !== lines[i]) {
+          cache[i] = { src: lines[i], html: highlightLine(lines[i]) };
+          changed = true;
+        }
+      }
+    }
+
+    if (changed) {
+      hl.innerHTML = communityHlCaches[textareaId].map(function (c) { return c.html; }).join('\n') + '\n';
+      ta.classList.add('hl-active');
+    }
+  }
+
+  function highlightAllCommunityEditors() {
+    highlightCommunityEditor('community-top-block');
+    highlightCommunityEditor('community-filter-text');
+    highlightCommunityEditor('community-bottom-block');
+  }
+
   function syncScroll() {
     var wrap = document.querySelector('.code-editor-wrap');
     lineNumbers.scrollTop = wrap.scrollTop;
@@ -940,11 +993,25 @@
   // ==========================================
   // Insert rule into editor
   // ==========================================
+  function getCommunityInsertTarget() {
+    // In community mode, insert into the top block by default
+    if (communityMode.active) return document.getElementById('community-top-block');
+    return null;
+  }
+
+  function afterCommunityInsert(target) {
+    highlightCommunityEditor(target.id);
+    codeEditor.value = getFullFilterText();
+    updateLineNumbers();
+    saveCommunityState();
+  }
+
   function insertRule() {
     if (generatedCode.classList.contains('empty-state')) return;
     var rule = generatedCode.textContent;
-    var val = codeEditor.value;
-    var pos = codeEditor.selectionStart;
+    var target = getCommunityInsertTarget() || codeEditor;
+    var val = target.value;
+    var pos = target.selectionStart;
 
     // Find the boundaries of the current line
     var lineStart = val.lastIndexOf('\n', pos - 1) + 1;
@@ -957,46 +1024,57 @@
       var before = val.substring(0, lineEnd);
       var after = val.substring(lineEnd);
       var suffix = after.length > 0 && !after.startsWith('\n') ? '\n' : '';
-      codeEditor.value = before + '\n' + rule + suffix + after;
+      target.value = before + '\n' + rule + suffix + after;
       var newPos = lineEnd + 1 + rule.length;
-      codeEditor.selectionStart = codeEditor.selectionEnd = newPos;
+      target.selectionStart = target.selectionEnd = newPos;
     } else {
       // Empty line — insert directly here
       var before = val.substring(0, lineStart);
       var after = val.substring(lineEnd);
       var suffix = after.length > 0 && !after.startsWith('\n') ? '\n' : '';
-      codeEditor.value = before + rule + suffix + after;
+      target.value = before + rule + suffix + after;
       var newPos = lineStart + rule.length;
-      codeEditor.selectionStart = codeEditor.selectionEnd = newPos;
+      target.selectionStart = target.selectionEnd = newPos;
     }
-    codeEditor.focus();
-    updateLineNumbers();
-    saveToStorage();
+    target.focus();
+    if (communityMode.active) { afterCommunityInsert(target); } else { updateLineNumbers(); saveToStorage(); }
   }
 
   function insertRuleAtTop() {
     if (generatedCode.classList.contains('empty-state')) return;
     var rule = generatedCode.textContent;
-    var val = codeEditor.value;
+    var target = getCommunityInsertTarget() || codeEditor;
+    var val = target.value;
     var suffix = val.length > 0 && !val.startsWith('\n') ? '\n' : '';
-    codeEditor.value = rule + suffix + val;
-    codeEditor.selectionStart = codeEditor.selectionEnd = rule.length;
-    codeEditor.focus();
-    updateLineNumbers();
-    saveToStorage();
+    target.value = rule + suffix + val;
+    target.selectionStart = target.selectionEnd = rule.length;
+    target.focus();
+    if (communityMode.active) { afterCommunityInsert(target); } else { updateLineNumbers(); saveToStorage(); }
   }
 
   function insertRuleAtEnd() {
     if (generatedCode.classList.contains('empty-state')) return;
     var rule = generatedCode.textContent;
-    var val = codeEditor.value;
-    var prefix = val.length > 0 && !val.endsWith('\n') ? '\n' : '';
-    codeEditor.value = val + prefix + rule;
-    var newPos = val.length + prefix.length + rule.length;
-    codeEditor.selectionStart = codeEditor.selectionEnd = newPos;
-    codeEditor.focus();
-    updateLineNumbers();
-    saveToStorage();
+    if (communityMode.active) {
+      // In community mode, "insert at end" goes to the bottom block
+      var target = document.getElementById('community-bottom-block');
+      var val = target.value;
+      var prefix = val.length > 0 && !val.endsWith('\n') ? '\n' : '';
+      target.value = val + prefix + rule;
+      var newPos = val.length + prefix.length + rule.length;
+      target.selectionStart = target.selectionEnd = newPos;
+      target.focus();
+      afterCommunityInsert(target);
+    } else {
+      var val = codeEditor.value;
+      var prefix = val.length > 0 && !val.endsWith('\n') ? '\n' : '';
+      codeEditor.value = val + prefix + rule;
+      var newPos = val.length + prefix.length + rule.length;
+      codeEditor.selectionStart = codeEditor.selectionEnd = newPos;
+      codeEditor.focus();
+      updateLineNumbers();
+      saveToStorage();
+    }
   }
 
   // ==========================================
@@ -1342,7 +1420,12 @@
     function switchToCodeTab() {
       document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
       document.querySelector('[data-tab="code"]').classList.add('active');
-      document.getElementById('pane-code').style.display = 'block';
+      if (communityMode.active) {
+        document.getElementById('pane-community').style.display = 'block';
+        document.getElementById('pane-code').style.display = 'none';
+      } else {
+        document.getElementById('pane-code').style.display = 'block';
+      }
       document.getElementById('pane-preview').style.display = 'none';
       document.getElementById('pane-grail').style.display = 'none';
     }
@@ -1419,9 +1502,62 @@
     // Switch to code tab
     document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
     document.querySelector('[data-tab="code"]').classList.add('active');
-    document.getElementById('pane-code').style.display = 'block';
     document.getElementById('pane-preview').style.display = 'none';
     document.getElementById('pane-grail').style.display = 'none';
+
+    if (communityMode.active) {
+      // Navigate within community mode
+      document.getElementById('pane-community').style.display = 'block';
+      document.getElementById('pane-code').style.display = 'none';
+
+      var topText = document.getElementById('community-top-block').value;
+      var midText = document.getElementById('community-filter-text').value;
+      var topLines = topText ? topText.split('\n').length : 0;
+      var midLines = midText ? midText.split('\n').length : 0;
+
+      var targetTextarea, localLine;
+      if (topText.trim() && lineNum <= topLines) {
+        // Line is in top block
+        targetTextarea = document.getElementById('community-top-block');
+        localLine = lineNum;
+      } else if (lineNum <= topLines + midLines) {
+        // Line is in community filter (read-only)
+        targetTextarea = document.getElementById('community-filter-text');
+        localLine = lineNum - (topText.trim() ? topLines : 0);
+        // Expand the community filter if collapsed
+        var midContainer = document.getElementById('community-mid-container');
+        if (midContainer.style.display === 'none') {
+          midContainer.style.display = '';
+          document.getElementById('btn-community-toggle').textContent = 'Hide';
+        }
+      } else {
+        // Line is in bottom block
+        targetTextarea = document.getElementById('community-bottom-block');
+        localLine = lineNum - (topText.trim() ? topLines : 0) - midLines;
+      }
+
+      // Select the line in the target textarea
+      var lines = targetTextarea.value.split('\n');
+      var pos = 0;
+      for (var i = 0; i < Math.min(localLine - 1, lines.length); i++) {
+        pos += lines[i].length + 1;
+      }
+      var lineEnd = pos + (lines[localLine - 1] || '').length;
+      targetTextarea.setSelectionRange(pos, lineEnd);
+      targetTextarea.focus();
+
+      // Scroll into view
+      var container = targetTextarea.parentElement;
+      var lh = parseFloat(getComputedStyle(targetTextarea).lineHeight) || 18;
+      var scrollTarget = (localLine - 1) * lh - container.clientHeight / 3;
+      container.scrollTop = Math.max(0, scrollTarget);
+
+      // Also scroll the page to the textarea
+      targetTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    document.getElementById('pane-code').style.display = 'block';
 
     var text = codeEditor.value;
     var lines = text.split('\n');
@@ -2221,6 +2357,10 @@
       document.getElementById('community-bottom-block').value = '';
     }
 
+    // Community filter starts collapsed (user clicks Show to expand)
+    document.getElementById('community-mid-container').style.display = 'none';
+    document.getElementById('btn-community-toggle').textContent = 'Show';
+
     document.getElementById('pane-code').style.display = 'none';
     document.getElementById('pane-community').style.display = 'block';
     document.getElementById('pane-preview').style.display = 'none';
@@ -2232,6 +2372,7 @@
 
     codeEditor.value = getFullFilterText();
     updateLineNumbers();
+    highlightAllCommunityEditors();
 
     if (!isRestore) {
       saveCommunityState();
@@ -2246,6 +2387,7 @@
     document.getElementById('pane-code').style.display = 'block';
 
     updateLineNumbers();
+    highlightCode();
     saveToStorage();
     saveCommunityState();
   }
@@ -2271,6 +2413,7 @@
         el.textContent = lc + ' lines (read-only) \u2014 updated!';
         codeEditor.value = getFullFilterText();
         updateLineNumbers();
+        highlightCommunityEditor('community-filter-text');
         saveCommunityState();
         setTimeout(function () { el.textContent = lc + ' lines (read-only)'; }, 3000);
       })
@@ -2290,8 +2433,11 @@
     var topBlock = document.getElementById('community-top-block');
     var bottomBlock = document.getElementById('community-bottom-block');
     var filterTextArea = document.getElementById('community-filter-text');
+    var midContainer = document.getElementById('community-mid-container');
 
     if (!btnRefresh) return;
+
+    initCommunityHighlighting();
 
     btnRefresh.addEventListener('click', refreshCommunityFilter);
 
@@ -2301,15 +2447,17 @@
     });
 
     btnToggle.addEventListener('click', function () {
-      var isHidden = filterTextArea.style.display === 'none';
-      filterTextArea.style.display = isHidden ? 'block' : 'none';
+      var isHidden = midContainer.style.display === 'none';
+      midContainer.style.display = isHidden ? '' : 'none';
       btnToggle.textContent = isHidden ? 'Hide' : 'Show';
+      if (isHidden) highlightCommunityEditor('community-filter-text');
     });
 
     var saveDebounce = null;
     function onBlockInput() {
       codeEditor.value = getFullFilterText();
       updateLineNumbers();
+      highlightCommunityEditor(this.id);
       clearTimeout(saveDebounce);
       saveDebounce = setTimeout(function () {
         saveCommunityState();
@@ -2318,6 +2466,11 @@
 
     topBlock.addEventListener('input', onBlockInput);
     bottomBlock.addEventListener('input', onBlockInput);
+
+    // If community mode was restored before highlighting was initialized, highlight now
+    if (communityMode.active) {
+      highlightAllCommunityEditors();
+    }
   }
 
   // ==========================================

@@ -816,8 +816,11 @@
             </div>
             <div class="community-block">
               <label class="community-block-label" for="community-top-block">Your Top Block <span class="text-muted">(rules here override the community filter)</span></label>
-              <textarea class="code-editor community-editor" id="community-top-block" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
-                placeholder="// Add your custom rules here. These will appear ABOVE the community filter and take priority."></textarea>
+              <div class="community-editor-container">
+                <div class="code-highlight community-highlight" id="community-top-highlight" aria-hidden="true"></div>
+                <textarea class="code-editor community-editor" id="community-top-block" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                  placeholder="// Add your custom rules here. These will appear ABOVE the community filter and take priority."></textarea>
+              </div>
             </div>
             <div class="community-block community-block-locked">
               <div class="community-block-header">
@@ -827,12 +830,18 @@
               <div class="community-preview-collapsed" id="community-collapsed-info">
                 <span class="text-muted" id="community-line-count">0 lines</span>
               </div>
-              <textarea class="code-editor community-editor community-readonly" id="community-filter-text" readonly spellcheck="false" style="display:none"></textarea>
+              <div class="community-editor-container" id="community-mid-container" style="display:none">
+                <div class="code-highlight community-highlight" id="community-mid-highlight" aria-hidden="true"></div>
+                <textarea class="code-editor community-editor community-readonly" id="community-filter-text" readonly spellcheck="false"></textarea>
+              </div>
             </div>
             <div class="community-block">
               <label class="community-block-label" for="community-bottom-block">Your Bottom Block <span class="text-muted">(fallback rules)</span></label>
-              <textarea class="code-editor community-editor" id="community-bottom-block" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
-                placeholder="// Add fallback rules here. These appear BELOW the community filter."></textarea>
+              <div class="community-editor-container">
+                <div class="code-highlight community-highlight" id="community-bottom-highlight" aria-hidden="true"></div>
+                <textarea class="code-editor community-editor" id="community-bottom-block" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                  placeholder="// Add fallback rules here. These appear BELOW the community filter."></textarea>
+              </div>
             </div>
           </div>
 
