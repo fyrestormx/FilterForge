@@ -802,6 +802,40 @@
             </div>
           </div>
 
+          <!-- Community Edit Mode pane -->
+          <div class="editor-pane" id="pane-community" style="display:none">
+            <div class="community-mode-banner">
+              <div class="community-mode-info">
+                <span class="community-mode-label">Community Edit Mode</span>
+                <span class="community-mode-filter" id="community-filter-name">—</span>
+              </div>
+              <div class="community-mode-actions">
+                <button class="btn btn-secondary btn-small" id="btn-community-refresh" title="Re-download the latest version of this community filter">Refresh Filter</button>
+                <button class="btn btn-secondary btn-small" id="btn-community-exit" title="Exit community edit mode and return to full editor">Exit Mode</button>
+              </div>
+            </div>
+            <div class="community-block">
+              <label class="community-block-label" for="community-top-block">Your Top Block <span class="text-muted">(rules here override the community filter)</span></label>
+              <textarea class="code-editor community-editor" id="community-top-block" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                placeholder="// Add your custom rules here. These will appear ABOVE the community filter and take priority."></textarea>
+            </div>
+            <div class="community-block community-block-locked">
+              <div class="community-block-header">
+                <label class="community-block-label">Community Filter <span class="text-muted">(read-only)</span></label>
+                <button class="btn btn-secondary btn-small" id="btn-community-toggle" title="Show/hide community filter text">Show</button>
+              </div>
+              <div class="community-preview-collapsed" id="community-collapsed-info">
+                <span class="text-muted" id="community-line-count">0 lines</span>
+              </div>
+              <textarea class="code-editor community-editor community-readonly" id="community-filter-text" readonly spellcheck="false" style="display:none"></textarea>
+            </div>
+            <div class="community-block">
+              <label class="community-block-label" for="community-bottom-block">Your Bottom Block <span class="text-muted">(fallback rules)</span></label>
+              <textarea class="code-editor community-editor" id="community-bottom-block" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                placeholder="// Add fallback rules here. These appear BELOW the community filter."></textarea>
+            </div>
+          </div>
+
           <!-- Preview pane -->
           <div class="editor-pane" id="pane-preview" style="display:none">
             <div class="preview-header">

@@ -1438,3 +1438,103 @@
     flex-direction: column;
   }
 }
+
+/* ============================================
+   Community Edit Mode
+   ============================================ */
+.community-mode-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent-primary);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.community-mode-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.community-mode-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.community-mode-filter {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.community-mode-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.community-block {
+  margin-bottom: 1rem;
+}
+
+.community-block-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+  color: var(--text-primary);
+}
+
+.community-block-locked {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.community-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.community-preview-collapsed {
+  font-size: 0.85rem;
+}
+
+.community-editor {
+  width: 100%;
+  min-height: 80px;
+  max-height: 400px;
+  resize: vertical;
+  font-family: var(--font-mono, 'Consolas', 'Courier New', monospace);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  tab-size: 4;
+}
+
+.community-editor:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -1px;
+}
+
+.community-readonly {
+  opacity: 0.7;
+  cursor: default;
+  background: var(--bg-secondary);
+  min-height: 120px;
+  max-height: 500px;
+}

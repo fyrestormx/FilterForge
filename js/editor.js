@@ -1032,7 +1032,7 @@
     });
 
     btnExport.addEventListener('click', function () {
-      var text = codeEditor.value;
+      var text = getFullFilterText();
       if (!text.trim()) {
         text = '// Empty filter\nItemDisplay[]: %NAME%';
       }
@@ -1052,6 +1052,12 @@
       codeEditor.value = '';
       updateLineNumbers();
       saveToStorage();
+      if (communityMode.active) {
+        communityMode.active = false;
+        saveCommunityState();
+        document.getElementById('pane-community').style.display = 'none';
+        document.getElementById('pane-code').style.display = 'block';
+      }
     });
   }
 
@@ -1387,7 +1393,13 @@
         document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
         tab.classList.add('active');
 
-        document.getElementById('pane-code').style.display = target === 'code' ? 'block' : 'none';
+        if (communityMode.active) {
+          document.getElementById('pane-community').style.display = target === 'code' ? 'block' : 'none';
+          document.getElementById('pane-code').style.display = 'none';
+        } else {
+          document.getElementById('pane-community').style.display = 'none';
+          document.getElementById('pane-code').style.display = target === 'code' ? 'block' : 'none';
+        }
         document.getElementById('pane-preview').style.display = target === 'preview' ? 'flex' : 'none';
         document.getElementById('pane-grail').style.display = target === 'grail' ? 'block' : 'none';
 
@@ -1489,7 +1501,7 @@
   }
 
   function testAllItems() {
-    var text = codeEditor.value;
+    var text = getFullFilterText();
     var lines = text.split('\n');
     var rules = parseRules(lines);
     var selectedKey = document.getElementById('preview-item-type').value;
@@ -2129,6 +2141,183 @@
         codeEditor.value = saved;
       }
     } catch (e) { /* ignore */ }
+  }
+
+
+  // ==========================================
+  // Community Edit Mode
+  // ==========================================
+  var COMMUNITY_STORAGE_KEY = 'filterforge-community-mode';
+  var communityMode = {
+    active: false,
+    filterName: '',
+    authorName: '',
+    fileUrl: '',
+    filterText: '',
+    topBlock: '',
+    bottomBlock: ''
+  };
+
+  function getFullFilterText() {
+    if (communityMode.active) {
+      var top = document.getElementById('community-top-block').value;
+      var mid = document.getElementById('community-filter-text').value;
+      var bot = document.getElementById('community-bottom-block').value;
+      var parts = [];
+      if (top.trim()) parts.push(top);
+      if (mid.trim()) parts.push(mid);
+      if (bot.trim()) parts.push(bot);
+      return parts.join('\n');
+    }
+    return codeEditor.value;
+  }
+
+  function saveCommunityState() {
+    try {
+      if (communityMode.active) {
+        communityMode.topBlock = document.getElementById('community-top-block').value;
+        communityMode.bottomBlock = document.getElementById('community-bottom-block').value;
+        communityMode.filterText = document.getElementById('community-filter-text').value;
+        localStorage.setItem(COMMUNITY_STORAGE_KEY, JSON.stringify(communityMode));
+        localStorage.setItem(STORAGE_KEY, getFullFilterText());
+      } else {
+        localStorage.removeItem(COMMUNITY_STORAGE_KEY);
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  function loadCommunityState() {
+    try {
+      var saved = localStorage.getItem(COMMUNITY_STORAGE_KEY);
+      if (saved) {
+        var state = JSON.parse(saved);
+        if (state && state.active) {
+          communityMode = state;
+          enterCommunityMode(state.filterText, state.filterName, state.authorName, state.fileUrl, true);
+          return true;
+        }
+      }
+    } catch (e) { /* ignore */ }
+    return false;
+  }
+
+  function enterCommunityMode(filterText, filterName, authorName, fileUrl, isRestore) {
+    communityMode.active = true;
+    communityMode.filterName = filterName;
+    communityMode.authorName = authorName;
+    communityMode.fileUrl = fileUrl;
+    communityMode.filterText = filterText;
+
+    document.getElementById('community-filter-name').textContent = filterName + ' by ' + authorName;
+    document.getElementById('community-filter-text').value = filterText;
+    var lc = filterText.split('\n').length;
+    document.getElementById('community-line-count').textContent = lc + ' lines (read-only)';
+
+    if (isRestore) {
+      document.getElementById('community-top-block').value = communityMode.topBlock || '';
+      document.getElementById('community-bottom-block').value = communityMode.bottomBlock || '';
+    } else {
+      document.getElementById('community-top-block').value = '';
+      document.getElementById('community-bottom-block').value = '';
+    }
+
+    document.getElementById('pane-code').style.display = 'none';
+    document.getElementById('pane-community').style.display = 'block';
+    document.getElementById('pane-preview').style.display = 'none';
+    var grailPane = document.getElementById('pane-grail');
+    if (grailPane) grailPane.style.display = 'none';
+
+    document.querySelectorAll('.editor-tab').forEach(function (t) { t.classList.remove('active'); });
+    document.querySelector('[data-tab="code"]').classList.add('active');
+
+    codeEditor.value = getFullFilterText();
+    updateLineNumbers();
+
+    if (!isRestore) {
+      saveCommunityState();
+    }
+  }
+
+  function exitCommunityMode() {
+    codeEditor.value = getFullFilterText();
+    communityMode.active = false;
+
+    document.getElementById('pane-community').style.display = 'none';
+    document.getElementById('pane-code').style.display = 'block';
+
+    updateLineNumbers();
+    saveToStorage();
+    saveCommunityState();
+  }
+
+  function refreshCommunityFilter() {
+    if (!communityMode.fileUrl) return;
+    var el = document.getElementById('community-line-count');
+    el.textContent = 'Refreshing...';
+
+    fetch(communityMode.fileUrl)
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        var text = new TextDecoder('utf-8').decode(buf);
+        if (text.indexOf('\uFFFD') !== -1) {
+          text = new TextDecoder('windows-1252').decode(buf);
+        }
+        communityMode.filterText = text;
+        document.getElementById('community-filter-text').value = text;
+        var lc = text.split('\n').length;
+        el.textContent = lc + ' lines (read-only) \u2014 updated!';
+        codeEditor.value = getFullFilterText();
+        updateLineNumbers();
+        saveCommunityState();
+        setTimeout(function () { el.textContent = lc + ' lines (read-only)'; }, 3000);
+      })
+      .catch(function () {
+        el.textContent = 'Failed to refresh. Try again later.';
+        setTimeout(function () {
+          var lc = communityMode.filterText.split('\n').length;
+          el.textContent = lc + ' lines (read-only)';
+        }, 3000);
+      });
+  }
+
+  function initCommunityMode() {
+    var btnRefresh = document.getElementById('btn-community-refresh');
+    var btnExit = document.getElementById('btn-community-exit');
+    var btnToggle = document.getElementById('btn-community-toggle');
+    var topBlock = document.getElementById('community-top-block');
+    var bottomBlock = document.getElementById('community-bottom-block');
+    var filterTextArea = document.getElementById('community-filter-text');
+
+    if (!btnRefresh) return;
+
+    btnRefresh.addEventListener('click', refreshCommunityFilter);
+
+    btnExit.addEventListener('click', function () {
+      if (!confirm('Exit Community Edit Mode? Your top/bottom blocks will be merged into the full editor.')) return;
+      exitCommunityMode();
+    });
+
+    btnToggle.addEventListener('click', function () {
+      var isHidden = filterTextArea.style.display === 'none';
+      filterTextArea.style.display = isHidden ? 'block' : 'none';
+      btnToggle.textContent = isHidden ? 'Hide' : 'Show';
+    });
+
+    var saveDebounce = null;
+    function onBlockInput() {
+      codeEditor.value = getFullFilterText();
+      updateLineNumbers();
+      clearTimeout(saveDebounce);
+      saveDebounce = setTimeout(function () {
+        saveCommunityState();
+      }, 500);
+    }
+
+    topBlock.addEventListener('input', onBlockInput);
+    bottomBlock.addEventListener('input', onBlockInput);
   }
 
   // ==========================================
@@ -4982,14 +5171,26 @@
           if (text.indexOf('\uFFFD') !== -1) {
             text = new TextDecoder('windows-1252').decode(buf);
           }
-          if (codeEditor.value.trim() && !confirm('Load "' + file.name + '" from ' + author.author + '? This will replace your current filter.')) {
-            showStep(2);
-            return;
+          var useCommunity = confirm('Load "' + file.name + '" from ' + author.author + ' in Community Edit Mode?\n\nOK = Community Edit Mode (filter is read-only, you edit top/bottom blocks)\nCancel = Full Editor Mode (full access to edit everything)');
+          if (useCommunity) {
+            enterCommunityMode(text, file.name, author.author, file.url, false);
+            hideModal();
+          } else {
+            if (codeEditor.value.trim() && !confirm('This will replace your current filter. Continue?')) {
+              showStep(2);
+              return;
+            }
+            if (communityMode.active) {
+              communityMode.active = false;
+              saveCommunityState();
+              document.getElementById('pane-community').style.display = 'none';
+              document.getElementById('pane-code').style.display = 'block';
+            }
+            codeEditor.value = text;
+            updateLineNumbers();
+            saveToStorage();
+            hideModal();
           }
-          codeEditor.value = text;
-          updateLineNumbers();
-          saveToStorage();
-          hideModal();
         })
         .catch(function () {
           loadingMsg.innerHTML = 'Failed to download file.';
@@ -5006,6 +5207,9 @@
     loadFromStorage();
     updateLineNumbers();
 
+    // Restore community edit mode if it was active
+    loadCommunityState();
+
     initChips();
     initPanelToggles();
     initValueConditions();
@@ -5020,6 +5224,7 @@
     initItemCodeFinder();
     initItemCodeAutocomplete();
     initAuthorImport();
+    initCommunityMode();
 
     // Auto-open author import if ?author= in URL
     var urlParams2 = new URLSearchParams(window.location.search);
