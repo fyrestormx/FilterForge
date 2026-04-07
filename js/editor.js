@@ -916,59 +916,6 @@
     showHighlight();
   }
 
-  // Community editor syntax highlighting
-  var communityHighlights = {};
-  var communityHlCaches = {};
-
-  function initCommunityHighlighting() {
-    var ids = [
-      { textarea: 'community-top-block', highlight: 'community-top-highlight' },
-      { textarea: 'community-filter-text', highlight: 'community-mid-highlight' },
-      { textarea: 'community-bottom-block', highlight: 'community-bottom-highlight' }
-    ];
-    ids.forEach(function (pair) {
-      var ta = document.getElementById(pair.textarea);
-      var hl = document.getElementById(pair.highlight);
-      if (!ta || !hl) return;
-      communityHighlights[pair.textarea] = hl;
-      communityHlCaches[pair.textarea] = [];
-    });
-  }
-
-  function highlightCommunityEditor(textareaId) {
-    var ta = document.getElementById(textareaId);
-    var hl = communityHighlights[textareaId];
-    if (!ta || !hl) return;
-
-    var text = ta.value;
-    var lines = text.split('\n');
-    var cache = communityHlCaches[textareaId];
-    var changed = false;
-
-    if (lines.length !== cache.length) {
-      communityHlCaches[textareaId] = lines.map(function (l) { return { src: l, html: highlightLine(l) }; });
-      changed = true;
-    } else {
-      for (var i = 0; i < lines.length; i++) {
-        if (cache[i].src !== lines[i]) {
-          cache[i] = { src: lines[i], html: highlightLine(lines[i]) };
-          changed = true;
-        }
-      }
-    }
-
-    if (changed) {
-      hl.innerHTML = communityHlCaches[textareaId].map(function (c) { return c.html; }).join('\n') + '\n';
-      ta.classList.add('hl-active');
-    }
-  }
-
-  function highlightAllCommunityEditors() {
-    highlightCommunityEditor('community-top-block');
-    highlightCommunityEditor('community-filter-text');
-    highlightCommunityEditor('community-bottom-block');
-  }
-
   function syncScroll() {
     var wrap = document.querySelector('.code-editor-wrap');
     lineNumbers.scrollTop = wrap.scrollTop;
@@ -1000,7 +947,6 @@
   }
 
   function afterCommunityInsert(target) {
-    highlightCommunityEditor(target.id);
     codeEditor.value = getFullFilterText();
     updateLineNumbers();
     saveCommunityState();
@@ -1525,9 +1471,8 @@
         targetTextarea = document.getElementById('community-filter-text');
         localLine = lineNum - (topText.trim() ? topLines : 0);
         // Expand the community filter if collapsed
-        var midContainer = document.getElementById('community-mid-container');
-        if (midContainer.style.display === 'none') {
-          midContainer.style.display = '';
+        if (targetTextarea.style.display === 'none') {
+          targetTextarea.style.display = 'block';
           document.getElementById('btn-community-toggle').textContent = 'Hide';
         }
       } else {
@@ -2358,7 +2303,7 @@
     }
 
     // Community filter starts collapsed (user clicks Show to expand)
-    document.getElementById('community-mid-container').style.display = 'none';
+    document.getElementById('community-filter-text').style.display = 'none';
     document.getElementById('btn-community-toggle').textContent = 'Show';
 
     document.getElementById('pane-code').style.display = 'none';
@@ -2372,7 +2317,6 @@
 
     codeEditor.value = getFullFilterText();
     updateLineNumbers();
-    highlightAllCommunityEditors();
 
     if (!isRestore) {
       saveCommunityState();
@@ -2413,7 +2357,6 @@
         el.textContent = lc + ' lines (read-only) \u2014 updated!';
         codeEditor.value = getFullFilterText();
         updateLineNumbers();
-        highlightCommunityEditor('community-filter-text');
         saveCommunityState();
         setTimeout(function () { el.textContent = lc + ' lines (read-only)'; }, 3000);
       })
@@ -2433,31 +2376,26 @@
     var topBlock = document.getElementById('community-top-block');
     var bottomBlock = document.getElementById('community-bottom-block');
     var filterTextArea = document.getElementById('community-filter-text');
-    var midContainer = document.getElementById('community-mid-container');
 
     if (!btnRefresh) return;
-
-    initCommunityHighlighting();
 
     btnRefresh.addEventListener('click', refreshCommunityFilter);
 
     btnExit.addEventListener('click', function () {
-      if (!confirm('Exit Community Edit Mode? Your top/bottom blocks will be merged into the full editor.')) return;
+      if (!confirm('Switch to Full Editor?\n\nYour top block, community filter, and bottom block will be merged into one editable document. You can always re-import the community filter later.')) return;
       exitCommunityMode();
     });
 
     btnToggle.addEventListener('click', function () {
-      var isHidden = midContainer.style.display === 'none';
-      midContainer.style.display = isHidden ? '' : 'none';
+      var isHidden = filterTextArea.style.display === 'none';
+      filterTextArea.style.display = isHidden ? 'block' : 'none';
       btnToggle.textContent = isHidden ? 'Hide' : 'Show';
-      if (isHidden) highlightCommunityEditor('community-filter-text');
     });
 
     var saveDebounce = null;
     function onBlockInput() {
       codeEditor.value = getFullFilterText();
       updateLineNumbers();
-      highlightCommunityEditor(this.id);
       clearTimeout(saveDebounce);
       saveDebounce = setTimeout(function () {
         saveCommunityState();
@@ -2466,11 +2404,6 @@
 
     topBlock.addEventListener('input', onBlockInput);
     bottomBlock.addEventListener('input', onBlockInput);
-
-    // If community mode was restored before highlighting was initialized, highlight now
-    if (communityMode.active) {
-      highlightAllCommunityEditors();
-    }
   }
 
   // ==========================================
@@ -5324,7 +5257,7 @@
           if (text.indexOf('\uFFFD') !== -1) {
             text = new TextDecoder('windows-1252').decode(buf);
           }
-          var useCommunity = confirm('Load "' + file.name + '" from ' + author.author + ' in Community Edit Mode?\n\nOK = Community Edit Mode (filter is read-only, you edit top/bottom blocks)\nCancel = Full Editor Mode (full access to edit everything)');
+          var useCommunity = confirm('Load "' + file.name + '" by ' + author.author + '\n\nChoose how to use this filter:\n\n[OK] Community Edit Mode\nThe community filter stays read-only and auto-updates. You add your own rules above and below it.\n\n[Cancel] Full Editor\nLoad the entire filter into the editor for full control. No auto-updates.');
           if (useCommunity) {
             enterCommunityMode(text, file.name, author.author, file.url, false);
             hideModal();
