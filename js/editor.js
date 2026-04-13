@@ -2623,6 +2623,7 @@
       builderState.weapons = '';
       builderState.misc = '';
       builderState.classitems = '';
+      builderState.location = [];
       builderState.negate = [];
       builderState.action = 'show';
       builderState.nameDisplay = '%NAME%';
