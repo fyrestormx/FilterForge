@@ -3285,6 +3285,7 @@
           // Paladin Shields
           ['UNI !ID pa3', 'Sankekurs Fall'],
           ['UNI !ID pa9', 'Herald of Zakarum'],
+          ['UNI !ID pab', 'Ephemeral'],
           ['UNI !ID pac', 'Alma Negra'],
           ['UNI !ID pae', 'Dragonscale'],
           ['UNI !ID paf', 'Skywarden'],
@@ -3293,6 +3294,8 @@
           ['UNI !ID ob7', 'Skorn'],
           ['UNI !ID oba', 'The Oculus'],
           ['UNI !ID obc', 'Eschutas Temper'],
+          ['UNI !ID obd', 'Embersworn'],
+          ['UNI !ID obe', 'Skyfall'],
           ['UNI !ID obf', 'Deaths Fathom'],
           // Normal Armor
           ['UNI !ID qui', 'Greyform'],
@@ -3413,11 +3416,11 @@
           // Elite Helms
           ['UNI !ID uap', 'Shako'],
           ['UNI !ID ulm', 'Steel Shade'],
-          ['UNI !ID uhl', 'Overlords Helm'],
+          ['UNI !ID uhl', 'Sages Defiance'],
           ['UNI !ID uhm', 'Veil of Steel or Nightwings Veil'],
           ['UNI !ID usk', 'Andariels Visage'],
           ['UNI !ID urn', 'Crown of Ages'],
-          ['UNI !ID uh9', 'Giant Skull'],
+          ['UNI !ID uh9', 'Giant Skull or Overlords Helm'],
           // Normal Shields
           ['UNI !ID buc', 'Pelta Lunata'],
           ['UNI !ID sml', 'Umbral Disk'],
@@ -3574,6 +3577,7 @@
           ['UNI !ID 7o7', 'Bonehew'],
           ['UNI !ID 7s8', 'The Reapers Toll'],
           ['UNI !ID 7pa', 'Tomb Reaver'],
+          ['UNI !ID 7vo', 'Giant Maimer'],
           ['UNI !ID 7wc', 'Stormspire'],
           // Normal Scepters
           ['UNI !ID scp', 'Knell Striker'],
@@ -3684,6 +3688,7 @@
           // Elite Wands
           ['UNI !ID 7bw', 'Boneshade'],
           ['UNI !ID 7gw', 'Deaths Web'],
+          ['UNI !ID 7yw', 'Nethercrux'],
           // --- SET ITEMS ---
           // Multi-base sets
           ['SET !ID amu', 'Set Amulet'],
@@ -4960,9 +4965,9 @@
       ['7p7','Steel Pillar - War Pike'],['7pa','Tomb Reaver - Cryptic Axe'],['7pi','Stygian Pilum (No Unique for this base)'],['7qr','Aidans Scar'],['7qs','Akarat\'s Devotion - Seraph Rod'],
       ['7s7','Demons Arch - Balrog Spear'],['7s8','The Reapers Toll - Thresher'],['7sb','Bloodmoon - Elegant Blade'],['7sc','Heavens Light or The Redeemer - Mighty Scepter'],['7sm','Djinn Slayer - Ataghan'],
       ['7sp','Demon Limb - Tyrant Club'],['7sr','Ariocs Needle - Hyperion Spear'],['7ss','Falcata (No Unique for this base)'],['7st','Uldyssians Awakening - Ghost Spear'],['7ta','Gimmershred - Flying Axe'],
-      ['7tk','Flying Knife (No Unique for this base)'],['7tr','Stygian Pike (No Unique for this base)'],['7ts','Gargoyles Bite - Winged Harpoon'],['7tw','Stalker\'s Cull - Runic Talons'],['7vo','Colossus Voulge (No Unique for this base)'],
+      ['7tk','Flying Knife (No Unique for this base)'],['7tr','Stygian Pike (No Unique for this base)'],['7ts','Gargoyles Bite - Winged Harpoon'],['7tw','Stalker\'s Cull - Runic Talons'],['7vo','Giant Maimer - Colossus Voulge'],
       ['7wa','Death Cleaver - Berserker Axe'],['7wb','Jade Talon - Wrist Sword'],['7wc','Stormspire - Giant Thresher'],['7wd','Mythical Sword (No Unique for this base)'],['7wh','Stone Crusher or Schaefers Hammer'],
-      ['7wn','Polished Wand (No Unique for this base)'],['7ws','Astreons Iron Ward - Caduceus'],['7xf','War Fist - Whispering Mirage'],['7yw','Ghost Wand (No Unique for this base)'],['8bs','Warpspear - Gothic Staff'],
+      ['7wn','Polished Wand (No Unique for this base)'],['7ws','Astreons Iron Ward - Caduceus'],['7xf','War Fist - Whispering Mirage'],['7yw','Nethercrux - Ghost Wand'],['8bs','Warpspear - Gothic Staff'],
       ['8cb','Endlesshail - Double Bow'],['8cs','Chromatic Ire - Cedar Staff'],['8hb','Riphook - Razor Bow'],['8hx','Buriza-Do Kyanon - Ballista'],['8l8','Cliffkiller - Large Siege Bow'],
       ['8lb','Kuko Shakaku - Cedar Bow'],['8ls','Ribcracker - Quarterstaff'],['8lw','Goldstrike - Arch Gothic Bow'],['8lx','Langer Briser - Arbalest'],['8mx','Pus Spitter - Siege Crossbow'],
       ['8rx','Demon Machine - Chu-Ko-Nu'],['8s8','Witchwild String - Short Siege Bow'],['8sb','Skystrike - Edge Bow'],['8ss','Razorswitch - Jo Staff'],['8sw','Magewrath - Rune Bow'],
@@ -5012,10 +5017,10 @@
       ['neb','Minion Skull (No Unique for this base)'],['ned','Martyrdom - Overseer Skull'],['nee','Boneflame - Succubus Skull'],['nef','Darkforce - Spawn Bloodlord Skull'],['neg','Sacred Totem - Hellspawn Skull'],
       ['ob1','Eagle Orb (No Unique for this base)'],['ob2','Sacred Globe (No Unique for this base)'],['ob3','Smoked Sphere (No Unique for this base)'],['ob4','Clasped Orb (No Unique for this base)'],['ob5','Jareds Stone (No Unique for this base)'],
       ['ob6','Tempest - Glowing Orb'],['ob7','Skorn - Crystalline Globe'],['ob8','Cloudy Sphere (No Unique for this base)'],['ob9','Sparkling Ball (No Unique for this base)'],['oba','The Oculus - Swirling Crystal'],
-      ['obb','Heavenly Stone (No Unique for this base)'],['obc','Eschutas Temper - Eldritch Orb'],['obd','Demon Heart (No Unique for this base)'],['obe','Vortex Orb (No Unique for this base)'],['obf','Deaths Fathom - Dimensional Shard'],
+      ['obb','Heavenly Stone (No Unique for this base)'],['obc','Eschutas Temper - Eldritch Orb'],['obd','Embersworn - Demon Heart'],['obe','Skyfall - Vortex Orb'],['obf','Deaths Fathom - Dimensional Shard'],
       ['pa1','Targe (No Unique for this base)'],['pa2','Rondache (No Unique for this base)'],['pa3','Sankekurs Fall - Heraldic Shield'],['pa4','Aerin Shield (No Unique for this base)'],['pa5','Crown Shield (No Unique for this base)'],
       ['pa6','Akaran Targe (No Unique for this base)'],['pa7','Akaran Rondache (No Unique for this base)'],['pa8','Protector Shield (No Unique for this base)'],['pa9','Herald of Zakarum - Gilded Shield'],['paa','Royal Shield (No Unique for this base)'],
-      ['pab','Sacred Targe (No Unique for this base)'],['pac','Alma Negra - Sacred Rondache'],['pad','Kurast Shield (No Unique for this base)'],['pae','Dragonscale - Zakarum Shield'],['paf','Vortex Shield - Skywarden'],
+      ['pab','Ephemeral - Sacred Targe'],['pac','Alma Negra - Sacred Rondache'],['pad','Kurast Shield (No Unique for this base)'],['pae','Dragonscale - Zakarum Shield'],['paf','Vortex Shield - Skywarden'],
       ['pax','The Battlebranch - Poleaxe'],['pik','The Tannr Gorerod - Pike'],['pil','Pilum (No Unique for this base)'],['plt','Boneflesh - Plate Mail'],['qui','Greyform - Quilted Armor'],
       ['ram','The Third Eye'],['rar','Cage of the Unsullied'],['rbe','Band of Skulls'],['rin','Unique Ring'],['rng','Darkglow - Ring Mail'],
       ['rxb','Doomslinger - Repeating Crossbow'],['sbb','Stormstrike - Short Battle Bow'],['sbr','Skewer of Krintiz - Sabre'],['sbw','Pluckeye - Short Bow'],['scl','Hawkmail - Scale Mail'],
@@ -5024,8 +5029,8 @@
       ['spt','Lance of Yaggai - Spetum'],['ssd','Rixots Keen - Short Sword'],['ssp','Short Spear (No Unique for this base)'],['sst','Bane Ash - Short Staff'],['stu','Twitchthroe - Studded Leather'],
       ['swb','Hellclap - Short War Bow'],['tax','Throwing Axe (No Unique for this base)'],['tbl','Goldwrap - Heavy Belt'],['tbt','Goblin Toe - Light Plated Boots'],['tgl','Magefist - Light Gauntlets'],
       ['tkf','Throwing Knife (No Unique for this base)'],['tow','Bverrit Keep - Tower Shield'],['tri','Razortine - Trident'],['tsp','Throwing Spear (No Unique for this base)'],['uap','SHAKO'],
-      ['ucl','Loricated Mail (No Unique for this base)'],['uea','Wyrmhide (No Unique for this base)'],['uh9','Giant Skull - Bone Visage'],['uhb','Shadow Dancer - Myrmidon Greaves'],['uhc','Siggard\'s Staunch - Colossus Girdle'],
-      ['uhg','Steelrend - Ogre Gauntlets'],['uhl','Overlords Helm'],['uhm','Veil of Steel or Nightwings Veil'],['uhn','Cage of the Unsullied'],['uit','Stormshield'],
+      ['ucl','Loricated Mail (No Unique for this base)'],['uea','Wyrmhide (No Unique for this base)'],['uh9','Giant Skull or Overlords Helm - Bone Visage'],['uhb','Shadow Dancer - Myrmidon Greaves'],['uhc','Siggard\'s Staunch - Colossus Girdle'],
+      ['uhg','Steelrend - Ogre Gauntlets'],['uhl','Sages Defiance - Giant Conch'],['uhm','Veil of Steel or Nightwings Veil'],['uhn','Cage of the Unsullied'],['uit','Stormshield'],
       ['ukp','Hydraskull (No Unique for this base)'],['ula','Scarab Husk (No Unique for this base)'],['ulb','Merman\'s Sprocket - Wyrmhide Boots'],['ulc','Arachnid Mesh - Spiderweb Sash'],['uld','Leviathan - Kraken Shell'],
       ['ulg','Titans Grip - Bramble Mitts'],['ulm','Steel Shade - Armet'],['ult','Hellforge Plate (No Unique for this base)'],['umb','Marrowwalk - Boneweave Boots'],['umc','Verdungos Hearty Cord - Mithril Coil'],
       ['umg','Soul Drainer - Vambraces'],['uml','Blackoak Shield - Luna'],['ung','Wraithskin - Diamond Mail'],['uow','Medusas Gaze - Aegis'],['upk','Spike Thorn - Blade Barrier'],
