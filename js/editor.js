@@ -5115,7 +5115,7 @@
       ['uth','Tal Rasha\'s Guardianship - Lacquered Plate'],['uts','Taebaeks Glory - Ward'],['uui','Dark Adherent - Dusk Shroud'],['uul','Aldur\'s Deception - Shadow Plate'],['vbl','Arctic Binding - Light Belt'],
       ['vbt','Cow King or Sander - Heavy Boots'],['vgl','Sanders Taboo - Heavy Gloves'],['wsd','Death\'s Touch - War Sword'],['wsp','Milabrega\'s Rod - War Scepter'],['wst','Arcanna\'s Deathwand - War Staff'],
       ['xap','Cow King\'s Horns - War Hat'],['xar','Griswold\'s Heart - Ornate Plate'],['xcl','Hwanin\'s Refuge - Tigulated Mail'],['xh9','Natalya\'s Totem - Grim Helm'],['xhb','Immortal Kings Pillar - War Boots'],
-      ['xhg','Immortal Kings Forge - War Gauntlets'],['xhl','Sazabis Mental Sheath - Basinet'],['xhm','Guillaumes Face'],['xlb','Rite of Passage - Demonhide Boots'],['xmb','Natalya\'s Soul - Mesh Boots'],
+      ['xhg','Immortal Kings Forge - War Gauntlets'],['xhl','Sazabis Mental Sheath - Basinet'],['xhm','Guillaumes Face - Winged Helm'],['xlb','Rite of Passage - Demonhide Boots'],['xmb','Natalya\'s Soul - Mesh Boots'],
       ['xmg','Trang-Oul\'s Claws - Heavy Bracers'],['xml','Whitstans Guard - Round Shield'],['xrn','Hwanin\'s Splendor - Grand Crown'],['xrs','Haemosus Adamant - Cuirass'],['xsk','Tal Rasha\'s Horadric Crest - Death Mask'],
       ['xtb','Aldur\'s Advance - Battle Boots'],['xtg','Mavinas Icy Clutch - Battle Gauntlets'],['xul','Trang-Oul\'s Scales - Chaos Armor'],['xvg','Magnus Skin - Sharkskin Gloves'],['zhb','Immortal Kings Detail - War Belt'],
       ['zmb','Tal Rasha\'s Fine-Spun Cloth - Mesh Belt'],['ztb','Wilhelms Pride - Battle Belt'],['zvb','Mavinas Tenet - Sharkskin Belt']
@@ -5123,7 +5123,7 @@
     classitems: [
       // Druid Pelts
       ['dr1','Wolf Head'],['dr2','Hawk Helm'],['dr3','Antlers'],['dr4','Falcon Mask'],['dr5','Spirit Mask'],
-      ['dr6','Alpha Helm'],['dr7','Griffon Headress'],['dr8','Hunter\'s Guise'],['dr9','Sacred Feathers'],['dra','Totemic Mask'],
+      ['dr6','Alpha Helm'],['dr7','Griffon Headdress'],['dr8','Hunter\'s Guise'],['dr9','Sacred Feathers'],['dra','Totemic Mask'],
       ['drb','Blood Spirit'],['drc','Sun Spirit'],['drd','Earth Spirit'],['dre','Sky Spirit'],['drf','Dream Spirit'],
       // Barbarian Helms
       ['ba1','Jawbone Cap'],['ba2','Fanged Helm'],['ba3','Horned Helm'],['ba4','Assault Helmet'],['ba5','Avenger Guard'],
