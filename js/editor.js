@@ -4910,7 +4910,7 @@
     ],
     pd2: [
       ['wss','Worldstone Shard'],['lbox','Larzuk\'s Puzzlebox'],['lpp','Larzuk\'s Puzzlepiece'],['rkey','Skeleton Key'],
-      ['tes','Twisted Essence of Suffering'],['ceh','Charged Essense of Hatred'],['bet','Burning Essence of Terror'],['fed','Festering Essence of Destruction'],
+      ['tes','Twisted Essence of Suffering'],['ceh','Charged Essence of Hatred'],['bet','Burning Essence of Terror'],['fed','Festering Essence of Destruction'],
       ['toa','Token of Absolution'],['pk1','Key of Terror'],['pk2','Key of Hate'],['pk3','Key of Destruction'],
       ['mbr','Mephisto\'s Brain'],['dhn','Diablo\'s Horn'],['bey','Baal\'s Eye'],['std','Standard of Heroes'],
       ['dcho','Dclone Heart'],['dcso','Dclone Soul'],['dcbl','Dclone Blood'],['dcma','Dclone Matter'],
