@@ -1167,7 +1167,7 @@
   // ==========================================
   var GRAIL_DATA = {
     'Helms': [
-      {code:'uap',name:'Shako'},{code:'urn',name:'Crown of Ages'},{code:'ci3',name:"Griffon's Eye"},
+      {code:'uap',name:'Harlequin Crest'},{code:'urn',name:'Crown of Ages'},{code:'ci3',name:"Griffon's Eye"},
       {code:'ci2',name:"Kira's Guardian"},{code:'ulm',name:'Steel Shade'},{code:'xh9',name:'Vampire Gaze'},
       {code:'uhm',name:'Veil of Steel'},{code:'xsk',name:"Blackhorn's Face"},{code:'xkp',name:'Rockstopper'},
       {code:'xlm',name:'Stealskull'},{code:'xhl',name:'Darksight Helm'},{code:'cap',name:'Biggin\'s Bonnet'},
