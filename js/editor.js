@@ -5799,49 +5799,58 @@
       {name:"futureal.filter",url:"https://raw.githubusercontent.com/Kryszard-POD/Kryszard-s-PD2-Loot-Filter/main/futureal.filter",size:724417},
       {name:"item.filter",url:"https://raw.githubusercontent.com/Kryszard-POD/Kryszard-s-PD2-Loot-Filter/main/item.filter",size:720579}
     ]},
-    {name:"Kassahi's PD2 Filter",author:"Kassahi",repo:"KassahiPD2/Kassahi",files:[
-      {name:"Meme-Hyper.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Meme-Hyper.filter",size:916495},
-      {name:"Meme.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Meme.filter",size:916052},
-      {name:"Mystery-Hyper.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Mystery-Hyper.filter",size:916362},
-      {name:"Mystery-Luxe.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Mystery-Luxe.filter",size:919171},
-      {name:"Mystery.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Mystery.filter",size:915909},
-      {name:"Regular-Hyper.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular-Hyper.filter",size:915063},
-      {name:"Regular-Luxe.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular-Luxe.filter",size:917819},
-      {name:"Regular.filter",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular.filter",size:914620}
+    {name:"Kassahi's PD2 Filter",author:"Kassahi",repo:"KassahiPD2/Kassahi",
+      definitionsUrl:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/filter_definitions.json",
+      files:[
+      {name:"Regular.filter",displayName:"Regular-Standard",description:"All-in-one balanced filter. The standard recommendation for most players.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular.filter",size:917496},
+      {name:"Regular-Hyper.filter",displayName:"Regular-Hyper",description:"Standard filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular-Hyper.filter",size:917939},
+      {name:"Regular-Luxe.filter",displayName:"Regular-philanthropy777",description:"Standard filter with a philanthropy777 visual theme.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Regular-Luxe.filter",size:920684},
+      {name:"Meme.filter",displayName:"Meme-Standard",description:"Standard filter with meme item names for a humorous experience.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Meme.filter",size:918977},
+      {name:"Meme-Hyper.filter",displayName:"Meme-Hyper",description:"Meme filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Meme-Hyper.filter",size:919420},
+      {name:"Mystery.filter",displayName:"Mystery-Standard",description:"Filter where high-value items are renamed to hide their identity.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Mystery.filter",size:918992},
+      {name:"Mystery-Hyper.filter",displayName:"Mystery-Hyper",description:"Mystery filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Mystery-Hyper.filter",size:919445},
+      {name:"Mystery-Luxe.filter",displayName:"Mystery-philanthropy777",description:"Mystery filter with a philanthropy777 visual theme.",url:"https://raw.githubusercontent.com/KassahiPD2/Kassahi/main/Mystery-Luxe.filter",size:922243}
     ]},
-    {name:"Erazure's PD2 Loot Filter",author:"Erazure",repo:"FiltersBy-Erazure/PD2-Loot-Filter",files:[
-      {name:"Erazure-BIG-GG-PoE.filter",displayName:"BIG GG \u2014 PoE Sounds",description:"Strict filter with PoE-style drop sounds.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG-PoE.filter",size:775381},
-      {name:"Erazure-BIG-GG.filter",displayName:"BIG GG",description:"Strict filter for endgame mapping.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG.filter",size:774777},
-      {name:"Erazure-Main-PoE.filter",displayName:"Main \u2014 PoE Sounds",description:"Standard filter with PoE-style drop sounds.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main-PoE.filter",size:770903},
-      {name:"Erazure-Main.filter",displayName:"Main",description:"Standard all-purpose filter.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main.filter",size:770819}
+    {name:"Erazure's PD2 Loot Filter",author:"Erazure",repo:"FiltersBy-Erazure/PD2-Loot-Filter",
+      definitionsUrl:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/filter_definitions.json",
+      files:[
+      {name:"Erazure-Main.filter",displayName:"Erazure - Main",description:"Highly stylized loot filter with multiple filter level tiers for customizable strictness, colorful and intuitive symbols for runes, gems, maps, charms, etc.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main.filter",size:820133},
+      {name:"Erazure-Revealed.filter",displayName:"Erazure - Revealed",description:"Same as Erazure - Main but unidentified unique and set items show as their identified names when dropped.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Revealed.filter",size:820133},
+      {name:"Erazure-BIG-GG.filter",displayName:"Erazure - BIG GG",description:"Same as Erazure - Main but with a twist: high runes and super rare drops hide their identity on the ground when dropped, showing as BIG GG until you pick them up.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG.filter",size:820133},
+      {name:"Erazure-Revealed-BIG-GG.filter",displayName:"Erazure - Revealed - BIG GG",description:"Same as Erazure - BIG GG but unidentified unique and set items show as their identified names when dropped.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Revealed-BIG-GG.filter",size:820133},
+      {name:"Erazure-Main-PoE.filter",displayName:"Erazure - Main - PoE",description:"Same as Erazure - Main but with Path of Exile sound effects on valuable drops.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Main-PoE.filter",size:820133},
+      {name:"Erazure-Revealed-PoE.filter",displayName:"Erazure - Revealed - PoE",description:"Same as Erazure - Main - PoE but unidentified unique and set items show as their identified names when dropped.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Revealed-PoE.filter",size:820133},
+      {name:"Erazure-BIG-GG-PoE.filter",displayName:"Erazure - BIG GG - PoE",description:"The mystery of BIG GG drops combined with Path of Exile sound notifications.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-BIG-GG-PoE.filter",size:820133},
+      {name:"Erazure-Revealed-BIG-GG-PoE.filter",displayName:"Erazure - Revealed - BIG GG - PoE",description:"Same as Erazure - BIG GG - PoE, but unidentified unique and set items show as their identified names when dropped.",url:"https://raw.githubusercontent.com/FiltersBy-Erazure/PD2-Loot-Filter/main/Erazure-Revealed-BIG-GG-PoE.filter",size:820133}
     ]},
     {name:"HiimFilter by Maaaark + HiimDave",author:"HiimFilter",repo:"Maaaaaarrk/HiimFilter-PD2-Filter",
       definitionsUrl:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/filter_definitions.json",
       files:[
-      {name:"Hiim.filter",displayName:"Hiim \u2014 Standard",description:"All-in-one balanced filter. The standard recommendation for most players.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim.filter",size:490035},
-      {name:"Hiim_Crafting_Amazon_Focused.filter",displayName:"Class \u2014 Amazon",description:"Class filter tuned for Amazon. Shows Amazon-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Amazon_Focused.filter",size:486367},
-      {name:"Hiim_Crafting_Assassin_Focused.filter",displayName:"Class \u2014 Assassin",description:"Class filter tuned for Assassin. Shows Assassin-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Assassin_Focused.filter",size:486088},
-      {name:"Hiim_Crafting_Barbarian_Focused.filter",displayName:"Class \u2014 Barbarian",description:"Class filter tuned for Barbarian. Shows Barbarian-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Barbarian_Focused.filter",size:487194},
-      {name:"Hiim_Crafting_Druid_Focused.filter",displayName:"Class \u2014 Druid",description:"Class filter tuned for Druid. Shows Druid-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Druid_Focused.filter",size:485717},
-      {name:"Hiim_Crafting_Necromancer_Focused.filter",displayName:"Class \u2014 Necromancer",description:"Class filter tuned for Necromancer. Shows Necromancer-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Necromancer_Focused.filter",size:485343},
-      {name:"Hiim_Crafting_Paladin_Focused.filter",displayName:"Class \u2014 Paladin",description:"Class filter tuned for Paladin. Shows Paladin-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Paladin_Focused.filter",size:485798},
-      {name:"Hiim_Crafting_Sorceress_Focused.filter",displayName:"Class \u2014 Sorceress",description:"Class filter tuned for Sorceress. Shows Sorceress-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Sorceress_Focused.filter",size:485083},
-      {name:"Hiim_Crafting.filter",displayName:"Crafting",description:"Same as the standard filter, but good crafting bases are not limited in higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting.filter",size:489570},
-      {name:"Hiim_Grail.filter",displayName:"Grail Friendly",description:"All-in-one filter that always shows Uniques and Set items on filter levels 1-8.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Grail.filter",size:489886},
-      {name:"Hiim_LLD_Focused.filter",displayName:"LLD",description:"Shows LLD-relevant items at higher filter levels. Includes LLD jewel point evaluation and LLD tags.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_LLD_Focused.filter",size:492706},
-      {name:"Hiim_LLD_Hyper.filter",displayName:"LLD \u2014 Hyper",description:"LLD Focused filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_LLD_Hyper.filter",size:494190},
-      {name:"Hiim_Mystery.filter",displayName:"Mystery",description:"All-in-one filter where Runes Pul+ and GG uniques are renamed to hide their identity.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Mystery.filter",size:495903},
-      {name:"Hiim_Only_Filter.filter",displayName:"Only A Filter",description:"Filtering only, no annotations or re-naming.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Only_Filter.filter",size:203500},
-      {name:"Hiim_Hyper.filter",displayName:"Style \u2014 Hyper",description:"All-in-one filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Hyper.filter",size:491423},
-      {name:"Hiim_TalRasha_Themed.filter",displayName:"Style \u2014 TalRasha",description:"All-in-one filter with a TalRasha color theme.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_TalRasha_Themed.filter",size:490041},
-      {name:"Hiim_Vanilla_Plus.filter",displayName:"Vanilla Plus",description:"All-in-one filter without item re-naming.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Vanilla_Plus.filter",size:397716},
-      {name:"Hiim_Closed_Beta.filter",displayName:"Closed Beta",description:"Filter for closed beta testing.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Closed_Beta.filter",size:490140}
+      {name:"Hiim.filter",displayName:"Hiim \u2014 Standard",description:"All-in-one balanced filter. The standard recommendation for most players.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim.filter",size:491565},
+      {name:"Hiim_Crafting_Amazon_Focused.filter",displayName:"Class \u2014 Amazon",description:"Class filter tuned for Amazon. Shows Amazon-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Amazon_Focused.filter",size:493210},
+      {name:"Hiim_Crafting_Assassin_Focused.filter",displayName:"Class \u2014 Assassin",description:"Class filter tuned for Assassin. Shows Assassin-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Assassin_Focused.filter",size:492931},
+      {name:"Hiim_Crafting_Barbarian_Focused.filter",displayName:"Class \u2014 Barbarian",description:"Class filter tuned for Barbarian. Shows Barbarian-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Barbarian_Focused.filter",size:494032},
+      {name:"Hiim_Crafting_Druid_Focused.filter",displayName:"Class \u2014 Druid",description:"Class filter tuned for Druid. Shows Druid-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Druid_Focused.filter",size:492560},
+      {name:"Hiim_Crafting_Necromancer_Focused.filter",displayName:"Class \u2014 Necromancer",description:"Class filter tuned for Necromancer. Shows Necromancer-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Necromancer_Focused.filter",size:492180},
+      {name:"Hiim_Crafting_Paladin_Focused.filter",displayName:"Class \u2014 Paladin",description:"Class filter tuned for Paladin. Shows Paladin-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Paladin_Focused.filter",size:492733},
+      {name:"Hiim_Crafting_Sorceress_Focused.filter",displayName:"Class \u2014 Sorceress",description:"Class filter tuned for Sorceress. Shows Sorceress-relevant items and crafting bases at higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting_Sorceress_Focused.filter",size:491986},
+      {name:"Hiim_Crafting.filter",displayName:"Crafting",description:"Same as the standard filter, but good crafting bases are not limited in higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Crafting.filter",size:491335},
+      {name:"Hiim_Grail.filter",displayName:"Grail Friendly",description:"All-in-one filter that always shows Uniques and Set items on filter levels 1-8.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Grail.filter",size:491404},
+      {name:"Hiim_LLD_Focused.filter",displayName:"LLD",description:"Shows LLD-relevant items at higher filter levels. Includes LLD jewel point evaluation and LLD tags.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_LLD_Focused.filter",size:496561},
+      {name:"Hiim_LLD_Hyper.filter",displayName:"LLD \u2014 Hyper",description:"LLD Focused filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_LLD_Hyper.filter",size:497949},
+      {name:"Hiim_Mystery.filter",displayName:"Mystery",description:"All-in-one filter where Runes Pul+ and GG uniques are renamed to hide their identity.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Mystery.filter",size:497429},
+      {name:"Hiim_Only_Filter.filter",displayName:"Only A Filter",description:"Filtering only, no annotations or re-naming.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Only_Filter.filter",size:204301},
+      {name:"Hiim_Hyper.filter",displayName:"Style \u2014 Hyper",description:"All-in-one filter with a Hyper visual theme.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Hyper.filter",size:492946},
+      {name:"Hiim_TalRasha_Themed.filter",displayName:"Style \u2014 TalRasha",description:"All-in-one filter with a TalRasha color theme.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_TalRasha_Themed.filter",size:491557},
+      {name:"Hiim_Vanilla_Plus.filter",displayName:"Vanilla Plus",description:"All-in-one filter without item re-naming.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Vanilla_Plus.filter",size:447380},
+      {name:"Hiim_Vanilla_Plus_Crafting.filter",displayName:"Vanilla Plus \u2014 Crafting",description:"Vanilla Plus filter where good crafting bases are not limited in higher filter levels.",url:"https://raw.githubusercontent.com/Maaaaaarrk/HiimFilter-PD2-Filter/main/Hiim_Vanilla_Plus_Crafting.filter",size:447157}
     ]},
-    {name:"eqN's PD2 Filters",author:"eqN",repo:"eqNj/eqN-PD2-Filter",files:[
-      {name:"eqN-All-In-One.filter",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-All-In-One.filter",size:842601},
-      {name:"eqN-Potionless.filter",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-Potionless.filter",size:844331},
-      {name:"eqN-Specialized-LLD.filter",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-Specialized-LLD.filter",size:5131167},
-      {name:"eqN-Specialized-SSF.filter",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-Specialized-SSF.filter",size:846233}
+    {name:"eqN's PD2 Filters",author:"eqN",repo:"eqNj/eqN-PD2-Filter",
+      definitionsUrl:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/filter_definitions.json",
+      files:[
+      {name:"eqN-All-In-One.filter",displayName:"eqN - All-In-One Filter",description:"A filter designed with a Vanilla+ aesthetic approach that doesn't overly editorialize on most filter levels.",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-All-In-One.filter",size:828817},
+      {name:"eqN-Specialized-SSF.filter",displayName:"eqN - Specialized SSF Filter",description:"A specialized version of the eqN Filter that excludes any LLD (Low Level Dueling) features.",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-Specialized-SSF.filter",size:828931},
+      {name:"eqN-Specialized-LLD.filter",displayName:"eqN - Specialized LLD Filter",description:"A specialized version of the eqN Filter that maintains several LLD (Low Level Dueling) features.",url:"https://raw.githubusercontent.com/eqNj/eqN-PD2-Filter/main/eqN-Specialized-LLD.filter",size:832955}
     ]},
     {name:"DarkHumility + ADev Filter",author:"ADevDH",repo:"DarkHumility/DHFilter",files:[
       {name:"dark.filter",url:"https://raw.githubusercontent.com/DarkHumility/DHFilter/main/dark.filter",size:337534}
@@ -5867,11 +5876,13 @@
       {name:"Loot_Goblin.filter",url:"https://raw.githubusercontent.com/PreyInstinct/Loot-Goblin-Filter/main/Loot_Goblin.filter",size:1373241},
       {name:"Loot_Goblin_experimental.filter",url:"https://raw.githubusercontent.com/PreyInstinct/Loot-Goblin-Filter/main/Loot_Goblin_experimental.filter",size:1373241}
     ]},
-    {name:"Phyx10n's Filter",author:"Phyx10n",repo:"Phyx10n/PD2-Filter",files:[
-      {name:"crafting+revealed.filter",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/crafting+revealed.filter",size:175253},
-      {name:"crafting.filter",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/crafting.filter",size:175254},
-      {name:"main.filter",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/main.filter",size:175255},
-      {name:"revealed.filter",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/revealed.filter",size:175254}
+    {name:"Phyx10n's Filter",author:"Phyx10n",repo:"Phyx10n/PD2-Filter",
+      definitionsUrl:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/filter_definitions.json",
+      files:[
+      {name:"main.filter",displayName:"Main",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/main.filter",size:171009},
+      {name:"crafting.filter",displayName:"Crafting",description:"Highlights crafting bases",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/crafting.filter",size:171008},
+      {name:"revealed.filter",displayName:"Revealed",description:"Shows unidentified Set/Unique names",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/revealed.filter",size:171008},
+      {name:"crafting+revealed.filter",displayName:"Crafting + Revealed",url:"https://raw.githubusercontent.com/Phyx10n/PD2-Filter/main/crafting+revealed.filter",size:171007}
     ]}
   ];
   var authorFilters = [];
@@ -5950,7 +5961,10 @@
       showStep(2);
 
       // If the author has a definitionsUrl, try fetching live definitions first
-      // to pick up any newly added filters since our static data was built
+      // to pick up newly added/renamed filters since our static data was built.
+      // Display names and descriptions in the upstream filter_definitions.json
+      // are the canonical source of truth — our static `files` array only
+      // serves as a fallback when the network request fails.
       if (f.definitionsUrl) {
         fileList.innerHTML = '<p class="text-muted text-center">Loading filter list...</p>';
         fetch(f.definitionsUrl)
@@ -5963,16 +5977,26 @@
             var info = defs.filter_info;
             if (!info) throw new Error('No filter_info');
             var baseUrl = f.definitionsUrl.replace('filter_definitions.json', '');
+            // Build a lookup of static file metadata by filename so we can
+            // reuse the cached `size` (the upstream JSON doesn't carry sizes)
+            var staticByName = {};
+            (f.files || []).forEach(function (file) {
+              staticByName[file.name] = file;
+            });
             var liveFiles = [];
             Object.keys(info).forEach(function (key) {
               var entry = info[key];
+              if (!entry || !entry.file_name) return;
+              var staticEntry = staticByName[entry.file_name] || {};
               liveFiles.push({
                 name: entry.file_name,
-                displayName: entry.display_name,
-                description: entry.description,
-                url: baseUrl + entry.file_name
+                displayName: entry.display_name || staticEntry.displayName,
+                description: entry.description || staticEntry.description,
+                url: baseUrl + entry.file_name,
+                size: staticEntry.size
               });
             });
+            if (!liveFiles.length) throw new Error('Empty filter_info');
             renderFileList(liveFiles, f);
           })
           .catch(function () {
