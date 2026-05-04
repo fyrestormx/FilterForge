@@ -5422,14 +5422,15 @@
             return;
           }
           flags.push('NMAG', 'NORM');
-          if (code.match(/^(aq|cq)/)) flags.push('MISC');
+          if (code.match(/^(aq|cq)/)) flags.push('MISC', 'QUIVER');
           else flags.push('ARMOR');
         } else if (codeCat === 'exc') {
           flags.push('NMAG', 'EXC');
           flags.push('ARMOR');
         } else if (codeCat === 'elt') {
           flags.push('NMAG', 'ELT');
-          flags.push('ARMOR');
+          if (code.match(/^(aq|cq)/)) flags.push('MISC', 'QUIVER');
+          else flags.push('ARMOR');
         } else if (codeCat === 'classitems') {
           flags.push('NMAG');
           flags.push('WEAPON');
@@ -5468,7 +5469,7 @@
 
     // Generate MAG and RARE entries for all equipment bases and charms
     var equipCats = ['norm', 'exc', 'elt', 'classitems'];
-    var magRareSkip = ['aqv', 'cqv']; // quivers: no magic/rare
+    var magRareSkip = ['aqv', 'cqv']; // norm quivers: no magic/rare
     equipCats.forEach(function (codeCat) {
       ITEM_CODES[codeCat].forEach(function (entry) {
         var code = entry[0];
@@ -5476,14 +5477,17 @@
         if (magRareSkip.indexOf(code) !== -1) return;
 
         var tierFlag = codeCat === 'exc' ? 'EXC' : codeCat === 'elt' ? 'ELT' : 'NORM';
-        var equipFlag = codeCat === 'classitems' ? 'WEAPON' : 'ARMOR';
+        var isQuiver = /^(aq|cq)/.test(code);
+        var typeFlagsForCode = isQuiver
+          ? ['MISC', 'QUIVER']
+          : [codeCat === 'classitems' ? 'WEAPON' : 'ARMOR'];
 
         // MAG version
         var magKey = 'mag-gen-' + code;
         if (!items.some(function (it) { return it.code === code && it.cat === 'mag'; })) {
           items.push({
             key: magKey, code: code, name: name,
-            flags: ['GROUND', 'MAG', tierFlag, equipFlag],
+            flags: ['GROUND', 'MAG', tierFlag].concat(typeFlagsForCode),
             values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 },
             cat: 'mag', hasFullData: false
           });
@@ -5494,7 +5498,7 @@
         if (!items.some(function (it) { return it.code === code && it.cat === 'rare'; })) {
           items.push({
             key: rareKey, code: code, name: name,
-            flags: ['GROUND', 'RARE', tierFlag, equipFlag],
+            flags: ['GROUND', 'RARE', tierFlag].concat(typeFlagsForCode),
             values: { ILVL: 85, SOCKETS: 0, RUNE: 0, GOLD: 0, GEM: 0 },
             cat: 'rare', hasFullData: false
           });
